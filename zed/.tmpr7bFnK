@@ -1,0 +1,120 @@
+{"signed_in":false,"milliseconds_since_first_event":0,"type":"App","operation":"open"}
+{"signed_in":false,"milliseconds_since_first_event":66,"type":"Setting","setting":"theme","value":"One Dark"}
+{"signed_in":false,"milliseconds_since_first_event":66,"type":"Setting","setting":"keymap","value":"VSCode"}
+{"signed_in":false,"milliseconds_since_first_event":0,"type":"Extension","extension_id":"html","version":"0.1.1"}
+{"signed_in":false,"milliseconds_since_first_event":0,"type":"Extension","extension_id":"java","version":"0.0.4"}
+{"signed_in":false,"milliseconds_since_first_event":427,"type":"Editor","operation":"open","file_extension":"tsx","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":18755,"type":"Editor","operation":"open","file_extension":"tsx","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":107676,"type":"Editor","operation":"open","file_extension":"tsx","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":171941,"type":"Edit","duration":2934,"environment":"terminal"}
+{"signed_in":true,"milliseconds_since_first_event":239929,"type":"Memory","memory_in_bytes":70860800,"virtual_memory_in_bytes":439887052800}
+{"signed_in":true,"milliseconds_since_first_event":239929,"type":"Cpu","usage_as_percentage":0.0,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":239973,"type":"Edit","duration":33734,"environment":"editor"}
+{"signed_in":true,"milliseconds_since_first_event":298311,"type":"Editor","operation":"save","file_extension":"tsx","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Editor","operation":"open","file_extension":"tsx","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":11402,"type":"Editor","operation":"open","file_extension":"tsx","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":53730,"type":"Editor","operation":"open","file_extension":"tsx","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":57915,"type":"Edit","duration":58915,"environment":"editor"}
+{"signed_in":true,"milliseconds_since_first_event":67438,"type":"Editor","operation":"save","file_extension":"tsx","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":83259,"type":"Editor","operation":"save","file_extension":"tsx","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":85082,"type":"Editor","operation":"save","file_extension":"tsx","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":103672,"type":"App","operation":"extensions page: open"}
+{"signed_in":true,"milliseconds_since_first_event":166025,"type":"Memory","memory_in_bytes":104873984,"virtual_memory_in_bytes":440100257792}
+{"signed_in":true,"milliseconds_since_first_event":166025,"type":"Cpu","usage_as_percentage":10.945326,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":200202,"type":"App","operation":"extensions: install extension"}
+{"signed_in":true,"milliseconds_since_first_event":202182,"type":"Extension","extension_id":"macos-classic","version":"0.0.8"}
+{"signed_in":true,"milliseconds_since_first_event":219802,"type":"App","operation":"extensions: uninstall extension"}
+{"signed_in":true,"milliseconds_since_first_event":247636,"type":"App","operation":"extensions: install extension"}
+{"signed_in":true,"milliseconds_since_first_event":248544,"type":"Extension","extension_id":"github-theme","version":"0.0.2"}
+{"signed_in":true,"milliseconds_since_first_event":252769,"type":"App","operation":"extensions: uninstall extension"}
+{"signed_in":true,"milliseconds_since_first_event":292503,"type":"App","operation":"extensions: install extension"}
+{"signed_in":true,"milliseconds_since_first_event":293479,"type":"Extension","extension_id":"catppuccin","version":"0.2.7"}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"App","operation":"extensions: install extension"}
+{"signed_in":true,"milliseconds_since_first_event":1468,"type":"Extension","extension_id":"dockerfile","version":"0.0.4"}
+{"signed_in":true,"milliseconds_since_first_event":9917,"type":"App","operation":"extensions: install extension"}
+{"signed_in":true,"milliseconds_since_first_event":12163,"type":"Extension","extension_id":"sql","version":"1.0.0"}
+{"signed_in":true,"milliseconds_since_first_event":19933,"type":"App","operation":"extensions: install extension"}
+{"signed_in":true,"milliseconds_since_first_event":21128,"type":"Extension","extension_id":"one-dark-pro","version":"0.0.3"}
+{"signed_in":true,"milliseconds_since_first_event":34167,"type":"App","operation":"extensions: uninstall extension"}
+{"signed_in":true,"milliseconds_since_first_event":71240,"type":"Memory","memory_in_bytes":97370112,"virtual_memory_in_bytes":448708460544}
+{"signed_in":true,"milliseconds_since_first_event":71240,"type":"Cpu","usage_as_percentage":13.637574,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":168169,"type":"App","operation":"extensions: install extension"}
+{"signed_in":true,"milliseconds_since_first_event":170931,"type":"Extension","extension_id":"graphql","version":"0.0.2"}
+{"signed_in":true,"milliseconds_since_first_event":172186,"type":"App","operation":"extensions: install extension"}
+{"signed_in":true,"milliseconds_since_first_event":174213,"type":"Extension","extension_id":"scss","version":"0.0.3"}
+{"signed_in":true,"milliseconds_since_first_event":178636,"type":"App","operation":"extensions: install extension"}
+{"signed_in":true,"milliseconds_since_first_event":179505,"type":"Extension","extension_id":"smooth","version":"1.0.0"}
+{"signed_in":true,"milliseconds_since_first_event":190833,"type":"App","operation":"extensions: uninstall extension"}
+{"signed_in":true,"milliseconds_since_first_event":206413,"type":"App","operation":"extensions: install extension"}
+{"signed_in":true,"milliseconds_since_first_event":207363,"type":"Extension","extension_id":"ultimate-dark-neo","version":"0.0.4"}
+{"signed_in":true,"milliseconds_since_first_event":209146,"type":"App","operation":"extensions: uninstall extension"}
+{"signed_in":true,"milliseconds_since_first_event":214729,"type":"App","operation":"extensions: install extension"}
+{"signed_in":true,"milliseconds_since_first_event":216488,"type":"Extension","extension_id":"astro","version":"0.0.2"}
+{"signed_in":true,"milliseconds_since_first_event":226012,"type":"App","operation":"extensions: uninstall extension"}
+{"signed_in":true,"milliseconds_since_first_event":237828,"type":"App","operation":"extensions: install extension"}
+{"signed_in":true,"milliseconds_since_first_event":239589,"type":"Extension","extension_id":"prisma","version":"0.0.2"}
+{"signed_in":true,"milliseconds_since_first_event":242845,"type":"App","operation":"extensions: uninstall extension"}
+{"signed_in":true,"milliseconds_since_first_event":254963,"type":"App","operation":"extensions: install extension"}
+{"signed_in":true,"milliseconds_since_first_event":256121,"type":"Extension","extension_id":"material-dark","version":"0.0.1"}
+{"signed_in":true,"milliseconds_since_first_event":259645,"type":"App","operation":"extensions: uninstall extension"}
+{"signed_in":true,"milliseconds_since_first_event":295212,"type":"App","operation":"extensions: install extension"}
+{"signed_in":true,"milliseconds_since_first_event":296206,"type":"Extension","extension_id":"nanowise","version":"0.1.0"}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"App","operation":"extensions: uninstall extension"}
+{"signed_in":true,"milliseconds_since_first_event":817,"type":"App","operation":"extensions: install extension"}
+{"signed_in":true,"milliseconds_since_first_event":1702,"type":"Extension","extension_id":"nanowise","version":"0.1.0"}
+{"signed_in":true,"milliseconds_since_first_event":10939,"type":"Memory","memory_in_bytes":92962816,"virtual_memory_in_bytes":465889656832}
+{"signed_in":true,"milliseconds_since_first_event":10939,"type":"Cpu","usage_as_percentage":13.152434,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":232098,"type":"Editor","operation":"open","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":235335,"type":"Edit","duration":26570,"environment":"editor"}
+{"signed_in":true,"milliseconds_since_first_event":250941,"type":"Memory","memory_in_bytes":116408320,"virtual_memory_in_bytes":465891393536}
+{"signed_in":true,"milliseconds_since_first_event":250941,"type":"Cpu","usage_as_percentage":17.12942,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":262913,"type":"Editor","operation":"save","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":267486,"type":"Editor","operation":"save","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":268382,"type":"Editor","operation":"save","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":272683,"type":"Editor","operation":"save","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":293313,"type":"Editor","operation":"save","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":299914,"type":"Editor","operation":"save","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Editor","operation":"save","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":22564,"type":"Edit","duration":71988,"environment":"editor"}
+{"signed_in":true,"milliseconds_since_first_event":27213,"type":"Editor","operation":"save","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":35020,"type":"Editor","operation":"save","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":50314,"type":"Editor","operation":"save","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":61595,"type":"Editor","operation":"save","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":81090,"type":"Editor","operation":"save","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":94542,"type":"Editor","operation":"save","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":100611,"type":"Editor","operation":"save","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":106065,"type":"Editor","operation":"save","file_extension":"json","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":183151,"type":"Memory","memory_in_bytes":90079232,"virtual_memory_in_bytes":465892474880}
+{"signed_in":true,"milliseconds_since_first_event":183151,"type":"Cpu","usage_as_percentage":12.402203,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Memory","memory_in_bytes":35848192,"virtual_memory_in_bytes":465891901440}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Cpu","usage_as_percentage":3.5994046,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":239889,"type":"Memory","memory_in_bytes":15876096,"virtual_memory_in_bytes":465891901440}
+{"signed_in":true,"milliseconds_since_first_event":239889,"type":"Cpu","usage_as_percentage":0.12327155,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Memory","memory_in_bytes":54312960,"virtual_memory_in_bytes":465891524608}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Cpu","usage_as_percentage":0.5732028,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":239994,"type":"Memory","memory_in_bytes":58834944,"virtual_memory_in_bytes":465891000320}
+{"signed_in":true,"milliseconds_since_first_event":239994,"type":"Cpu","usage_as_percentage":4.7569995,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Memory","memory_in_bytes":24510464,"virtual_memory_in_bytes":465890426880}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Cpu","usage_as_percentage":1.0769336,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":240003,"type":"Memory","memory_in_bytes":22200320,"virtual_memory_in_bytes":465890426880}
+{"signed_in":true,"milliseconds_since_first_event":240003,"type":"Cpu","usage_as_percentage":0.14988935,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Memory","memory_in_bytes":70238208,"virtual_memory_in_bytes":465888952320}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Cpu","usage_as_percentage":4.987609,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":239998,"type":"Memory","memory_in_bytes":24199168,"virtual_memory_in_bytes":465888428032}
+{"signed_in":true,"milliseconds_since_first_event":239999,"type":"Cpu","usage_as_percentage":3.5934207,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Memory","memory_in_bytes":33275904,"virtual_memory_in_bytes":465887903744}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Cpu","usage_as_percentage":0.21367633,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":1038704,"type":"Memory","memory_in_bytes":27082752,"virtual_memory_in_bytes":465887477760}
+{"signed_in":true,"milliseconds_since_first_event":1038704,"type":"Cpu","usage_as_percentage":0.25718582,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Memory","memory_in_bytes":32931840,"virtual_memory_in_bytes":465888296960}
+{"signed_in":true,"milliseconds_since_first_event":0,"type":"Cpu","usage_as_percentage":0.28380322,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":285323,"type":"Editor","operation":"open","file_extension":"tsx","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":290188,"type":"Edit","duration":83014,"environment":"editor"}
+{"signed_in":true,"milliseconds_since_first_event":294528,"type":"Editor","operation":"save","file_extension":"tsx","vim_mode":false,"copilot_enabled":true,"copilot_enabled_for_language":true}
+{"signed_in":true,"milliseconds_since_first_event":325767,"type":"Edit","duration":4388,"environment":"editor"}
+{"signed_in":true,"milliseconds_since_first_event":338104,"type":"App","operation":"open project"}
+{"signed_in":true,"milliseconds_since_first_event":345095,"type":"App","operation":"extensions page: open"}
+{"signed_in":true,"milliseconds_since_first_event":356045,"type":"Edit","duration":3454,"environment":"editor"}
+{"signed_in":true,"milliseconds_since_first_event":378199,"type":"Memory","memory_in_bytes":111755264,"virtual_memory_in_bytes":465972166656}
+{"signed_in":true,"milliseconds_since_first_event":378199,"type":"Cpu","usage_as_percentage":5.60006,"core_count":8}
+{"signed_in":true,"milliseconds_since_first_event":405418,"type":"App","operation":"extensions page: open"}

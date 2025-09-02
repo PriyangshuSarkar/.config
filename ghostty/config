@@ -1,0 +1,104 @@
+########################################
+#  Ghostty Configuration (macOS Stable)
+########################################
+
+# File locations:
+# macOS: ~/.config/ghostty/config or
+#        ~/Library/Application Support/com.mitchellh.ghostty/config
+# Syntax: key = value, comments start with #
+
+########################################
+# Start-Up / Session Management
+########################################
+# Always attach to existing tmux session, or create new if none exists
+# command = zellij
+
+# Exit Ghostty when last window (and tmux session) closes
+quit-after-last-window-closed = true
+
+# Enable shell integration
+shell-integration = zsh
+
+shell-integration-features = no-cursor
+
+# Preserve working directory across new windows/tabs (macOS only)
+window-inherit-working-directory = true
+
+########################################
+# Font Configuration
+########################################
+font-family = "JetBrainsMono Nerd Font"
+font-family-bold = "JetBrainsMono Nerd Font"
+font-size = 13.0
+
+# New windows inherit font-size of previously focused window
+window-inherit-font-size = true
+
+########################################
+# Appearance & Theme
+########################################
+# Set theme; Ghostty supports built-in themes via `ghostty +list-themes`
+theme = light:catppuccin-frappe,dark:catppuccin-mocha
+
+# Slightly glassy effect
+background-opacity = 0.75
+background-blur-radius = 75
+
+# Example palette overrides (optional):
+# palette = 1=ff5555
+# palette = 2=50fa7b
+
+########################################
+# Window Behavior (macOS-specific)
+########################################
+window-decoration = auto
+macos-titlebar-style = "transparent"
+macos-window-shadow = true
+macos-option-as-alt = left
+keybind = alt+left=unbind
+keybind = alt+right=unbind
+keybind = alt+up=unbind
+keybind = alt+down=unbind
+
+# Use Display P3 color space (Retina-compatible)
+window-colorspace = display-p3
+
+# Position new tabs at the end
+window-new-tab-position = end
+
+# Save and restore layout (macOS default behavior)
+window-save-state = default
+
+########################################
+# Scrolling & Buffer
+########################################
+# Set scrollback buffer size (bytes)
+scrollback-limit = 20000000
+
+########################################
+# Optional: Advanced Features
+########################################
+# Uncomment to enable
+# custom-shader = "/path/to/shader.glsl"
+# custom-shader-animation = false
+
+# link = "\\bhttps?://[^ ]+"  # Example: URL detection and clickable links
+# link = "/[\\w/\\.\\-]+\\.txt"  # File link matching (example)
+
+########################################
+# Keybindings (examples)
+########################################
+# Open Ghostty config in editor (macOS default)
+# keybind = cmd+,=open_config
+
+# Reload configuration at runtime
+# keybind = cmd+shift+,=reload_config
+
+# Increase / decrease font size
+# keybind = cmd+= = increase_font_size
+# keybind = cmd+- = decrease_font_size
+
+
+mouse-hide-while-typing = true
+
+desktop-notifications = true

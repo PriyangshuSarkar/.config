@@ -1,0 +1,27 @@
+-- local dap = require("dap")
+--
+-- -- Define a reusable configuration
+-- local bun_config = {
+--   type = "pwa-node",
+--   request = "launch",
+--   name = "Launch with Bun",
+--   runtimeExecutable = "bun",
+--   runtimeArgs = function()
+--     -- Prompt user for which script to run
+--     local choice = vim.fn.input("Bun script (start:dev/start:debug/debug/dev): ")
+--     if choice == "" then
+--       choice = "dev" -- fallback default
+--     end
+--     return { "run", choice }
+--   end,
+--   cwd = vim.fn.getcwd(), -- always current working dir
+--   console = "integratedTerminal",
+-- }
+--
+-- -- Apply the same config to JavaScript & TypeScript (and more if you want)
+-- dap.configurations.javascript = { bun_config }
+-- dap.configurations.typescript = { bun_config }
+-- dap.configurations.typescriptreact = { bun_config }
+-- dap.configurations.javascriptreact = { bun_config }
+
+return {}

@@ -1,0 +1,8 @@
+color:
+    theme: custom
+    when: always
+icons:
+    when: always
+layout: grid
+sorting:
+    column: name

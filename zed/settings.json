@@ -1,0 +1,57 @@
+{
+    // Core UI & fonts
+    "theme": {
+        "mode": "system",
+        "dark": "Catppuccin Mocha (teal)",
+        "light": "Catppuccin Frappé (teal)"
+    },
+    "icon_theme": {
+        "mode": "system",
+        "dark": "Catppuccin Mocha",
+        "light": "Catppuccin Frappé"
+    },
+    "ui_font_size": 15,
+    "buffer_font_size": 12,
+    "buffer_font_family": "JetBrainsMono Nerd Font",
+
+    // Workspace and quitting behavior
+    "confirm_quit": true,
+    "telemetry": {
+        "diagnostics": true,
+        "metrics": true
+    },
+
+    // AI / edit predictions
+    "show_edit_predictions": true,
+    "edit_predictions": {
+        "mode": "eager"
+    },
+    "features": {
+        "edit_prediction_provider": "zed"
+    },
+
+    // Format on save, trimming newlines
+    "format_on_save": "on",
+    "use_on_type_format": true,
+    "line_indicator_format": "short",
+    "formatter": "prettier",
+    "ensure_final_newline_on_save": true,
+
+    // Optional language-specific overrides
+    "languages": {
+        "TypeScript": {
+            "formatter": {
+                "external": {
+                    "command": "prettier",
+                    "arguments": ["--stdin-filepath", "{buffer_path}"]
+                }
+            },
+            "format_on_save": "on"
+        }
+    },
+
+    // File associations (e.g. custom extensions → languages)
+    "file_types": {
+        "TOML": ["nest‑cli.json"]
+    }
+}
