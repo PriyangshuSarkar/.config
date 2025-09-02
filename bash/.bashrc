@@ -46,6 +46,9 @@ alias lt='lsd --tree' # Tree view
 alias za='zellij attach -c dev'
 alias zk='zellij kill-session dev'
 
+# 🍺 Homebrew alias
+alias brewsync='brew update && brew upgrade -g && brew cleanup'
+
 # ✅ Git aliases & functions
 
 # Sync with origin/main

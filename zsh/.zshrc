@@ -1,4 +1,3 @@
-
 # vim motions
 bindkey -v
 
@@ -61,6 +60,8 @@ alias za='zellij attach -c dev'
 # Detach from current session
 alias zk='zellij kill-session dev'
 
+# 🍺 Homebrew alias
+alias brewsync='brew update && brew upgrade -g && brew cleanup'
 
 # Git aliases
 
