@@ -34,7 +34,7 @@ font-size = 13.0
 # New windows inherit font-size of previously focused window
 window-inherit-font-size = true
 
-cursor-style = block
+cursor-style = bar
 
 ########################################
 # Appearance & Theme
