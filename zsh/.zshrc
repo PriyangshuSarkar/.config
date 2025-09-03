@@ -130,9 +130,10 @@ gnew() {
 
 # Pull latest from remote for the current branch
 gpull() {
+  git fetch --all -p -P || return 1
   branch=$(git rev-parse --abbrev-ref HEAD)
-  if [ -z "$branch" ]; then
-    echo "Not on a branch."
+  if [ -z "$branch" ] || [ "$branch" = "HEAD" ]; then
+    echo "Not on a branch (detached HEAD)."
     return 1
   fi
   git pull origin "$branch"
