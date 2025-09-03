@@ -1,5 +1,6 @@
 {
     // Core UI & fonts
+    "vim_mode": true,
     "theme": {
         "mode": "system",
         "dark": "Catppuccin Mocha (teal)",
