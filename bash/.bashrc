@@ -53,7 +53,29 @@ alias brewsync='brew update && brew upgrade -g && brew cleanup'
 
 # Sync with origin/main
 gsync() {
-  git fetch --all -p -P && git merge origin/main
+  branch=$(git rev-parse --abbrev-ref HEAD)
+
+  if [ -z "$branch" ] || [ "$branch" = "HEAD" ]; then
+    echo "Not on a branch (detached HEAD)."
+    return 1
+  fi
+
+  git fetch --all -p -P || return 1
+
+  # Merge with remote counterpart if it exists
+  if git rev-parse --verify "origin/$branch" >/dev/null 2>&1; then
+    git merge "origin/$branch" || return 1
+  else
+    echo "No remote branch found for $branch, skipping..."
+  fi
+
+  # Merge with origin/main if it exists
+  if git rev-parse --verify origin/main >/dev/null 2>&1; then
+    git merge origin/main
+  else
+    echo "origin/main not found"
+    return 1
+  fi
 }
 
 # Add all changes
