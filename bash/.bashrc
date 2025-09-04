@@ -1,7 +1,8 @@
 # 🟢 Efficient PATH prepending
 export PATH="/Users/priyangshusarkar09/.bun/bin:/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="/Users/priyangshusarkar09/.codeium/windsurf/bin:$PATH"
-export PATH="$PATH:/Users/priyangshusarkar09/.local/bin"
+export PATH="/Users/priyangshusarkar09/.local/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH" # ← add this line
 
 # 🟢 Auto-Warpify (Warp terminal integration)
 if [[ $- == *i* ]]; then
