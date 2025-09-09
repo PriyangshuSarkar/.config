@@ -215,3 +215,4 @@ gpush() {
   echo "✅ Build passed. Pushing branch '$branch'..."
   git push origin "$branch"
 }
+. "$HOME/.cargo/env"
