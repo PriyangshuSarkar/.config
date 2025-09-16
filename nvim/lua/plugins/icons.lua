@@ -28,6 +28,18 @@ return {
       ["bitbucket-pipelines.yml"] = { glyph = "", hl = "MiniIconsBlue" },
       ["aws.yml"] = { glyph = "󰸏", hl = "MiniIconsOrange" },
       ["aws.json"] = { glyph = "󰸏", hl = "MiniIconsOrange" },
+
+      -- ESLint configuration files
+      [".eslintrc"] = { glyph = "", hl = "MiniIconsPurple" },
+      [".eslintrc.js"] = { glyph = "", hl = "MiniIconsPurple" },
+      [".eslintrc.json"] = { glyph = "", hl = "MiniIconsPurple" },
+      [".eslintrc.yml"] = { glyph = "", hl = "MiniIconsPurple" },
+      [".eslintrc.yaml"] = { glyph = "", hl = "MiniIconsPurple" },
+      [".eslintrc.cjs"] = { glyph = "", hl = "MiniIconsPurple" },
+      ["eslint.config.js"] = { glyph = "", hl = "MiniIconsPurple" },
+      ["eslint.config.mjs"] = { glyph = "", hl = "MiniIconsPurple" },
+      ["eslint.config.cjs"] = { glyph = "", hl = "MiniIconsPurple" },
+      [".eslintignore"] = { glyph = "", hl = "MiniIconsGrey" },
     },
 
     filetype = {
