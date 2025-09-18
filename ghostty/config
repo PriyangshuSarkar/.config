@@ -43,8 +43,8 @@ cursor-style = bar
 theme = light:catppuccin-frappe.conf,dark:catppuccin-mocha.conf
 
 # Slightly glassy effect
-background-opacity = 0.75
-background-blur-radius = 75
+background-opacity = 0.95
+background-blur-radius = 95
 
 # Example palette overrides (optional):
 # palette = 1=ff5555

@@ -3,7 +3,7 @@ return {
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
-    tag = "v1.10.0",
+    -- tag = "v1.10.0",
     config = function()
       require("catppuccin").setup({
         flavour = "auto", -- latte, frappe, macchiato, mocha
@@ -12,10 +12,10 @@ return {
           dark = "mocha",
         },
         transparent_background = true, -- disables setting the background color.
-        -- float = {
-        --   transparent = false, -- enable transparent floating windows
-        --   solid = true, -- use solid styling for floating windows, see |winborder|
-        -- },
+        float = {
+          transparent = false, -- enable transparent floating windows
+          solid = false, -- use solid styling for floating windows, see |winborder|
+        },
         -- show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
         -- term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
         -- dim_inactive = {
