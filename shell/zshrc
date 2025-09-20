@@ -1,0 +1,45 @@
+# vim mode
+set -o vi
+
+# PATH
+export PATH="/Users/priyangshusarkar09/.bun/bin:/opt/homebrew/opt/openjdk/bin:/Users/priyangshusarkar09/.codeium/windsurf/bin:/opt/homebrew/opt/postgresql@17/bin:$PATH"
+export PATH="$PATH:/Users/priyangshusarkar09/.local/bin"
+
+# fpath completions
+fpath+=(
+  "/Users/priyangshusarkar09/.bun"
+  "/Users/priyangshusarkar09/.docker/completions"
+  $(brew --prefix)/share/zsh-completions
+)
+autoload -Uz compinit
+compinit -C
+
+# fzf
+FZF_PREFIX=$(brew --prefix)/opt/fzf
+[[ -f $FZF_PREFIX/shell/key-bindings.zsh ]] && source $FZF_PREFIX/shell/key-bindings.zsh
+[[ -f $FZF_PREFIX/shell/completion.zsh ]] && source $FZF_PREFIX/shell/completion.zsh
+
+# zoxide
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
+
+# Starship prompt
+command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
+
+# Zsh plugins
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Completion and tab options
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+setopt AUTO_MENU AUTO_LIST COMPLETE_IN_WORD
+
+# Optional: fastfetch only in interactive shells
+[[ $- == *i* ]] && fastfetch
+
+# Load shared aliases
+[[ -f "$HOME/.config/shell/aliases.sh" ]] && source "$HOME/.config/shell/aliases.sh"
+
+# OPAM
+[[ -r '/Users/priyangshusarkar/.opam/opam-init/init.zsh' ]] && source '/Users/priyangshusarkar/.opam/opam-init/init.zsh' > /dev/null 2>&1
+

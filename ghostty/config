@@ -40,7 +40,7 @@ cursor-style = bar
 # Appearance & Theme
 ########################################
 # Set theme; Ghostty supports built-in themes via `ghostty +list-themes`
-theme = light:catppuccin-frappe.conf,dark:catppuccin-mocha.conf
+theme = light:catppuccin-macchiato.conf,dark:catppuccin-mocha.conf
 
 # Slightly glassy effect
 background-opacity = 0.95

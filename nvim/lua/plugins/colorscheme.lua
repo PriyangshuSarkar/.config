@@ -6,14 +6,14 @@ return {
     -- tag = "v1.10.0",
     config = function()
       require("catppuccin").setup({
-        flavour = "auto", -- latte, frappe, macchiato, mocha
+        flavour = "macchiato", -- latte, frappe, macchiato, mocha
         background = { -- :h background
           light = "frappe",
           dark = "mocha",
         },
         transparent_background = true, -- disables setting the background color.
         float = {
-          transparent = false, -- enable transparent floating windows
+          transparent = true, -- enable transparent floating windows
           solid = false, -- use solid styling for floating windows, see |winborder|
         },
         -- show_end_of_buffer = false, -- shows the '~' characters after the end of buffers

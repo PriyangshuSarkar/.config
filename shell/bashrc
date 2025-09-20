@@ -1,0 +1,23 @@
+# vim mode
+set -o vi
+
+# PATH
+export PATH="/Users/priyangshusarkar09/.bun/bin:/opt/homebrew/opt/openjdk/bin:/Users/priyangshusarkar09/.codeium/windsurf/bin:/opt/homebrew/opt/postgresql@17/bin:$PATH"
+export PATH="$PATH:/Users/priyangshusarkar09/.local/bin"
+
+# zoxide
+eval "$(zoxide init bash)"
+
+# Starship prompt
+eval "$(starship init bash)"
+
+# Completion options
+shopt -s progcomp
+bind 'set show-all-if-ambiguous on'
+bind 'set completion-ignore-case on'
+
+# Optional: fastfetch only in interactive shells
+[[ $- == *i* ]] && fastfetch
+
+# Load shared aliases + Git functions
+source "$HOME/.config/shell/aliases.sh"
