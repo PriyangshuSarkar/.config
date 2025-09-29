@@ -19,7 +19,7 @@ quit-after-last-window-closed = true
 # Enable shell integration
 shell-integration = zsh
 
-shell-integration-features = no-cursor
+# shell-integration-features = no-cursor
 
 # Preserve working directory across new windows/tabs (macOS only)
 window-inherit-working-directory = true
@@ -43,8 +43,8 @@ cursor-style = bar
 theme = light:catppuccin-macchiato.conf,dark:catppuccin-mocha.conf
 
 # Slightly glassy effect
-background-opacity = 0.95
-background-blur-radius = 95
+background-opacity = 0.75
+background-blur-radius = 100
 
 # Example palette overrides (optional):
 # palette = 1=ff5555
@@ -54,7 +54,7 @@ background-blur-radius = 95
 # Window Behavior (macOS-specific)
 ########################################
 window-decoration = auto
-macos-titlebar-style = "transparent"
+macos-titlebar-style = "hidden"
 macos-window-shadow = true
 macos-option-as-alt = left
 keybind = alt+left=unbind
