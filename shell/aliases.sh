@@ -9,8 +9,7 @@ alias brewsync='brew update && brew upgrade -g && brew cleanup'
 alias za='zellij attach -c dev'
 alias zk='zellij kill-session dev'
 alias zadsa='zellij attach -c dsa'
-alias zkdha='zellij kill-session dha'
-alias testzsh="echo Zsh is working!"
+alias zkdsa='zellij kill-session dsa'
 alias vi='nvim'
 alias vim='nvim'
 
