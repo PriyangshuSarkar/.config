@@ -27,8 +27,8 @@ window-inherit-working-directory = true
 ########################################
 # Font Configuration
 ########################################
-font-family = "JetBrainsMono Nerd Font"
-font-family-bold = "JetBrainsMono Nerd Font"
+font-family = "JetBrains Mono"
+font-family-bold = "JetBrains Mono"
 font-size = 13.0
 
 # New windows inherit font-size of previously focused window
