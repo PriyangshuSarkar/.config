@@ -71,7 +71,13 @@ fi
 # -----------------------------
 # Common interactive-only commands
 # -----------------------------
-[[ $- == *i* ]] && command -v fastfetch >/dev/null 2>&1 && fastfetch
+[[ $- == *i* ]] && command -v fastfetch >/dev/null 2>&1 &&
+  {
+    while [ "$(tput cols)" -eq 0 ] || [ "$(tput lines)" -eq 0 ]; do
+      sleep 0.05
+    done
+    fastfetch
+  }
 
 # -----------------------------
 # Load shared aliases + Git functions

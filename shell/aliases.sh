@@ -12,6 +12,8 @@ alias zadsa='zellij attach -c dsa'
 alias zkdsa='zellij kill-session dsa'
 alias vi='nvim'
 alias vim='nvim'
+alias tad='source ~/.config/shell/dev_tmux.sh'
+alias tkd='tmux has-session -t dev 2>/dev/null && tmux kill-session -t dev || echo "No dev session running"'
 
 # ===============================
 # Git helper aliases
