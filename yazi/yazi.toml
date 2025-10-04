@@ -1,0 +1,7 @@
+[mgr]
+show_hidden = false
+show_symlink = true
+mouse_events = ["click", "scroll", "touch", "move", "drag"]
+
+[preview]
+image_quality = 90
