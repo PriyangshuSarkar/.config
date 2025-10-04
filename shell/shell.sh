@@ -69,6 +69,12 @@ if [ "$SHELL_TYPE" = "zsh" ]; then
 fi
 
 # -----------------------------
+# Text Editor
+# -----------------------------
+export EDITOR=nvim
+export VISUAL=nvim
+
+# -----------------------------
 # Common interactive-only commands
 # -----------------------------
 [[ $- == *i* ]] && command -v fastfetch >/dev/null 2>&1 &&
