@@ -14,6 +14,8 @@ alias vi='nvim'
 alias vim='nvim'
 alias tad='source ~/.config/shell/dev_tmux.sh'
 alias tkd='tmux has-session -t dev 2>/dev/null && tmux kill-session -t dev || echo "No dev session running"'
+alias cmatrix='cmatrix -ba -C cyan'
+alias metrix='cmatrix -ba -C cyan'
 
 # ===============================
 # Git helper aliases
