@@ -6,16 +6,12 @@ alias ll='lsd -l'
 alias la='lsd -la'
 alias lt='lsd --tree'
 alias brewsync='brew update && brew upgrade -g && brew cleanup'
-alias za='zellij attach -c dev'
-alias zk='zellij kill-session dev'
-alias zadsa='zellij attach -c dsa'
-alias zkdsa='zellij kill-session dsa'
 alias vi='nvim'
 alias vim='nvim'
 alias tad='source ~/.config/shell/dev_tmux.sh'
 alias tkd='tmux has-session -t dev 2>/dev/null && tmux kill-session -t dev || echo "No dev session running"'
 alias cmatrix='cmatrix -ba -C cyan'
-alias metrix='cmatrix -ba -C cyan'
+alias matrix='cmatrix -ba -C cyan'
 
 # ===============================
 # Git helper aliases
