@@ -53,6 +53,14 @@ gbranch() {
   fi
 }
 
+gdiff() {
+  echo "🔹 Unstaged changes:"
+  git diff --color | sed 's/^/    /' # indent unstaged diff for clarity
+  echo
+  echo "🔹 Staged changes:"
+  git diff --staged --color | sed 's/^/    /' # indent staged diff
+}
+
 grename() {
   if [ -z "$1" ]; then
     echo "Usage: grename <new-branch-name> [old-branch-name]"

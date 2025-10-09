@@ -1,257 +1,36 @@
-# Starship Configuration - Neatly Organized
-
 # ──────────────────────────────
 # Global Settings
 # ──────────────────────────────
 palette = "catppuccin_macchiato"
 
-format="""
+format = """
 $directory\
-[](fg:pink bg:base)\
 $git_status\
-[](fg:base bg:blue)\
 $git_branch\
-[](fg:blue)\
 $line_break\
 $line_break\
 $character
 """
 
-# $bun\
-# $c\
-# $dart\
-# $deno\
-# $dotnet\
-# $elixir\
-# $elm\
-# $erlang\
-# $gleam\
-# $golang\
-# $haskell\
-# $java\
-# $julia\
-# $kotlin\
-# $lua\
-# $nodejs\
-# $ocaml\
-# $perl\
-# $php\
-# $python\
-# $raku\
-# $rlang\
-# $ruby\
-# $rust\
-# $scala\
-# $swift\
-# $zig\
-# $package\
-
 # ──────────────────────────────
 # Core Segments
 # ──────────────────────────────
 
-[os]
-disabled = true
-format = "[$symbol ]($style)"
-style = "bg:text fg:base"
-
-[os.symbols]
-AlmaLinux = ""
-Alpine = ""
-Amazon = ""
-Android = ""
-Arch = ""
-Artix = ""
-CachyOS = ""
-CentOS = ""
-Debian = ""
-EndeavourOS = ""
-Fedora = ""
-FreeBSD = ""
-Garuda = ""
-Gentoo = ""
-Illumos = ""
-Kali = ""
-Linux = ""
-Macos = ""
-Manjaro = ""
-Mint = "󰣭"
-NixOS = ""
-Nobara = ""
-OpenBSD = ""
-openSUSE = ""
-Pop = ""
-Raspbian = ""
-Redhat = ""
-RedHatEnterprise = ""
-RockyLinux = ""
-Solus = ""
-SUSE = ""
-Ubuntu = ""
-Void = ""
-Windows = ""
-
-
-[shell]
-disabled = true
-format = "[$indicator]($style)"
-style = "bg:text fg:base"
-bash_indicator = "bash  "
-zsh_indicator = "zsh  "
-fish_indicator = "fish  "
-powershell_indicator = "pwsh  "
-pwsh_indicator = "pwsh  "
-ion_indicator = "ion  "
-nu_indicator = "nu 󰥭"
-unknown_indicator = "shell "
-
-
-
 [directory]
 truncation_length = 4
 style = "fg:mantle bg:pink"
-format = "(fg:pink)[ $path ]($style)"
+format = "[ $path ]($style)[](fg:pink bg:base)"
 
 [git_branch]
-format = '[[ $branch ](fg:base bg:blue)]($style)'
-style = "bold bg:blue"
+style = "fg:base bg:blue"
+format = "[ $branch ]($style)[](fg:blue)"
 
 [git_status]
-format ="([ 󰘬]($style)[\\([$all_status$ahead_behind]($style)\\) ]($style))"
+format = "([ 󰘬 ]($style)[\\[[$all_status$ahead_behind]($style)\\]]($style))[](fg:base bg:blue)"
 style = "fg:text bg:base"
 
 # ──────────────────────────────
-# Language Runtimes
-# ──────────────────────────────
-
-[bun]
-symbol = ""
-style = "bg:surface1"
-format = "[$symbol ($version) ](fg:yellow bg:base)"
-
-[c]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:blue bg:base)"
-
-[deno]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:text bg:base)"
-
-[dotnet]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:blue bg:base)"
-
-[elixir]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:mauve bg:base)"
-
-[elm]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:green bg:base)"
-
-[erlang]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:red bg:base)"
-
-[gleam]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:lavender bg:base)"
-
-[golang]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:sapphire bg:base)"
-
-[haskell]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:mauve bg:base)"
-
-[java]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:red bg:base)"
-
-[julia]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:purple bg:base)"
-
-[kotlin]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:lavender bg:base)"
-
-[lua]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:blue bg:base)"
-
-[nodejs]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:green bg:base)"
-
-[ocaml]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:peach bg:base)"
-
-[perl]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:teal bg:base)"
-
-[php]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:purple bg:base)"
-
-[python]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:yellow bg:base)"
-
-[rlang]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:blue bg:base)"
-
-[ruby]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:red bg:base)"
-
-[rust]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:red bg:base)"
-
-[scala]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:red bg:base)"
-
-[swift]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:peach bg:base)"
-
-[zig]
-symbol = ""
-style = "bg:base"
-format = "[$symbol ($version) ](fg:yellow bg:base)"
-
-
-# ──────────────────────────────
-# Packages
+# Package Info
 # ──────────────────────────────
 
 [package]
@@ -260,48 +39,6 @@ display_private = false
 symbol = ""
 style = "bg:base"
 format = '[[$symbol ($version) ](fg:text bg:base)]($style)'
-
-
-# ──────────────────────────────
-# Utilities
-# ──────────────────────────────
-
-[docker_context]
-disabled = true
-detect_files = [ "docker-compose.yml", "docker-compose.yaml", "Dockerfile" ]
-only_with_files = false
-format = "[$symbol$context]($style)"
-style = "bg:blue"
-symbol = ""
-
-[cmd_duration]
-format = "[$duration]($style)"
-style = "base bg:yellow"
-min_time = 0
-show_milliseconds = false
-disabled = true
-
-[memory_usage]
-format = "[${ram}]($style)"
-threshold = 0
-style = "base bg:teal"
-disabled = true
-
-[time]
-time_format = "%R"
-format = '[[ $time](fg:mantle bg:flamingo)]($style)'
-style = "bg:peach"
-disabled = true
-
-[fill]
-symbol = " "
-
-[battery]
-format = "[$symbol$percentage]($style) "
-disabled = true
-[[battery.display]]
-threshold = 100
-style = "bold green"
 
 # ──────────────────────────────
 # UI / Visual
@@ -317,7 +54,7 @@ vimcmd_replace_symbol = '[❮](bold fg:purple)'
 vimcmd_visual_symbol = '[❮](bold fg:lavender)'
 
 # ──────────────────────────────
-# Color Palettes
+# Color Palette (Catppuccin Macchiato)
 # ──────────────────────────────
 
 # Palette definitions
