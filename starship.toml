@@ -25,7 +25,7 @@ format = "[ $path ]($style)[](fg:pink bg:base)"
 
 [git_status]
 style = "fg:text bg:base"
-format = "[ 󰘬 ]($style)([\\[[$all_status$ahead_behind]($style)\\]]($style))[](fg:base bg:blue)"
+format = "([ 󰘬 ]($style)[\\[[$all_status$ahead_behind]($style)\\]]($style))[](fg:base bg:blue)"
 
 [git_branch]
 style = "fg:base bg:blue"
