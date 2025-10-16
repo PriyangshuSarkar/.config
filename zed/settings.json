@@ -10,9 +10,9 @@
     "dark": "Catppuccin Mocha",
     "light": "Catppuccin Frappé"
   },
-  "ui_font_size": 15,
+  "ui_font_size": 14,
   "buffer_font_size": 12,
-  "buffer_font_family": "JetBrains Mono",
+  "buffer_font_family": "Fira Code",
 
   "confirm_quit": true,
   "telemetry": {
@@ -34,6 +34,8 @@
   "formatter": "prettier",
   "ensure_final_newline_on_save": true,
 
+  "relative_line_numbers": true,
+
   "languages": {
     "TypeScript": {
       "formatter": {
@@ -45,8 +47,4 @@
       "format_on_save": "on"
     }
   },
-
-  "file_types": {
-    "TOML": ["nest‑cli.json"]
-  }
 }
