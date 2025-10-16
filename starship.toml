@@ -21,15 +21,15 @@ $character
 [directory]
 truncation_length = 4
 style = "fg:mantle bg:pink"
-format = "[ $path ]($style)[](fg:pink bg:base)"
+format = "[ $path]($style)[](fg:pink bg:base)"
 
 [git_status]
 style = "fg:text bg:base"
-format = "([ 󰘬 ]($style)[\\[[$all_status$ahead_behind]($style)\\]]($style))[](fg:base bg:blue)"
+format = "([ [$all_status$ahead_behind]($style)]($style))[](fg:base bg:blue)"
 
 [git_branch]
 style = "fg:base bg:blue"
-format = "[ $branch ]($style)[](fg:blue)"
+format = "[ $branch]($style)[](fg:blue)"
 
 [fill]
 symbol = "  "

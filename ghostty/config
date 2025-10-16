@@ -26,7 +26,6 @@ window-inherit-working-directory = true
 ########################################
 
 font-family = "JetBrains Mono"
-font-family-bold = "JetBrains Mono"
 font-size = 13.0
 
 # New windows inherit previous window’s font size
