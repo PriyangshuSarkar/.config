@@ -39,10 +39,13 @@ cursor-style-blink = false
 ########################################
 
 # Use Catppuccin themes (light/dark auto switch)
-theme = light:catppuccin-macchiato.conf,dark:catppuccin-mocha.conf
+# theme = light:catppuccin-frappe.conf,dark:catppuccin-mocha.conf
+
+# Use Catppuccin themes
+theme = catppuccin-macchiato.conf
 
 # Background styling
-background-opacity = 0.75
+background-opacity = 100
 background-blur-radius = 100
 
 ########################################
