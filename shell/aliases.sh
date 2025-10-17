@@ -124,7 +124,7 @@ gsync() {
 # ===============================
 # Git commit & push helpers
 # ===============================
-gcommit() {
+gc() {
   if git diff --cached --quiet; then
     echo "No staged changes to commit."
     return 1
@@ -137,7 +137,7 @@ gcommit() {
   fi
 }
 
-gpush() {
+gp() {
   branch=$(git rev-parse --abbrev-ref HEAD)
   build_and_test || return 1
   echo "🔹 Pushing branch '$branch'..."
