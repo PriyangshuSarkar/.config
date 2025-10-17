@@ -6,7 +6,7 @@ return {
     -- tag = "v1.10.0",
     config = function()
       require("catppuccin").setup({
-        flavour = "macchiato", -- latte, frappe, macchiato, mocha
+        flavour = "mocha", -- latte, frappe, macchiato, mocha
         background = { -- :h background
           light = "frappe",
           dark = "mocha",

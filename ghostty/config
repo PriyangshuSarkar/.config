@@ -42,7 +42,7 @@ cursor-style-blink = false
 # theme = light:catppuccin-frappe.conf,dark:catppuccin-mocha.conf
 
 # Use Catppuccin themes
-theme = catppuccin-macchiato.conf
+theme = catppuccin-mocha.conf
 
 # Background styling
 background-opacity = 100

@@ -23,7 +23,7 @@ config.font_size = 13
 config.font = wezterm.font("JetBrains Mono")
 
 -- Color scheme
-config.color_scheme = "Catppuccin Macchiato"
+config.color_scheme = "Catppuccin Macha"
 
 -- Finally, return the configuration to wezterm:
 return config
