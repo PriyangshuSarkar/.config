@@ -18,95 +18,92 @@ alias cmatrix='cmatrix -ba -C cyan'
 alias matrix='cmatrix -ba -C cyan'
 
 # ===============================
-# Git Basic Aliases
+# Git Aliases — Core
 # ===============================
 alias ga='git add .'
 alias gau='git add -u'
+alias gap='git add -p'
 alias gs='git status -sb'
 alias gd='git diff'
 alias gds='git diff --staged'
-alias gr1='git reset --soft HEAD~1'
-alias grh='git reset --hard'
 alias gl='git log --oneline --graph --decorate --all'
 alias grl='git reflog --decorate --color=auto'
 
-# ===============================
-# Git Stash Aliases
-# ===============================
-alias gst='git stash'
-alias gstp='git stash pop'
-alias gstl='git stash list'
-alias gstd='git stash drop'
+# Safer reset aliases
+alias grs='git reset --soft HEAD~1'
+alias grm='git reset --mixed HEAD~1'
+alias grh='echo "⚠️ Use grhf to force hard reset";'
+alias grhf='git reset --hard'
 
 # ===============================
-# Git Commit / Push / Pull Aliases
+# Git Commit / Push / Pull
 # ===============================
-alias gca='git commit -a'
 alias gcm='git commit -m'
+alias gca='git commit -a'
 alias gcf='git commit --fixup'
-alias gco='git checkout'
+alias gcA='git commit --amend --no-edit'
 
+alias gpl='git pull --rebase --autostash'
 alias gp='git push'
-alias gpf='git push --force-with-lease'
-alias gpl='git pull'
+alias gpf='echo "⚠️ Use gpF for force push";'
+alias gpF='git push --force-with-lease'
 alias gpa='git push --all'
 
 # ===============================
-# Git Branch Aliases
+# Git Branch — Core
 # ===============================
 alias gb='git branch'
 alias gba='git branch -a'
 alias gbv='git branch -vv'
 
 # ===============================
-# Git Branch Functions
+# Git Branch — Functions
 # ===============================
 
+# Create new branch from origin/main
 gbn() {
   if [ -z "$1" ]; then
-    echo "Usage: gbn <branch>"
+    echo "Usage: gbn <branch-name>"
     return 1
   fi
-  git switch -c "$1" origin/main
+  git fetch origin main >/dev/null 2>&1
+  git switch -c "$1" origin/main && echo "✅ Created branch '$1' from origin/main"
 }
 
+# Rename current or target branch
 gbr() {
   if [ -z "$1" ]; then
-    echo "Usage: gbr <new-branch-name> [old-branch-name]"
+    echo "Usage: gbr <new-name> [old-name]"
     return 1
   fi
-  new_branch="$1"
-  old_branch="${2:-$(git rev-parse --abbrev-ref HEAD)}"
-
-  if [ "$old_branch" = "HEAD" ]; then
-    echo "Cannot rename detached HEAD."
-    return 1
-  fi
-
-  git branch -m "$old_branch" "$new_branch" &&
-    echo "Branch '$old_branch' renamed to '$new_branch'."
+  new="$1"
+  old="${2:-$(git rev-parse --abbrev-ref HEAD)}"
+  [ "$old" = "HEAD" ] && echo "❌ Detached HEAD — cannot rename." && return 1
+  git branch -m "$old" "$new" && echo "✅ Renamed branch '$old' → '$new'"
 }
 
+# Delete branch safely with confirmation
 gbd() {
   if [ -z "$1" ]; then
-    echo "Usage: gbd <branch>"
+    echo "Usage: gbd <branch-name>"
     return 1
   fi
-
   branch="$1"
   if git branch -d "$branch" 2>/dev/null; then
-    echo "Branch '$branch' deleted safely."
-    return 0
-  fi
-
-  echo -n "Safe delete failed. Force delete '$branch'? [y/N]: "
-  read confirm
-  if [[ "$confirm" =~ ^[Yy]$ ]]; then
-    git branch -D "$branch" && echo "Branch '$branch' force deleted."
+    echo "🗑️  Deleted branch '$branch' safely."
   else
-    echo "Branch '$branch' not deleted."
+    read -p "⚠️  Force delete '$branch'? [y/N]: " confirm
+    [[ "$confirm" =~ ^[Yy]$ ]] && git branch -D "$branch" && echo "✅ Force deleted '$branch'"
   fi
 }
+
+# ===============================
+# Git Stash
+# ===============================
+alias gst='git stash push'
+alias gstp='git stash pop'
+alias gstl='git stash list'
+alias gstd='git stash drop'
 
 # ===============================
 # Git Diff Helper
@@ -120,46 +117,36 @@ gdf() {
 }
 
 # ===============================
-# Git Sync Helpers
+# Git Update / Sync Helpers
 # ===============================
+
+# Fetch + merge current branch
 gup() {
-  git fetch --all -p -P
+  git fetch --all -p
+  local branch
   branch=$(git rev-parse --abbrev-ref HEAD)
   [ "$branch" != "HEAD" ] && git merge "origin/$branch"
 }
 
+# Sync current branch with its remote and main
 gsy() {
+  local branch
   branch=$(git rev-parse --abbrev-ref HEAD)
-  if [ -z "$branch" ] || [ "$branch" = "HEAD" ]; then
-    echo "Not on a branch (detached HEAD)."
-    return 1
-  fi
-
-  git fetch --all -p -P || return 1
-
-  if git rev-parse --verify "origin/$branch" >/dev/null 2>&1; then
-    git merge "origin/$branch" || return 1
-  else
-    echo "No remote branch found for $branch, skipping..."
-  fi
-
-  if git rev-parse --verify origin/main >/dev/null 2>&1; then
-    git merge origin/main
-  else
-    echo "origin/main not found"
-    return 1
-  fi
+  [ "$branch" = "HEAD" ] && echo "❌ Detached HEAD — cannot sync." && return 1
+  git fetch --all -p
+  git merge --ff-only "origin/$branch" 2>/dev/null || echo "⚠️  No remote branch for '$branch'"
+  git merge --ff-only origin/main 2>/dev/null || echo "⚠️  origin/main not found"
+  echo "✅ Branch synced."
 }
 
 # ===============================
-# Git Commit Helper (Commitizen / Bun)
+# Commit Helper (with Commitizen/Bun)
 # ===============================
 gc() {
   if git diff --cached --quiet; then
-    echo "No staged changes to commit."
+    echo "ℹ️  No staged changes to commit."
     return 1
   fi
-
   if command -v bun >/dev/null 2>&1; then
     bunx git-cz || git commit
   else
@@ -172,48 +159,47 @@ gc() {
 # ===============================
 build_and_test() {
   echo "🔍 Detecting build system..."
-  # Node.js
   if [ -f package.json ]; then
     if command -v bun >/dev/null 2>&1; then
       bun run build && bun run test
     elif command -v npm >/dev/null 2>&1; then
-      npm run build && npm run test
+      npm run build && npm test
     elif command -v yarn >/dev/null 2>&1; then
-      yarn run build && yarn run test
+      yarn build && yarn test
     fi
-  # Python
   elif [ -f pyproject.toml ] || [ -f setup.py ]; then
-    if command -v hatch >/dev/null 2>&1; then
-      hatch build && hatch run test
-    elif command -v poetry >/dev/null 2>&1; then
+    if command -v poetry >/dev/null 2>&1; then
       poetry build && poetry run pytest
+    elif command -v hatch >/dev/null 2>&1; then
+      hatch build && hatch run test
     else
       python -m build && pytest
     fi
-  # Rust
   elif [ -f Cargo.toml ]; then
     cargo build --release && cargo test
-  # Go
   elif [ -f go.mod ]; then
     go build ./... && go test ./...
-  # Java
   elif [ -f pom.xml ]; then
     mvn package -DskipTests && mvn test
   elif [ -f build.gradle ] || [ -f build.gradle.kts ]; then
     gradle build -x test && gradle test
   else
-    echo "⚠️ No known build system detected — skipping build and tests."
+    echo "⚠️  No known build system detected."
   fi
-  echo "✅ Build and tests passed."
 }
 
 # ===============================
-# Git Push Helper (with Build/Test)
+# Push Helper (with Build/Test)
 # ===============================
-gpu() {
+gpB() {
+  local branch
   branch=$(git rev-parse --abbrev-ref HEAD)
-  build_and_test || return 1
-  echo "🔹 Pushing branch '$branch'..."
+  echo "🏗️  Running build and tests..."
+  build_and_test || {
+    echo "❌ Build/tests failed. Aborting push."
+    return 1
+  }
+  echo "🚀 Pushing '$branch'..."
   git push origin "$branch"
 }
 
