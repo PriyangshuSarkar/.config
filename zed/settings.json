@@ -12,7 +12,7 @@
   },
   "ui_font_size": 14,
   "buffer_font_size": 12,
-  "buffer_font_family": "Fira Code",
+  "buffer_font_family": "JetBrains Mono",
 
   "confirm_quit": true,
   "telemetry": {

@@ -1,69 +1,78 @@
 # ===============================
-# General aliases
+# General Aliases
 # ===============================
 alias ls='lsd'
 alias ll='lsd -l'
 alias la='lsd -la'
 alias lt='lsd --tree'
+
 alias brewsync='brew update; brew upgrade -g; brew cleanup'
+
 alias vi='nvim'
 alias vim='nvim'
+
 alias tad='source ~/.config/shell/dev_tmux.sh'
 alias tkd='tmux has-session -t dev 2>/dev/null && tmux kill-session -t dev || echo "No dev session running"'
+
 alias cmatrix='cmatrix -ba -C cyan'
 alias matrix='cmatrix -ba -C cyan'
 
 # ===============================
-# Git helper aliases
+# Git Basic Aliases
 # ===============================
 alias ga='git add .'
+alias gau='git add -u'
 alias gs='git status -sb'
-alias gundo='git reset --soft HEAD~1'
-alias gstash='git stash'
-alias gstashpop='git stash pop'
-alias glog='git log --oneline --graph --decorate --all'
-alias greflog='git reflog --decorate --color=auto'
+alias gd='git diff'
+alias gds='git diff --staged'
+alias gr1='git reset --soft HEAD~1'
+alias grh='git reset --hard'
+alias gl='git log --oneline --graph --decorate --all'
+alias grl='git reflog --decorate --color=auto'
 
 # ===============================
-# Git branch functions
+# Git Stash Aliases
+# ===============================
+alias gst='git stash'
+alias gstp='git stash pop'
+alias gstl='git stash list'
+alias gstd='git stash drop'
+
+# ===============================
+# Git Commit / Push / Pull Aliases
+# ===============================
+alias gca='git commit -a'
+alias gcm='git commit -m'
+alias gcf='git commit --fixup'
+alias gco='git checkout'
+
+alias gp='git push'
+alias gpf='git push --force-with-lease'
+alias gpl='git pull'
+alias gpa='git push --all'
+
+# ===============================
+# Git Branch Aliases
+# ===============================
+alias gb='git branch'
+alias gba='git branch -a'
+alias gbv='git branch -vv'
+
+# ===============================
+# Git Branch Functions
 # ===============================
 
-gswitch() {
+gbn() {
   if [ -z "$1" ]; then
-    echo "Usage: gswitch <branch>"
-    return 1
-  fi
-  git fetch --all -p -P
-  git switch "$1"
-}
-
-gnew() {
-  if [ -z "$1" ]; then
-    echo "Usage: gnew <branch>"
+    echo "Usage: gbn <branch>"
     return 1
   fi
   git switch -c "$1" origin/main
 }
 
-gbranch() {
-  if [ "$1" = "-a" ]; then
-    git branch -a
-  else
-    git branch
-  fi
-}
-
-gdiff() {
-  echo "🔹 Unstaged changes:"
-  git diff --color | sed 's/^/    /' # indent unstaged diff for clarity
-  echo
-  echo "🔹 Staged changes:"
-  git diff --staged --color | sed 's/^/    /' # indent staged diff
-}
-
-grename() {
+gbr() {
   if [ -z "$1" ]; then
-    echo "Usage: grename <new-branch-name> [old-branch-name]"
+    echo "Usage: gbr <new-branch-name> [old-branch-name]"
     return 1
   fi
   new_branch="$1"
@@ -74,16 +83,17 @@ grename() {
     return 1
   fi
 
-  git branch -m "$old_branch" "$new_branch" && echo "Branch '$old_branch' renamed to '$new_branch'."
+  git branch -m "$old_branch" "$new_branch" &&
+    echo "Branch '$old_branch' renamed to '$new_branch'."
 }
 
-gdelete() {
+gbd() {
   if [ -z "$1" ]; then
-    echo "Usage: gdelete <branch>"
+    echo "Usage: gbd <branch>"
     return 1
   fi
-  branch="$1"
 
+  branch="$1"
   if git branch -d "$branch" 2>/dev/null; then
     echo "Branch '$branch' deleted safely."
     return 0
@@ -98,7 +108,27 @@ gdelete() {
   fi
 }
 
-gsync() {
+# ===============================
+# Git Diff Helper
+# ===============================
+gdf() {
+  echo "🔹 Unstaged changes:"
+  git diff --color | sed 's/^/    /'
+  echo
+  echo "🔹 Staged changes:"
+  git diff --staged --color | sed 's/^/    /'
+}
+
+# ===============================
+# Git Sync Helpers
+# ===============================
+gup() {
+  git fetch --all -p -P
+  branch=$(git rev-parse --abbrev-ref HEAD)
+  [ "$branch" != "HEAD" ] && git merge "origin/$branch"
+}
+
+gsy() {
   branch=$(git rev-parse --abbrev-ref HEAD)
   if [ -z "$branch" ] || [ "$branch" = "HEAD" ]; then
     echo "Not on a branch (detached HEAD)."
@@ -122,7 +152,7 @@ gsync() {
 }
 
 # ===============================
-# Git commit & push helpers
+# Git Commit Helper (Commitizen / Bun)
 # ===============================
 gc() {
   if git diff --cached --quiet; then
@@ -137,15 +167,8 @@ gc() {
   fi
 }
 
-gp() {
-  branch=$(git rev-parse --abbrev-ref HEAD)
-  build_and_test || return 1
-  echo "🔹 Pushing branch '$branch'..."
-  git push origin "$branch"
-}
-
 # ===============================
-# Build & test helper
+# Build & Test Helper
 # ===============================
 build_and_test() {
   echo "🔍 Detecting build system..."
@@ -173,7 +196,7 @@ build_and_test() {
   # Go
   elif [ -f go.mod ]; then
     go build ./... && go test ./...
-  # Java (Maven/Gradle)
+  # Java
   elif [ -f pom.xml ]; then
     mvn package -DskipTests && mvn test
   elif [ -f build.gradle ] || [ -f build.gradle.kts ]; then
@@ -181,12 +204,21 @@ build_and_test() {
   else
     echo "⚠️ No known build system detected — skipping build and tests."
   fi
-
   echo "✅ Build and tests passed."
 }
 
 # ===============================
-# Auto-completion for branches
+# Git Push Helper (with Build/Test)
+# ===============================
+gpu() {
+  branch=$(git rev-parse --abbrev-ref HEAD)
+  build_and_test || return 1
+  echo "🔹 Pushing branch '$branch'..."
+  git push origin "$branch"
+}
+
+# ===============================
+# Branch Name Autocompletion
 # ===============================
 _git_branch_completion() {
   local branches
@@ -194,4 +226,4 @@ _git_branch_completion() {
   _arguments "1:branch name:(${branches[*]})"
 }
 
-compdef _git_branch_completion gswitch gdelete gnew
+compdef _git_branch_completion gbr gbd gbn

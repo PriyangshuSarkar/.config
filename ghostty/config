@@ -26,7 +26,7 @@ window-inherit-working-directory = true
 ########################################
 
 font-family = "JetBrains Mono"
-font-size = 13.0
+font-size = 12.5
 
 # New windows inherit previous window’s font size
 window-inherit-font-size = true
@@ -45,8 +45,8 @@ cursor-style-blink = false
 theme = catppuccin-mocha.conf
 
 # Background styling
-background-opacity = 100
-background-blur-radius = 100
+background-opacity = 1
+background-blur-radius = 0
 
 ########################################
 # 4. Window Behavior (macOS)
