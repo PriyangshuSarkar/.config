@@ -1,114 +1,59 @@
 # ===============================
-# General Aliases
+# General aliases
 # ===============================
 alias ls='lsd'
 alias ll='lsd -l'
 alias la='lsd -la'
 alias lt='lsd --tree'
-
 alias brewsync='brew update; brew upgrade -g; brew cleanup'
-
 alias vi='nvim'
 alias vim='nvim'
-
 alias tad='source ~/.config/shell/dev_tmux.sh'
 alias tkd='tmux has-session -t dev 2>/dev/null && tmux kill-session -t dev || echo "No dev session running"'
-
 alias cmatrix='cmatrix -ba -C cyan'
 alias matrix='cmatrix -ba -C cyan'
 
 # ===============================
-# Git Aliases — Core
+# Git helper aliases (shortened)
 # ===============================
-alias ga='git add .'
-alias gau='git add -u'
-alias gap='git add -p'
-alias gs='git status -sb'
-alias gd='git diff'
-alias gds='git diff --staged'
-alias gl='git log --oneline --graph --decorate --all'
-alias grl='git reflog --decorate --color=auto'
-
-# Safer reset aliases
-alias grs='git reset --soft HEAD~1'
-alias grm='git reset --mixed HEAD~1'
-alias grh='echo "⚠️ Use grhf to force hard reset";'
-alias grhf='git reset --hard'
+alias ga='git add .'                                  # add all changes
+alias gs='git status -sb'                             # status short
+alias gu='git reset --soft HEAD~1'                    # undo last commit
+alias gstash='git stash'                              # stash
+alias gstashp='git stash pop'                         # stash pop
+alias gl='git log --oneline --graph --decorate --all' # log
+alias grl='git reflog --decorate --color=auto'        # reflog
 
 # ===============================
-# Git Commit / Push / Pull
-# ===============================
-alias gcm='git commit -m'
-alias gca='git commit -a'
-alias gcf='git commit --fixup'
-alias gcA='git commit --amend --no-edit'
-
-alias gpl='git pull --rebase --autostash'
-alias gp='git push'
-alias gpf='echo "⚠️ Use gpF for force push";'
-alias gpF='git push --force-with-lease'
-alias gpa='git push --all'
-
-# ===============================
-# Git Branch — Core
-# ===============================
-alias gb='git branch'
-alias gba='git branch -a'
-alias gbv='git branch -vv'
-
-# ===============================
-# Git Branch — Functions
+# Git branch functions (shortened)
 # ===============================
 
-# Create new branch from origin/main
-gbn() {
+gsw() {
   if [ -z "$1" ]; then
-    echo "Usage: gbn <branch-name>"
+    echo "Usage: gsw <branch>"
     return 1
   fi
-  git fetch origin main >/dev/null 2>&1
-  git switch -c "$1" origin/main && echo "✅ Created branch '$1' from origin/main"
+  git fetch --all -p -P
+  git switch "$1"
 }
 
-# Rename current or target branch
-gbr() {
+gn() {
   if [ -z "$1" ]; then
-    echo "Usage: gbr <new-name> [old-name]"
+    echo "Usage: gn <branch>"
     return 1
   fi
-  new="$1"
-  old="${2:-$(git rev-parse --abbrev-ref HEAD)}"
-  [ "$old" = "HEAD" ] && echo "❌ Detached HEAD — cannot rename." && return 1
-  git branch -m "$old" "$new" && echo "✅ Renamed branch '$old' → '$new'"
+  git switch -c "$1" origin/main
 }
 
-# Delete branch safely with confirmation
-gbd() {
-  if [ -z "$1" ]; then
-    echo "Usage: gbd <branch-name>"
-    return 1
-  fi
-  branch="$1"
-  if git branch -d "$branch" 2>/dev/null; then
-    echo "🗑️  Deleted branch '$branch' safely."
+gb() {
+  if [ "$1" = "-a" ]; then
+    git branch -a
   else
-    read -p "⚠️  Force delete '$branch'? [y/N]: " confirm
-    [[ "$confirm" =~ ^[Yy]$ ]] && git branch -D "$branch" && echo "✅ Force deleted '$branch'"
+    git branch
   fi
 }
 
-# ===============================
-# Git Stash
-# ===============================
-alias gst='git stash push'
-alias gstp='git stash pop'
-alias gstl='git stash list'
-alias gstd='git stash drop'
-
-# ===============================
-# Git Diff Helper
-# ===============================
-gdf() {
+gd() {
   echo "🔹 Unstaged changes:"
   git diff --color | sed 's/^/    /'
   echo
@@ -116,37 +61,75 @@ gdf() {
   git diff --staged --color | sed 's/^/    /'
 }
 
-# ===============================
-# Git Update / Sync Helpers
-# ===============================
+gr() {
+  if [ -z "$1" ]; then
+    echo "Usage: gr <new-branch-name> [old-branch-name]"
+    return 1
+  fi
+  new_branch="$1"
+  old_branch="${2:-$(git rev-parse --abbrev-ref HEAD)}"
 
-# Fetch + merge current branch
-gup() {
-  git fetch --all -p
-  local branch
-  branch=$(git rev-parse --abbrev-ref HEAD)
-  [ "$branch" != "HEAD" ] && git merge "origin/$branch"
+  if [ "$old_branch" = "HEAD" ]; then
+    echo "Cannot rename detached HEAD."
+    return 1
+  fi
+
+  git branch -m "$old_branch" "$new_branch" && echo "Branch '$old_branch' renamed to '$new_branch'."
 }
 
-# Sync current branch with its remote and main
+gdelete() {
+  if [ -z "$1" ]; then
+    echo "Usage: gd <branch>"
+    return 1
+  fi
+  branch="$1"
+
+  if git branch -d "$branch" 2>/dev/null; then
+    echo "Branch '$branch' deleted safely."
+    return 0
+  fi
+
+  echo -n "Safe delete failed. Force delete '$branch'? [y/N]: "
+  read confirm
+  if [[ "$confirm" =~ ^[Yy]$ ]]; then
+    git branch -D "$branch" && echo "Branch '$branch' force deleted."
+  else
+    echo "Branch '$branch' not deleted."
+  fi
+}
+
 gsy() {
-  local branch
   branch=$(git rev-parse --abbrev-ref HEAD)
-  [ "$branch" = "HEAD" ] && echo "❌ Detached HEAD — cannot sync." && return 1
-  git fetch --all -p
-  git merge --ff-only "origin/$branch" 2>/dev/null || echo "⚠️  No remote branch for '$branch'"
-  git merge --ff-only origin/main 2>/dev/null || echo "⚠️  origin/main not found"
-  echo "✅ Branch synced."
+  if [ -z "$branch" ] || [ "$branch" = "HEAD" ]; then
+    echo "Not on a branch (detached HEAD)."
+    return 1
+  fi
+
+  git fetch --all -p -P || return 1
+
+  if git rev-parse --verify "origin/$branch" >/dev/null 2>&1; then
+    git merge "origin/$branch" || return 1
+  else
+    echo "No remote branch found for $branch, skipping..."
+  fi
+
+  if git rev-parse --verify origin/main >/dev/null 2>&1; then
+    git merge origin/main
+  else
+    echo "origin/main not found"
+    return 1
+  fi
 }
 
 # ===============================
-# Commit Helper (with Commitizen/Bun)
+# Git commit & push helpers
 # ===============================
 gc() {
   if git diff --cached --quiet; then
-    echo "ℹ️  No staged changes to commit."
+    echo "No staged changes to commit."
     return 1
   fi
+
   if command -v bun >/dev/null 2>&1; then
     bunx git-cz || git commit
   else
@@ -154,57 +137,56 @@ gc() {
   fi
 }
 
+gp() {
+  branch=$(git rev-parse --abbrev-ref HEAD)
+  bt || return 1
+  echo "🔹 Pushing branch '$branch'..."
+  git push origin "$branch"
+}
+
 # ===============================
-# Build & Test Helper
+# Build & test helper
 # ===============================
-build_and_test() {
+bt() {
   echo "🔍 Detecting build system..."
+  # Node.js
   if [ -f package.json ]; then
     if command -v bun >/dev/null 2>&1; then
       bun run build && bun run test
     elif command -v npm >/dev/null 2>&1; then
-      npm run build && npm test
+      npm run build && npm run test
     elif command -v yarn >/dev/null 2>&1; then
-      yarn build && yarn test
+      yarn run build && yarn run test
     fi
+  # Python
   elif [ -f pyproject.toml ] || [ -f setup.py ]; then
-    if command -v poetry >/dev/null 2>&1; then
-      poetry build && poetry run pytest
-    elif command -v hatch >/dev/null 2>&1; then
+    if command -v hatch >/dev/null 2>&1; then
       hatch build && hatch run test
+    elif command -v poetry >/dev/null 2>&1; then
+      poetry build && poetry run pytest
     else
       python -m build && pytest
     fi
+  # Rust
   elif [ -f Cargo.toml ]; then
     cargo build --release && cargo test
+  # Go
   elif [ -f go.mod ]; then
     go build ./... && go test ./...
+  # Java (Maven/Gradle)
   elif [ -f pom.xml ]; then
     mvn package -DskipTests && mvn test
   elif [ -f build.gradle ] || [ -f build.gradle.kts ]; then
     gradle build -x test && gradle test
   else
-    echo "⚠️  No known build system detected."
+    echo "⚠️ No known build system detected — skipping build and tests."
   fi
+
+  echo "✅ Build and tests passed."
 }
 
 # ===============================
-# Push Helper (with Build/Test)
-# ===============================
-gpB() {
-  local branch
-  branch=$(git rev-parse --abbrev-ref HEAD)
-  echo "🏗️  Running build and tests..."
-  build_and_test || {
-    echo "❌ Build/tests failed. Aborting push."
-    return 1
-  }
-  echo "🚀 Pushing '$branch'..."
-  git push origin "$branch"
-}
-
-# ===============================
-# Branch Name Autocompletion
+# Auto-completion for branches
 # ===============================
 _git_branch_completion() {
   local branches
@@ -212,4 +194,4 @@ _git_branch_completion() {
   _arguments "1:branch name:(${branches[*]})"
 }
 
-compdef _git_branch_completion gbr gbd gbn
+compdef _git_branch_completion gsw gd gn
