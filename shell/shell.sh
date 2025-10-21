@@ -57,7 +57,7 @@ if [ "$SHELL_TYPE" = "zsh" ]; then
 
   # Zsh plugins
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-  source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  source $(brew --prefix)/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
   # Completion styles
   zstyle ':completion:*' menu select
