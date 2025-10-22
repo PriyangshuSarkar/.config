@@ -77,7 +77,7 @@ gr() {
   git branch -m "$old_branch" "$new_branch" && echo "Branch '$old_branch' renamed to '$new_branch'."
 }
 
-gdelete() {
+gdel() {
   if [ -z "$1" ]; then
     echo "Usage: gd <branch>"
     return 1
@@ -194,4 +194,4 @@ _git_branch_completion() {
   _arguments "1:branch name:(${branches[*]})"
 }
 
-compdef _git_branch_completion gsw gdelete gn
+compdef _git_branch_completion gsw gdel gn

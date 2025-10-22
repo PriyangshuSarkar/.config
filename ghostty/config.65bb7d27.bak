@@ -31,7 +31,7 @@ font-size = 12.5
 # New windows inherit previous window’s font size
 window-inherit-font-size = true
 
-cursor-style = bar
+cursor-style = block
 cursor-style-blink = false
 
 ########################################
@@ -101,4 +101,3 @@ keybind = cmd+,=open_config
 
 # Reload configuration at runtime
 keybind = cmd+shift+,=reload_config
-keybind = shift+enter=text:\x1b\r
