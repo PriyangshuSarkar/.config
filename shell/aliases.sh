@@ -194,4 +194,4 @@ _git_branch_completion() {
   _arguments "1:branch name:(${branches[*]})"
 }
 
-compdef _git_branch_completion gsw gd gn
+compdef _git_branch_completion gsw gdelete gn
