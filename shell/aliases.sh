@@ -1,5 +1,5 @@
 # ===============================
-# General aliases
+# general aliases
 # ===============================
 alias ls='lsd'
 alias ll='lsd -l'
@@ -9,7 +9,7 @@ alias vi='nvim'
 alias vim='nvim'
 
 # ===============================
-# General functions
+# general functions
 # ===============================
 brewsync() {
   echo "🍺 $ brew update && brew upgrade -g && brew cleanup"
@@ -19,60 +19,60 @@ brewsync() {
 }
 
 tad() {
-  echo " $ source ~/.config/shell/dev_tmux.sh"
+  echo "💻 $ source ~/.config/shell/dev_tmux.sh"
   source ~/.config/shell/dev_tmux.sh
 }
 
 cmatrix() {
-  echo " $ cmatrix -ba -C cyan $*"
-  command cmatrix -ba -C cyan "$@"
+  echo "🟢 $ cmatrix -ba -c cyan $*"
+  command cmatrix -ba -c cyan "$@"
 }
 
 matrix() {
-  echo " $ cmatrix -ba -C cyan $*"
-  command cmatrix -ba -C cyan "$@"
+  echo "🟢 $ cmatrix -ba -c cyan $*"
+  command cmatrix -ba -c cyan "$@"
 }
 
 ip() {
-  echo "🌐 $ ipinfo myip $*"
+  echo "🌍 $ ipinfo myip $*"
   command ipinfo myip "$@"
 }
 
 # ===============================
-# Tmux helper
+# tmux helper
 # ===============================
 tkd() {
   if ! tmux has-session -t dev 2>/dev/null; then
-    echo "ℹ️  No dev session running"
+    echo "ℹ️  no dev session running"
     return 0
   fi
 
-  echo -n "💀 Kill tmux session 'dev'? [y/N]: "
+  echo -n "☠️  kill tmux session 'dev'? [y/n]: "
   read confirm
-  if [[ "$confirm" =~ ^[Yy]$ ]]; then
-    echo " $ tmux kill-session -t dev"
-    tmux kill-session -t dev && echo "✅ Session 'dev' killed."
+  if [[ "$confirm" =~ ^[yy]$ ]]; then
+    echo "⚡ $ tmux kill-session -t dev"
+    tmux kill-session -t dev && echo "✅ session 'dev' killed."
   else
-    echo "❌ Session 'dev' not killed."
+    echo "🚫 session 'dev' not killed."
   fi
 }
 
 # ===============================
-# Git helper functions
+# git helper functions
 # ===============================
 ga() {
-  echo " $ git add ."
+  echo "➕ $ git add ."
   git add .
 }
 
 gs() {
-  echo " $ git status -sb"
+  echo "📊 $ git status -sb"
   git status -sb
 }
 
 gu() {
-  echo " $ git reset --soft HEAD~1"
-  git reset --soft HEAD~1
+  echo "⏪ $ git reset --soft head~1"
+  git reset --soft head~1
 }
 
 gstash() {
@@ -81,7 +81,7 @@ gstash() {
 }
 
 gstashp() {
-  echo "📤 $ git stash pop $*"
+  echo "🎁 $ git stash pop $*"
   git stash pop "$@"
 }
 
@@ -96,104 +96,104 @@ grl() {
 }
 
 # ===============================
-# Git branch functions
+# git branch functions
 # ===============================
 
 gsw() {
   if [ -z "$1" ]; then
-    echo "Usage: gsw <branch>"
+    echo "usage: gsw <branch>"
     return 1
   fi
-  echo "🔄 $ git fetch --all -p -P"
-  git fetch --all -p -P
-  echo " $ git switch $1"
+  echo "🔄 $ git fetch --all -p -p"
+  git fetch --all -p -p
+  echo "🔀 $ git switch $1"
   git switch "$1"
 }
 
 gn() {
   if [ -z "$1" ]; then
-    echo "Usage: gn <branch>"
+    echo "usage: gn <branch>"
     return 1
   fi
-  echo " $ git switch -c $1 origin/main"
+  echo "🌱 $ git switch -c $1 origin/main"
   git switch -c "$1" origin/main
 }
 
 gb() {
   if [ "$1" = "-a" ]; then
-    echo " $ git branch -a"
+    echo "🌳 $ git branch -a"
     git branch -a
   else
-    echo " $ git branch"
+    echo "🌿 $ git branch"
     git branch
   fi
 }
 
 gd() {
-  echo "🔹 Unstaged changes:"
-  echo " $ git diff --color"
+  echo "🔸 unstaged changes:"
+  echo "👁️  $ git diff --color"
   git diff --color | sed 's/^/    /'
   echo
-  echo "🔹 Staged changes:"
-  echo " $ git diff --staged --color"
+  echo "🔹 staged changes:"
+  echo "👁️  $ git diff --staged --color"
   git diff --staged --color | sed 's/^/    /'
 }
 
 gr() {
   if [ -z "$1" ]; then
-    echo "Usage: gr <new-branch-name> [old-branch-name]"
+    echo "usage: gr <new-branch-name> [old-branch-name]"
     return 1
   fi
   new_branch="$1"
-  old_branch="${2:-$(git rev-parse --abbrev-ref HEAD)}"
+  old_branch="${2:-$(git rev-parse --abbrev-ref head)}"
 
-  if [ "$old_branch" = "HEAD" ]; then
-    echo "❌ Cannot rename detached HEAD."
+  if [ "$old_branch" = "head" ]; then
+    echo "❌ cannot rename detached head."
     return 1
   fi
 
-  echo "✏️ $ git branch -m $old_branch $new_branch"
-  git branch -m "$old_branch" "$new_branch" && echo "✅ Branch '$old_branch' renamed to '$new_branch'."
+  echo "✏️  $ git branch -m $old_branch $new_branch"
+  git branch -m "$old_branch" "$new_branch" && echo "✅ branch '$old_branch' renamed to '$new_branch'."
 }
 
 gdel() {
   if [ -z "$1" ]; then
-    echo "Usage: gdel <branch>"
+    echo "usage: gdel <branch>"
     return 1
   fi
   branch="$1"
 
-  echo "🗑️ $ git branch -d $branch"
+  echo "🗑️  $ git branch -d $branch"
   if git branch -d "$branch" 2>/dev/null; then
-    echo "✅ Branch '$branch' deleted safely."
+    echo "✅ branch '$branch' deleted safely."
     return 0
   fi
 
-  echo -n "⚠️  Safe delete failed. Force delete '$branch'? [y/N]: "
+  echo -n "⚠️  safe delete failed. force delete '$branch'? [y/n]: "
   read confirm
-  if [[ "$confirm" =~ ^[Yy]$ ]]; then
+  if [[ "$confirm" =~ ^[yy]$ ]]; then
     echo "💥 $ git branch -D $branch"
-    git branch -D "$branch" && echo "✅ Branch '$branch' force deleted."
+    git branch -D "$branch" && echo "✅ branch '$branch' force deleted."
   else
-    echo "❌ Branch '$branch' not deleted."
+    echo "🚫 branch '$branch' not deleted."
   fi
 }
 
 gsy() {
-  branch=$(git rev-parse --abbrev-ref HEAD)
-  if [ -z "$branch" ] || [ "$branch" = "HEAD" ]; then
-    echo "❌ Not on a branch (detached HEAD)."
+  branch=$(git rev-parse --abbrev-ref head)
+  if [ -z "$branch" ] || [ "$branch" = "head" ]; then
+    echo "❌ not on a branch (detached head)."
     return 1
   fi
 
-  echo "🔄 $ git fetch --all -p -P"
-  git fetch --all -p -P || return 1
+  echo "🔄 $ git fetch --all -p -p"
+  git fetch --all -p -p || return 1
 
   if git rev-parse --verify "origin/$branch" >/dev/null 2>&1; then
     echo "🔀 $ git merge origin/$branch"
     git merge "origin/$branch" || return 1
   else
-    echo "⚠️  No remote branch found for $branch, skipping..."
+    echo "⚠️  no remote branch found for $branch, skipping..."
   fi
 
   if git rev-parse --verify origin/main >/dev/null 2>&1; then
@@ -206,40 +206,40 @@ gsy() {
 }
 
 # ===============================
-# Git commit & push helpers
+# git commit & push helpers
 # ===============================
 gc() {
   if git diff --cached --quiet; then
-    echo "⚠️  No staged changes to commit."
+    echo "⚠️  no staged changes to commit."
     return 1
   fi
 
   if command -v bun >/dev/null 2>&1; then
-    echo "📝 $ bunx git-cz"
+    echo "💬 $ bunx git-cz"
     bunx git-cz || git commit
   else
-    echo "📝 $ git commit"
+    echo "💬 $ git commit"
     git commit
   fi
 }
 
 gp() {
-  branch=$(git rev-parse --abbrev-ref HEAD)
+  branch=$(git rev-parse --abbrev-ref head)
   bt || return 1
   echo "🚀 $ git push origin $branch"
   git push origin "$branch"
 }
 
 # ===============================
-# Build & test helper
+# build & test helper
 # ===============================
 bt() {
-  echo "🔍 Detecting build system..."
+  echo "🔍 detecting build system..."
 
-  # Node.js
+  # node.js
   if [ -f package.json ]; then
     if command -v bun >/dev/null 2>&1; then
-      echo " $ bun run build && bun run test"
+      echo "🥟 $ bun run build && bun run test"
       bun run build && bun run test
     elif command -v npm >/dev/null 2>&1; then
       echo "📦 $ npm run build && npm run test"
@@ -248,7 +248,7 @@ bt() {
       echo "🧶 $ yarn run build && yarn run test"
       yarn run build && yarn run test
     fi
-  # Python
+  # python
   elif [ -f pyproject.toml ] || [ -f setup.py ]; then
     if command -v hatch >/dev/null 2>&1; then
       echo "🐍 $ hatch build && hatch run test"
@@ -260,30 +260,30 @@ bt() {
       echo "🐍 $ python -m build && pytest"
       python -m build && pytest
     fi
-  # Rust
-  elif [ -f Cargo.toml ]; then
+  # rust
+  elif [ -f cargo.toml ]; then
     echo "🦀 $ cargo build --release && cargo test"
     cargo build --release && cargo test
-  # Go
+  # go
   elif [ -f go.mod ]; then
     echo "🐹 $ go build ./... && go test ./..."
     go build ./... && go test ./...
-  # Java (Maven/Gradle)
+  # java (maven/gradle)
   elif [ -f pom.xml ]; then
-    echo "☕ $ mvn package -DskipTests && mvn test"
-    mvn package -DskipTests && mvn test
+    echo "☕ $ mvn package -dskiptests && mvn test"
+    mvn package -dskiptests && mvn test
   elif [ -f build.gradle ] || [ -f build.gradle.kts ]; then
     echo "🐘 $ gradle build -x test && gradle test"
     gradle build -x test && gradle test
   else
-    echo "⚠️  No known build system detected — skipping build and tests."
+    echo "⚠️  no known build system detected — skipping build and tests."
   fi
 
-  echo "✅ Build and tests passed."
+  echo "✅ build and tests passed."
 }
 
 # ===============================
-# Auto-completion for branches
+# auto-completion for branches
 # ===============================
 _git_branch_completion() {
   local branches
