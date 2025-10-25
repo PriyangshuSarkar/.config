@@ -23,14 +23,9 @@ tad() {
   source ~/.config/shell/dev_tmux.sh
 }
 
-cmatrix() {
-  echo "🟢 $ cmatrix -ba -c cyan $*"
-  command cmatrix -ba -c cyan "$@"
-}
-
 matrix() {
-  echo "🟢 $ cmatrix -ba -c cyan $*"
-  command cmatrix -ba -c cyan "$@"
+  echo "🟢 $ cmatrix -ba $*"
+  command cmatrix -ba "$@"
 }
 
 ip() {
@@ -47,7 +42,7 @@ tkd() {
     return 0
   fi
 
-  echo -n "☠️  kill tmux session 'dev'? [y/n]: "
+  echo -n "💀 kill tmux session 'dev'? [y/N]: "
   read confirm
   if [[ "$confirm" =~ ^[yy]$ ]]; then
     echo "⚡ $ tmux kill-session -t dev"
