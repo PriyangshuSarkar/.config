@@ -46,7 +46,7 @@ cursor-style-blink = false
 theme = catppuccin-mocha.conf
 
 # Background styling
-background-opacity = 1
+background-opacity = 0.95
 background-blur-radius = 0
 
 ########################################
