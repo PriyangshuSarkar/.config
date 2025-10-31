@@ -99,8 +99,8 @@ gsw() {
     echo "usage: gsw <branch>"
     return 1
   fi
-  echo "🔄 $ git fetch --all -p -p"
-  git fetch --all -p -p
+  echo "🔄 $ git fetch --all -p -P"
+  git fetch --all -p -P
   echo "🔀 $ git switch $1"
   git switch "$1"
 }
@@ -175,29 +175,50 @@ gdel() {
 }
 
 gsy() {
-  branch=$(git rev-parse --abbrev-ref head)
-  if [ -z "$branch" ] || [ "$branch" = "head" ]; then
+  branch=$(git rev-parse --abbrev-ref HEAD)
+
+  if [ -z "$branch" ] || [ "$branch" = "HEAD" ]; then
     echo "❌ not on a branch (detached head)."
     return 1
   fi
 
-  echo "🔄 $ git fetch --all -p -p"
-  git fetch --all -p -p || return 1
+  echo "🔄 $ git fetch --all -p -P"
+  git fetch --all -p -P || return 1
 
+  # Detect upstream (branch we originally forked from)
+  upstream=$(git for-each-ref --format='%(upstream:short)' "refs/heads/$branch")
+
+  # If no upstream is configured, guess based on closest ancestor
+  if [ -z "$upstream" ]; then
+    echo "ℹ️  No upstream set — determining closest parent branch..."
+
+    upstream=$(for remote_branch in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin | grep -v "$branch$"); do
+      base=$(git merge-base "$branch" "$remote_branch")
+      if [ -n "$base" ]; then
+        distance=$(git rev-list --count "$base..$branch")
+        echo "$distance $remote_branch"
+      fi
+    done | sort -n | head -1 | awk '{print $2}')
+
+    # Fallback to origin/main
+    upstream=${upstream:-origin/main}
+  fi
+
+  echo "🔀 Syncing with $upstream"
+  git merge "$upstream" || {
+    echo "❌ merge with $upstream failed."
+    return 1
+  }
+
+  # Also pull latest from remote version of this branch if it exists
   if git rev-parse --verify "origin/$branch" >/dev/null 2>&1; then
-    echo "🔀 $ git merge origin/$branch"
+    echo "🔀 Merging origin/$branch"
     git merge "origin/$branch" || return 1
   else
-    echo "⚠️  no remote branch found for $branch, skipping..."
+    echo "⚠️  No remote branch origin/$branch (skipping)"
   fi
 
-  if git rev-parse --verify origin/main >/dev/null 2>&1; then
-    echo "🔀 $ git merge origin/main"
-    git merge origin/main
-  else
-    echo "❌ origin/main not found"
-    return 1
-  fi
+  echo "✅ Branch synced with $upstream"
 }
 
 # ===============================
@@ -216,6 +237,11 @@ gc() {
     echo "💬 $ git commit"
     git commit
   fi
+}
+
+gca() {
+  echo "✏️  $ git commit --amend"
+  git commit --amend
 }
 
 gp() {
