@@ -107,11 +107,15 @@ gsw() {
 
 gn() {
   if [ -z "$1" ]; then
-    echo "usage: gn <branch>"
+    echo "usage: gn <new-branch> [base-branch]"
     return 1
   fi
-  echo "🌱 $ git switch -c $1 origin/main"
-  git switch -c "$1" origin/main
+
+  new_branch="$1"
+  base_branch="${2:-origin/main}"
+
+  echo "🌱 $ git switch -c $new_branch $base_branch"
+  git switch -c "$new_branch" "$base_branch"
 }
 
 gb() {
