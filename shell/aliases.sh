@@ -168,7 +168,7 @@ gdel() {
     return 0
   fi
 
-  echo -n "⚠️  safe delete failed. force delete '$branch'? [y/n]: "
+  echo -n "⚠️  safe delete failed. force delete '$branch'? [y/N]: "
   read confirm
   if [[ "$confirm" =~ ^[yy]$ ]]; then
     echo "💥 $ git branch -D $branch"
@@ -179,50 +179,78 @@ gdel() {
 }
 
 gsy() {
-  branch=$(git rev-parse --abbrev-ref HEAD)
+  # Ensure inside a git repo
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    echo "❌ not inside a git repository."
+    return 1
+  fi
 
+  # Detect current branch
+  branch=$(git rev-parse --abbrev-ref HEAD)
   if [ -z "$branch" ] || [ "$branch" = "HEAD" ]; then
     echo "❌ not on a branch (detached head)."
     return 1
   fi
 
+  # Optional extra sync target
+  extra_branch="$1"
+
   echo "🔄 $ git fetch --all -p -P"
   git fetch --all -p -P || return 1
 
-  # Detect upstream (branch we originally forked from)
+  # 1️⃣ Sync with remote self if exists
+  if git rev-parse --verify "origin/$branch" >/dev/null 2>&1; then
+    echo "🔁 Merging origin/$branch..."
+    git merge "origin/$branch" || {
+      echo "❌ merge with origin/$branch failed."
+      return 1
+    }
+  else
+    echo "⚠️ No remote branch origin/$branch (skipping self-sync)"
+  fi
+
+  # 2️⃣ Determine closest parent branch (or upstream)
   upstream=$(git for-each-ref --format='%(upstream:short)' "refs/heads/$branch")
-
-  # If no upstream is configured, guess based on closest ancestor
   if [ -z "$upstream" ]; then
-    echo "ℹ️  No upstream set — determining closest parent branch..."
-
-    upstream=$(for remote_branch in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin | grep -v "$branch$"); do
-      base=$(git merge-base "$branch" "$remote_branch")
-      if [ -n "$base" ]; then
-        distance=$(git rev-list --count "$base..$branch")
-        echo "$distance $remote_branch"
-      fi
-    done | sort -n | head -1 | awk '{print $2}')
-
-    # Fallback to origin/main
+    echo "ℹ️ No upstream set — determining closest parent branch..."
+    upstream=$(
+      for remote_branch in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin | grep -v "$branch$"); do
+        base=$(git merge-base "$branch" "$remote_branch")
+        if [ -n "$base" ]; then
+          distance=$(git rev-list --count "$base..$branch")
+          echo "$distance $remote_branch"
+        fi
+      done | sort -n | head -1 | awk '{print $2}'
+    )
     upstream=${upstream:-origin/main}
   fi
 
-  echo "🔀 Syncing with $upstream"
+  echo "🔀 Merging closest parent: $upstream..."
+  git fetch "${upstream%%/*}" "${upstream#*/}" >/dev/null 2>&1 || true
   git merge "$upstream" || {
     echo "❌ merge with $upstream failed."
     return 1
   }
 
-  # Also pull latest from remote version of this branch if it exists
-  if git rev-parse --verify "origin/$branch" >/dev/null 2>&1; then
-    echo "🔀 Merging origin/$branch"
-    git merge "origin/$branch" || return 1
-  else
-    echo "⚠️  No remote branch origin/$branch (skipping)"
+  # 3️⃣ Merge with the user-specified branch if provided
+  if [ -n "$extra_branch" ]; then
+    echo "📦 Merging additional branch: $extra_branch..."
+    if [[ "$extra_branch" == *"/"* ]]; then
+      git fetch "${extra_branch%%/*}" "${extra_branch#*/}" >/dev/null 2>&1 || true
+    fi
+
+    if git show-ref --verify --quiet "refs/heads/$extra_branch" ||
+      git show-ref --verify --quiet "refs/remotes/$extra_branch"; then
+      git merge "$extra_branch" || {
+        echo "❌ merge with $extra_branch failed."
+        return 1
+      }
+    else
+      echo "⚠️ Branch $extra_branch not found locally or remotely (skipping)"
+    fi
   fi
 
-  echo "✅ Branch synced with $upstream"
+  echo "✅ Branch '$branch' synced successfully."
 }
 
 # ===============================
