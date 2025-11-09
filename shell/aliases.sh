@@ -9,6 +9,22 @@ alias vi='nvim'
 alias vim='nvim'
 
 # ===============================
+# grep replacement (ripgrep)
+# ===============================
+grep() {
+  if command -v rg >/dev/null 2>&1; then
+    echo "⚡ $ rg --color=auto --line-number --no-heading $*"
+    command rg --color=auto --line-number --no-heading "$@" || {
+      echo "🐢 fallback -> grep $*"
+      command grep "$@"
+    }
+  else
+    echo "🐢 fallback -> grep $*"
+    command grep "$@"
+  fi
+}
+
+# ===============================
 # general functions
 # ===============================
 brewsync() {
