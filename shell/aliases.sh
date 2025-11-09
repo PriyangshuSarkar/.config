@@ -13,8 +13,8 @@ alias vim='nvim'
 # ===============================
 grep() {
   if command -v rg >/dev/null 2>&1; then
-    echo "⚡ $ rg --color=auto --line-number --no-heading $*"
-    command rg --color=auto --line-number --no-heading "$@" || {
+    echo "⚡$ rg $*"
+    command rg "$@" || {
       echo "🐢 fallback -> grep $*"
       command grep "$@"
     }
