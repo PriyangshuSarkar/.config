@@ -25,15 +25,14 @@ window-inherit-working-directory = true
 # 2. Font & Cursor Configuration
 ########################################
 
-font-family = "JetBrains Mono"
-# font-family = "Fira Code"
+font-family = "Fira Code"
 # font-size = 12.5
 
 # New windows inherit previous window’s font size
 window-inherit-font-size = true
 
 cursor-style = bar
-cursor-style-blink = false
+cursor-style-blink = true
 
 ########################################
 # 3. Appearance & Theme
@@ -54,6 +53,7 @@ background-blur-radius = 0
 ########################################
 
 window-decoration = auto
+window-padding-balance = true
 macos-non-native-fullscreen = false
 macos-window-buttons = visible
 macos-titlebar-style = hidden

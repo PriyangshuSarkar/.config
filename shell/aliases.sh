@@ -9,22 +9,6 @@ alias vi='nvim'
 alias vim='nvim'
 
 # ===============================
-# grep replacement (ripgrep)
-# ===============================
-grep() {
-  if command -v rg >/dev/null 2>&1; then
-    echo "⚡$ rg $*"
-    command rg "$@" || {
-      echo "🐢 fallback -> grep $*"
-      command grep "$@"
-    }
-  else
-    echo "🐢 fallback -> grep $*"
-    command grep "$@"
-  fi
-}
-
-# ===============================
 # general functions
 # ===============================
 brewsync() {
@@ -60,7 +44,7 @@ tkd() {
 
   echo -n "💀 kill tmux session 'dev'? [y/N]: "
   read confirm
-  if [[ "$confirm" =~ ^[yy]$ ]]; then
+  if [[ "$confirm" =~ ^[yY]$ ]]; then
     echo "⚡ $ tmux kill-session -t dev"
     tmux kill-session -t dev && echo "✅ session 'dev' killed."
   else
@@ -186,7 +170,7 @@ gdel() {
 
   echo -n "⚠️  safe delete failed. force delete '$branch'? [y/N]: "
   read confirm
-  if [[ "$confirm" =~ ^[yy]$ ]]; then
+  if [[ "$confirm" =~ ^[yY]$ ]]; then
     echo "💥 $ git branch -D $branch"
     git branch -D "$branch" && echo "✅ branch '$branch' force deleted."
   else
@@ -195,78 +179,49 @@ gdel() {
 }
 
 gsy() {
-  # Ensure inside a git repo
+  # Ensure inside git repo
   if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    echo "❌ not inside a git repository."
+    echo "❌ Not a git repository."
     return 1
   fi
 
-  # Detect current branch
-  branch=$(git rev-parse --abbrev-ref HEAD)
-  if [ -z "$branch" ] || [ "$branch" = "HEAD" ]; then
-    echo "❌ not on a branch (detached head)."
+  branch=$(git branch --show-current)
+  if [[ -z "$branch" ]]; then
+    echo "❌ Not on a branch (detached HEAD)."
     return 1
   fi
 
-  # Optional extra sync target
   extra_branch="$1"
 
-  echo "🔄 $ git fetch --all -p -P"
-  git fetch --all -p -P || return 1
-
-  # 1️⃣ Sync with remote self if exists
-  if git rev-parse --verify "origin/$branch" >/dev/null 2>&1; then
-    echo "🔁 Merging origin/$branch..."
-    git merge "origin/$branch" || {
-      echo "❌ merge with origin/$branch failed."
-      return 1
-    }
-  else
-    echo "⚠️ No remote branch origin/$branch (skipping self-sync)"
+  echo "🔄 Fetching & pruning remotes..."
+  if ! git fetch --all --prune; then
+    echo "⚠️ Failed to fetch/prune (continuing)."
   fi
 
-  # 2️⃣ Determine closest parent branch (or upstream)
-  upstream=$(git for-each-ref --format='%(upstream:short)' "refs/heads/$branch")
-  if [ -z "$upstream" ]; then
-    echo "ℹ️ No upstream set — determining closest parent branch..."
-    upstream=$(
-      for remote_branch in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin | grep -v "$branch$"); do
-        base=$(git merge-base "$branch" "$remote_branch")
-        if [ -n "$base" ]; then
-          distance=$(git rev-list --count "$base..$branch")
-          echo "$distance $remote_branch"
-        fi
-      done | sort -n | head -1 | awk '{print $2}'
-    )
-    upstream=${upstream:-origin/main}
+  echo "🔀 Pulling from upstream for $branch..."
+  if ! git pull --no-edit; then
+    echo "⚠️ Failed to pull upstream (continuing)."
   fi
 
-  echo "🔀 Merging closest parent: $upstream..."
-  git fetch "${upstream%%/*}" "${upstream#*/}" >/dev/null 2>&1 || true
-  git merge "$upstream" || {
-    echo "❌ merge with $upstream failed."
-    return 1
-  }
+  if [[ -n "$extra_branch" ]]; then
+    echo "📦 Merging extra branch: $extra_branch..."
 
-  # 3️⃣ Merge with the user-specified branch if provided
-  if [ -n "$extra_branch" ]; then
-    echo "📦 Merging additional branch: $extra_branch..."
-    if [[ "$extra_branch" == *"/"* ]]; then
-      git fetch "${extra_branch%%/*}" "${extra_branch#*/}" >/dev/null 2>&1 || true
-    fi
+    if git rev-parse --verify "refs/heads/$extra_branch" >/dev/null 2>&1; then
+      if ! git merge --no-edit "$extra_branch"; then
+        echo "⚠️ Merge failed for local branch '$extra_branch' (continuing)."
+      fi
 
-    if git show-ref --verify --quiet "refs/heads/$extra_branch" ||
-      git show-ref --verify --quiet "refs/remotes/$extra_branch"; then
-      git merge "$extra_branch" || {
-        echo "❌ merge with $extra_branch failed."
-        return 1
-      }
+    elif git rev-parse --verify "refs/remotes/$extra_branch" >/dev/null 2>&1; then
+      if ! git merge --no-edit "refs/remotes/$extra_branch"; then
+        echo "⚠️ Merge failed for remote branch '$extra_branch' (continuing)."
+      fi
+
     else
-      echo "⚠️ Branch $extra_branch not found locally or remotely (skipping)"
+      echo "⚠️ Extra branch '$extra_branch' not found. Skipping."
     fi
   fi
 
-  echo "✅ Branch '$branch' synced successfully."
+  echo "✅ Branch '$branch' sync process completed (with possible warnings)."
 }
 
 # ===============================
