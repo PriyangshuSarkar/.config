@@ -2,52 +2,62 @@
 set -euo pipefail
 
 # --- config ---
-TIMEOUT="gtimeout 600"   # 10 minutes
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 # fixed log path
-logfile="$HOME/library/logs/sysupdate.log"
+logfile="$HOME/Library/Logs/sysupdate.log"
 mkdir -p "$(dirname "$logfile")"
-exec >> "$logfile" 2>&1
+
+# overwrite
+exec > "$logfile" 2>&1
 
 echo "---- run at $(date) ----"
 
 run_with_timeout() {
   # $1 = command description (string)
-  # $@ = command to run
+  # rest = command to run
+  local description="$1"
   shift
-  echo ">>> Running: $* (timeout 10m)"
-  $TIMEOUT "$@" || echo "!!! Timed out or failed: $*"
+  echo ">>> Running: $description (timeout 10m)"
+  
+  # Check if gtimeout exists, fallback to timeout, or run without timeout
+  if command -v gtimeout >/dev/null 2>&1; then
+    gtimeout 600 "$@" || echo "!!! Timed out or failed: $description"
+  elif command -v timeout >/dev/null 2>&1; then
+    timeout 600 "$@" || echo "!!! Timed out or failed: $description"
+  else
+    "$@" || echo "!!! Failed: $description"
+  fi
 }
 
 # homebrew
 if command -v brew >/dev/null; then
-  run_with_timeout brew update --quiet
-  run_with_timeout brew upgrade --quiet
-  run_with_timeout brew cleanup --quiet
+  run_with_timeout "brew update" brew update
+  run_with_timeout "brew upgrade" brew upgrade
+  run_with_timeout "brew cleanup" brew cleanup
 fi
 
 # bun
 if command -v bun >/dev/null; then
-  run_with_timeout bun update -g
+  run_with_timeout "bun update -g" bun update -g
 fi
 
 # npm
 if command -v npm >/dev/null; then
-  run_with_timeout npm update -g --no-fund --no-audit
+  run_with_timeout "npm update -g" npm update -g
 fi
 
 # neovim
 if command -v nvim >/dev/null; then
-  run_with_timeout nvim --headless "+lazy! update" "+qall"
-  run_with_timeout nvim --headless "masonupdate" "+qall"
-  run_with_timeout nvim --headless "masontoolsupdate" "+qall"
+  run_with_timeout "nvim lazy sync+update" nvim --headless "+Lazy! sync" "+Lazy! update" "+qall"
+  run_with_timeout "nvim mason update" nvim --headless "MasonUpdate" "+qall"
+  run_with_timeout "nvim mason-tool-installer update" nvim --headless "MasonToolsUpdate" "+qall"
 fi
 
 # tmux tpm plugins
 if [ -d "$HOME/.tmux/plugins/tpm" ]; then
-  run_with_timeout "$HOME/.tmux/plugins/tpm/bin/update_plugins" all
-  run_with_timeout "$HOME/.tmux/plugins/tpm/bin/clean_plugins"
+  run_with_timeout "tmux tpm update" "$HOME/.tmux/plugins/tpm/bin/update_plugins" all
+  run_with_timeout "tmux tpm clean" "$HOME/.tmux/plugins/tpm/bin/clean_plugins"
 fi
 
 echo "---- finished at $(date) ----"
