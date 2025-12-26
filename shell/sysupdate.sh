@@ -18,23 +18,39 @@ run_with_timeout() {
   # rest = command to run
   local description="$1"
   shift
+
   echo ">>> Running: $description (timeout 10m)"
-  
-  # Check if gtimeout exists, fallback to timeout, or run without timeout
+
+  # --- begin "try" ---
+  set +e  # disable errexit
+  local status=0
+
   if command -v gtimeout >/dev/null 2>&1; then
-    gtimeout 600 "$@" || echo "!!! Timed out or failed: $description"
+    gtimeout 600 "$@"
+    status=$?
   elif command -v timeout >/dev/null 2>&1; then
-    timeout 600 "$@" || echo "!!! Timed out or failed: $description"
+    timeout 600 "$@"
+    status=$?
   else
-    "$@" || echo "!!! Failed: $description"
+    "$@"
+    status=$?
   fi
+
+  set -e  # re-enable errexit
+  # --- end "try" ---
+
+  if (( status != 0 )); then
+    echo "!!! Failed (exit $status): $description"
+  fi
+
+  return 0  # ALWAYS succeed so the script continues
 }
 
 # homebrew
 if command -v brew >/dev/null; then
   run_with_timeout "brew update" brew update
-  run_with_timeout "brew upgrade" brew upgrade
-  run_with_timeout "brew cleanup" brew cleanup
+  run_with_timeout "brew upgrade -g" brew upgrade -g
+  run_with_timeout "brew cleanup -s" brew cleanup -s
 fi
 
 # bun

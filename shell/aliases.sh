@@ -5,6 +5,7 @@ alias ls='lsd'
 alias ll='lsd -l'
 alias la='lsd -la'
 alias lt='lsd --tree'
+alias cat='bat'
 alias vi='nvim'
 alias vim='nvim'
 
@@ -15,7 +16,7 @@ brewsync() {
   echo "🍺 $ brew update && brew upgrade -g && brew cleanup"
   brew update
   brew upgrade -g
-  brew cleanup
+  brew cleanup -s
 }
 
 tad() {
