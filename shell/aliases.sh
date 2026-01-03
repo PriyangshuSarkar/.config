@@ -115,6 +115,8 @@ gn() {
   new_branch="$1"
   base_branch="${2:-origin/main}"
 
+  echo "🔄 $ git fetch --all -p -P"
+  git fetch --all -p -P
   echo "🌱 $ git switch -c $new_branch $base_branch"
   git switch -c "$new_branch" "$base_branch"
 }
