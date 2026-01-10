@@ -6,7 +6,7 @@ if ! tmux has-session -t "$SESSION" 2>/dev/null; then
 
   # Create session with home window
   tmux new-session -d -s "$SESSION" -n home -c ~
-  tmux send-keys -t "$SESSION" "matrix" C-m
+  tmux send-keys -t "$SESSION"
   tmux move-window -s "$SESSION:1" -t "$SESSION:5"
 
   # Create API window nvim

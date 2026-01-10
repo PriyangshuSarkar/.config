@@ -24,11 +24,6 @@ tad() {
   source ~/.config/shell/dev_tmux.sh
 }
 
-matrix() {
-  echo "🟢 $ cmatrix -ba $*"
-  command cmatrix -ba "$@"
-}
-
 ip() {
   echo "🌍 $ ipinfo myip $*"
   command ipinfo myip "$@"
