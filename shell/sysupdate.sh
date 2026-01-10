@@ -49,9 +49,12 @@ fi
 
 # neovim
 if command -v nvim >/dev/null; then
+  run_with_timeout "nvim lazy clean" nvim --headless "+Lazy! clean" "+qall"
   run_with_timeout "nvim lazy sync+update" nvim --headless "+Lazy! sync" "+Lazy! update" "+qall"
   run_with_timeout "nvim mason update" nvim --headless "MasonUpdate" "+qall"
   run_with_timeout "nvim mason-tool-installer update" nvim --headless "MasonToolsUpdate" "+qall"
+  run_with_timeout "nvim treesitter update" nvim --headless "+TSUpdate" "+qall"
+  run_with_timeout "nvim remote plugins update" nvim --headless "+UpdateRemotePlugins" "+qall"
 fi
 
 # tmux tpm plugins
