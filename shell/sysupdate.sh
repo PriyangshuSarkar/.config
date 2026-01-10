@@ -59,6 +59,7 @@ fi
 
 # tmux tpm plugins
 if [ -d "$HOME/.tmux/plugins/tpm" ]; then
+  run_with_timeout "tmux tpm install" "$HOME/.tmux/plugins/tpm/bin/install_plugins"
   run_with_timeout "tmux tpm update" "$HOME/.tmux/plugins/tpm/bin/update_plugins" all
   run_with_timeout "tmux tpm clean" "$HOME/.tmux/plugins/tpm/bin/clean_plugins"
 fi
