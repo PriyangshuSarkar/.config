@@ -42,7 +42,9 @@ cursor-style-blink = true
 # theme = light:catppuccin-frappe.conf,dark:catppuccin-mocha.conf
 
 # Use Catppuccin themes
-theme = catppuccin-mocha.conf
+# theme = Catppuccin Mocha
+theme = Gruvbox Dark
+
 
 # Background styling
 background-opacity = 0.95

@@ -91,3 +91,8 @@ export VISUAL=nvim
 # Load shared aliases + Git functions
 # -----------------------------
 [[ -f "$HOME/.config/shell/aliases.sh" ]] && source "$HOME/.config/shell/aliases.sh"
+
+# -----------------------------
+# Load Starship config
+# -----------------------------
+[[ -f "$HOME/.config/starship/starship.sh" ]] && source "$HOME/.config/starship/starship.sh"

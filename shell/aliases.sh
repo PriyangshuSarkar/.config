@@ -49,6 +49,21 @@ tkd() {
 }
 
 # ===============================
+# starship theme switcher
+# ===============================
+starship-catppuccin() {
+  echo "🎨 $ cp ~/.config/starship/themes/catppuccin.toml ~/.config/starship.toml"
+  cp ~/.config/starship/themes/catppuccin.toml ~/.config/starship.toml
+  echo "✅ switched to catppuccin theme. restart your shell or run: exec \$SHELL"
+}
+
+starship-gruvbox() {
+  echo "🎨 $ cp ~/.config/starship/themes/gruvbox.toml ~/.config/starship.toml"
+  cp ~/.config/starship/themes/gruvbox.toml ~/.config/starship.toml
+  echo "✅ switched to gruvbox theme. restart your shell or run: exec \$SHELL"
+}
+
+# ===============================
 # git helper functions
 # ===============================
 ga() {
