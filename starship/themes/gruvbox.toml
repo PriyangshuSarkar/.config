@@ -24,11 +24,11 @@ style = "fg:color_bg1 bg:color_orange"
 format = "[ $path ]($style)"
 
 [git_status]
-style = "fg:color_fg0 bg:color_bg3"
+style = "fg:color_fg0 bg:color_bg1"
 format = "[ $all_status$ahead_behind ]($style)"
 
 [git_branch]
-style = "fg:color_bg1 bg:color_blue"
+style = "fg:color_bg1 bg:color_aqua"
 format = "[ $branch ]($style)"
 
 # ──────────────────────────────
