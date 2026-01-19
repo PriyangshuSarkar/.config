@@ -1,0 +1,24 @@
+# Catppuccin Mocha theme for LazyGit
+gui:
+  theme:
+    activeBorderColor:
+      - "#a6e3a1" # green
+      - bold
+    inactiveBorderColor:
+      - "#a6adc8" # subtext0
+    optionsTextColor:
+      - "#89b4fa" # blue
+    selectedLineBgColor:
+      - "#313244" # surface0
+    cherryPickedCommitBgColor:
+      - "#45475a" # surface1
+    cherryPickedCommitFgColor:
+      - "#a6e3a1" # green
+    unstagedChangesColor:
+      - "#f38ba8" # red
+    defaultFgColor:
+      - "#cdd6f4" # text
+    searchingActiveBorderColor:
+      - "#f9e2af" # yellow
+  authorColors:
+    "*": "#b4befe" # lavender

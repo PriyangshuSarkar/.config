@@ -96,3 +96,13 @@ export VISUAL=nvim
 # Load Starship config
 # -----------------------------
 [[ -f "$HOME/.config/starship/starship.sh" ]] && source "$HOME/.config/starship/starship.sh"
+
+# -----------------------------
+# Load Lazygit config
+# -----------------------------
+[[ -f "$HOME/.config/lazygit/lazygit.sh" ]] && source "$HOME/.config/lazygit/lazygit.sh"
+
+# -----------------------------
+# Load Theme switcher
+# -----------------------------
+[[ -f "$HOME/.config/shell/theme.sh" ]] && source "$HOME/.config/shell/theme.sh"

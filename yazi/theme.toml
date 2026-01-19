@@ -1,9 +1,9 @@
 [flavor]
-# dark = "catppuccin-mocha"
-# light = "catppuccin-mocha"
+dark = "catppuccin-mocha"
+light = "catppuccin-mocha"
 
-dark = "gruvbox-dark"
-light = "gruvbox-dark"
+# dark = "gruvbox-dark"
+# light = "gruvbox-dark"
 
 [mgr]
 border_symbol = "│"

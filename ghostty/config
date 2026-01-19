@@ -43,7 +43,7 @@ cursor-style-blink = true
 
 # Use Catppuccin themes
 # theme = Catppuccin Mocha
-theme = Gruvbox Dark
+theme = Catppuccin Mocha
 
 
 # Background styling
