@@ -22,8 +22,8 @@ declare -A CATPPUCCIN=(
   [starship_disabled]='# export STARSHIP_CONFIG=~/.config/starship/themes/gruvbox.toml'
   [yazi_dark]='dark = "catppuccin-mocha"'
   [yazi_light]='light = "catppuccin-mocha"'
-  [bat_theme]='--theme=catppuccin'
-  [bat_disabled]='# --theme=gruvbox-dark'
+  [bat_theme]="--theme='Catppuccin Mocha'"
+  [bat_disabled]="# --theme='gruvbox-dark'"
   [ghostty_theme]='theme = Catppuccin Mocha'
   [zed_theme]='"theme": "Catppuccin Mocha"'
   [lazygit_theme]='catppuccin-mocha'
@@ -38,8 +38,8 @@ declare -A GRUVBOX=(
   [starship_disabled]='# export STARSHIP_CONFIG=~/.config/starship/themes/catppuccin.toml'
   [yazi_dark]='dark = "gruvbox-dark"'
   [yazi_light]='light = "gruvbox-dark"'
-  [bat_theme]='--theme=gruvbox-dark'
-  [bat_disabled]='# --theme=catppuccin'
+  [bat_theme]="--theme='gruvbox-dark'"
+  [bat_disabled]="# --theme='Catppuccin Mocha'"
   [ghostty_theme]='theme = Gruvbox Dark'
   [zed_theme]='"theme": "Gruvbox Material"'
   [lazygit_theme]='gruvbox'
@@ -122,11 +122,11 @@ _theme_update_bat() {
   local file="$CONFIG_DIR/bat/config"
 
   if [[ "$theme" == "catppuccin" ]]; then
-    sed -i '' 's/^--theme=gruvbox-dark/# --theme=gruvbox-dark/' "$file"
-    sed -i '' 's/^# --theme=catppuccin/--theme=catppuccin/' "$file"
+    sed -i '' "s/^--theme='gruvbox-dark'/# --theme='gruvbox-dark'/" "$file"
+    sed -i '' "s/^# --theme='Catppuccin Mocha'/--theme='Catppuccin Mocha'/" "$file"
   else
-    sed -i '' 's/^--theme=catppuccin/# --theme=catppuccin/' "$file"
-    sed -i '' 's/^# --theme=gruvbox-dark/--theme=gruvbox-dark/' "$file"
+    sed -i '' "s/^--theme='Catppuccin Mocha'/# --theme='Catppuccin Mocha'/" "$file"
+    sed -i '' "s/^# --theme='gruvbox-dark'/--theme='gruvbox-dark'/" "$file"
   fi
 }
 
