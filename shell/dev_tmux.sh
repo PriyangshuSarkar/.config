@@ -13,7 +13,7 @@ if ! tmux has-session -t "$SESSION" 2>/dev/null; then
   echo "🛠️  Setting up API nvim window..."
   tmux new-window -t "$SESSION:1" -n api-nvim -c ~/Projects/ops-api
   tmux split-window -h -t "$SESSION:1.1" -c ~/Projects/ops-api
-  tmux send-keys -t "$SESSION:1.1" "nvim ." C-m
+  tmux send-keys -t "$SESSION:1.1" "nvim" C-m
   tmux send-keys -t "$SESSION:1.2" "claude" C-m
   tmux select-pane -t "$SESSION:1.0"
 
@@ -28,7 +28,7 @@ if ! tmux has-session -t "$SESSION" 2>/dev/null; then
   echo "🎨 Setting up Web nvim window..."
   tmux new-window -t "$SESSION:3" -n web-nvim -c ~/Projects/ops-web
   tmux split-window -h -t "$SESSION:3.1" -c ~/Projects/ops-web
-  tmux send-keys -t "$SESSION:3.1" "nvim ." C-m
+  tmux send-keys -t "$SESSION:3.1" "nvim" C-m
   tmux send-keys -t "$SESSION:3.2" "claude" C-m
   tmux select-pane -t "$SESSION:3.0"
 
