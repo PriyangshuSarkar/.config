@@ -13,10 +13,10 @@ alias vim='nvim'
 # general functions
 # ===============================
 brewsync() {
-  echo "🍺 $ brew update && brew upgrade -g && brew cleanup"
+  echo "🍺 $ brew update && brew upgrade -g && brew cleanup --prune=all -s -v"
   brew update
   brew upgrade -g
-  brew cleanup -s
+  brew cleanup --prune=all -s -v
 }
 
 tad() {
