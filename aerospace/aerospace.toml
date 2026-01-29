@@ -58,64 +58,52 @@ outer.top = 5
 # Main Binding Mode
 # -----------------------------
 [mode.main.binding]
-# Layout
-alt-ctrl-shift-f = 'fullscreen'
-alt-ctrl-f = 'layout floating tiling'
-alt-slash = 'layout tiles horizontal vertical'
-alt-comma = 'layout accordion horizontal vertical'
 
-# Focus
-alt-left = 'focus left'
-alt-down = 'focus down'
-alt-up = 'focus up'
-alt-right = 'focus right'
-alt-ctrl-left = 'focus-monitor left'
-alt-ctrl-right = 'focus-monitor right'
-alt-ctrl-up = 'focus-monitor up'
-alt-ctrl-down = 'focus-monitor down'
-
-# Move
-alt-shift-left = 'move left'
-alt-shift-down = 'move down'
-alt-shift-up = 'move up'
-alt-shift-right = 'move right'
-alt-shift-ctrl-left = 'move-node-to-monitor left'
-alt-shift-ctrl-right = 'move-node-to-monitor right'
-alt-shift-ctrl-up = 'move-node-to-monitor up'
-alt-shift-ctrl-down = 'move-node-to-monitor down'
-
-# Resize
-alt-shift-minus = 'resize smart -50'
-alt-shift-equal = 'resize smart +50'
-
-# Workspaces
+# Workspace switching (alt + number)
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
 alt-4 = 'workspace 4'
 
-# Move windows to workspaces
-alt-shift-1 = 'move-node-to-workspace 1 --focus-follows-window'
-alt-shift-2 = 'move-node-to-workspace 2 --focus-follows-window'
-alt-shift-3 = 'move-node-to-workspace 3 --focus-follows-window'
-alt-shift-4 = 'move-node-to-workspace 4 --focus-follows-window'
+# Move window to workspace (alt + shift + number)
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4'
+
+# Layout
+alt-ctrl-shift-f = 'fullscreen'
+alt-ctrl-f = 'layout floating tiling'
+alt-slash = 'layout tiles'
+alt-comma = 'layout accordion'
+
+# Focus windows in workspace (alt + ctrl + hjkl/arrows)
+alt-ctrl-h = 'focus left'
+alt-ctrl-j = 'focus down'
+alt-ctrl-k = 'focus up'
+alt-ctrl-l = 'focus right'
+alt-ctrl-left = 'focus left'
+alt-ctrl-down = 'focus down'
+alt-ctrl-up = 'focus up'
+alt-ctrl-right = 'focus right'
+
+# Move windows in workspace (alt + shift + ctrl + hjkl/arrows)
+alt-shift-ctrl-h = 'move left'
+alt-shift-ctrl-j = 'move down'
+alt-shift-ctrl-k = 'move up'
+alt-shift-ctrl-l = 'move right'
+alt-shift-ctrl-left = 'move left'
+alt-shift-ctrl-down = 'move down'
+alt-shift-ctrl-up = 'move up'
+alt-shift-ctrl-right = 'move right'
+
+# Resize
+alt-shift-minus = 'resize smart -50'
+alt-shift-equal = 'resize smart +50'
 
 # Workspace navigation
 alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
-
-# Mode switching
-alt-shift-semicolon = 'mode service'
-alt-shift-enter = 'mode apps'
-
-# -----------------------------
-# Service Binding Mode
-# -----------------------------
-[mode.service.binding]
-esc = ['reload-config', 'mode main']
-r = ['flatten-workspace-tree', 'mode main']
-f = ['layout floating tiling', 'mode main']
-backspace = ['close-all-windows-but-current', 'mode main']
 
 # -----------------------------
 # Workspace to Monitor Assignment
