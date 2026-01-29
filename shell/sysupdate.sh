@@ -61,6 +61,11 @@ if command -v bun >/dev/null 2>&1; then
   run_with_timeout "bun update -g" bun update -g
 fi
 
+# --- pipx ---
+if command -v pipx >/dev/null 2>&1; then
+  run_with_timeout "pipx upgrade-all" pipx upgrade-all
+fi
+
 # --- neovim ---
 if command -v nvim >/dev/null 2>&1; then
   run_with_timeout "nvim lazy clean" nvim --headless "+Lazy! clean" "+qall"
