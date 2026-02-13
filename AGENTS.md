@@ -54,11 +54,10 @@ LazyVim-based setup using lazy.nvim plugin manager:
 
 ### Other Key Configurations
 
-- **Starship prompt**: `starship.toml` - Catppuccin Mocha theme with directory, git status, git branch display
-- **Zed editor**: `zed/settings.json` - Vim mode enabled, Catppuccin theme, format on save with Prettier
-- **LazyGit**: `lazygit/config.yml` - Catppuccin Mocha color scheme
-- **Aerospace**: Window manager configuration in `aerospace/aerospace.toml`
-- **Karabiner**: Keyboard customization in `karabiner/karabiner.json`
+- **Starship prompt**: `starship/themes/` — Catppuccin and Gruvbox variants; active theme is `~/.config/starship.toml` (symlinked or copied via `starship-catppuccin` / `starship-gruvbox` shell functions)
+- **Zed editor**: `zed/settings.json` — Vim mode enabled, Catppuccin theme, format on save with Prettier, relative line numbers
+- **LazyGit**: `lazygit/` — Catppuccin Mocha color scheme
+- **Aerospace**: macOS window manager, `aerospace/aerospace.toml`
 
 ## System Update Automation
 
@@ -67,10 +66,13 @@ LazyVim-based setup using lazy.nvim plugin manager:
 Runs with 10-minute timeout per operation and updates:
 - Homebrew (update, upgrade, cleanup)
 - Bun and npm global packages
-- Neovim plugins (Lazy sync/update, Mason, MasonToolsUpdate)
+- Neovim plugins (Lazy sync/update, Mason, MasonToolsUpdate, TSUpdate)
 - Tmux plugins (via tpm)
+- Yazi packages
 
 **Log location**: `~/Library/Logs/sysupdate.log` (overwritten on each run)
+
+**Constraint**: `sysupdate.sh` runs unattended via LaunchAgent — it must not require interactive input or a TTY, and must use absolute paths (shell aliases are not available).
 
 ## Common Commands
 
@@ -121,6 +123,8 @@ tkd             # Kill tmux dev session (with confirmation)
 
 ```bash
 brewsync        # brew update && brew upgrade -g && brew cleanup -s
+starship-catppuccin   # switch starship prompt to Catppuccin theme
+starship-gruvbox      # switch starship prompt to Gruvbox theme
 ```
 
 ### Neovim Updates
@@ -131,24 +135,23 @@ Updates are automated via `sysupdate.sh`, but can be run manually:
 nvim --headless "+Lazy! sync" "+Lazy! update" "+qall"
 nvim --headless "MasonUpdate" "+qall"
 nvim --headless "MasonToolsUpdate" "+qall"
+nvim --headless "+TSUpdate" "+qall"
 ```
 
 ## Important Notes
 
-- **Vi mode enabled**: Both shell and all editors (nvim, tmux copy mode, zed) use vi keybindings
-- **Theme consistency**: Catppuccin Mocha is used across all tools (nvim, tmux, zed, lazygit, starship, lsd, yazi, bat)
-- **Shell compatibility**: `shell.sh` detects and configures both Bash and Zsh
-- **Completion**: Zsh has custom completions for `gsw`, `gdel`, `gn` that autocomplete branch names
-- **Build system detection**: The `bt` function automatically detects project type and runs appropriate build/test commands
-- **Git commit style**: Uses conventional commits (feat:, fix:, docs:, etc.) with emoji prefixes
+- **Vi mode everywhere**: Shell, nvim, tmux copy mode, and Zed all use vi keybindings
+- **Theme consistency**: Catppuccin Mocha is primary across all tools; Gruvbox is the secondary alternative. When adding a new tool, configure it for Catppuccin Mocha first.
+- **Shell compatibility**: `shell.sh` and `aliases.sh` must remain compatible with both Bash and Zsh; Zsh-only features are conditionally wrapped
+- **`gp` runs `bt` first**: Every push triggers a build+test. Changes to `aliases.sh` that affect the `bt` function affect all git pushes.
+- **Zsh branch completions**: `gsw`, `gdel`, `gn` autocomplete branch names via `_git_branch_completion`
+- **Git commit style**: Conventional commits with emoji prefix (e.g. `feat: 🎸`, `fix: 🐛`, `chore: 🤖`, `refactor: ♻️`)
 - **Preferred package managers**: bun (Node.js), brew (macOS packages)
+- **Untracked directories**: `cursor/` and `ngrok/` are intentionally untracked; do not add them to git
 
 ## File Modification Guidelines
 
-When modifying configuration files:
-
-1. **Shell scripts**: Maintain the modular structure - don't merge `shell.sh` and `aliases.sh`
-2. **Neovim plugins**: Add new plugins in `nvim/lua/plugins/` as separate files
-3. **Tmux**: Use Catppuccin theme variables for consistency
-4. **Git functions**: Keep all Git helpers in `shell/aliases.sh` with echo statements showing executed commands
-5. **Preserve formatting**: Maintain existing comment separators and emoji usage in shell scripts
+- **Shell scripts**: Keep `shell.sh` (env setup) and `aliases.sh` (functions/aliases) separate; don't merge them
+- **Neovim plugins**: Add new plugins as separate files in `nvim/lua/plugins/`
+- **Git functions**: All git helpers go in `shell/aliases.sh` with an `echo` showing the command being run (existing style)
+- **Shell script style**: Maintain existing comment block separators (`# ===`) and emoji usage
