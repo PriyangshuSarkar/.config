@@ -38,8 +38,9 @@ tkd() {
     return 0
   fi
 
+  local confirm
   echo -n "💀 kill tmux session 'dev'? [y/N]: "
-  read confirm
+  read -r confirm
   if [[ "$confirm" =~ ^[yY]$ ]]; then
     echo "⚡ $ tmux kill-session -t dev"
     tmux kill-session -t dev && echo "✅ session 'dev' killed."
@@ -53,14 +54,14 @@ tkd() {
 # ===============================
 starship-catppuccin() {
   echo "🎨 $ cp ~/.config/starship/themes/catppuccin.toml ~/.config/starship.toml"
-  cp ~/.config/starship/themes/catppuccin.toml ~/.config/starship.toml
-  echo "✅ switched to catppuccin theme. restart your shell or run: exec \$SHELL"
+  cp ~/.config/starship/themes/catppuccin.toml ~/.config/starship.toml &&
+    echo "✅ switched to catppuccin theme. restart your shell or run: exec \$SHELL"
 }
 
 starship-gruvbox() {
   echo "🎨 $ cp ~/.config/starship/themes/gruvbox.toml ~/.config/starship.toml"
-  cp ~/.config/starship/themes/gruvbox.toml ~/.config/starship.toml
-  echo "✅ switched to gruvbox theme. restart your shell or run: exec \$SHELL"
+  cp ~/.config/starship/themes/gruvbox.toml ~/.config/starship.toml &&
+    echo "✅ switched to gruvbox theme. restart your shell or run: exec \$SHELL"
 }
 
 # ===============================
@@ -77,8 +78,8 @@ gs() {
 }
 
 gu() {
-  echo "⏪ $ git reset --soft head~1"
-  git reset --soft head~1
+  echo "⏪ $ git reset --soft HEAD~1"
+  git reset --soft HEAD~1
 }
 
 gstash() {
@@ -122,6 +123,7 @@ gn() {
     return 1
   fi
 
+  local new_branch base_branch
   new_branch="$1"
   base_branch="${2:-origin/main}"
 
@@ -156,11 +158,13 @@ gr() {
     echo "usage: gr <new-branch-name> [old-branch-name]"
     return 1
   fi
-  new_branch="$1"
-  old_branch="${2:-$(git rev-parse --abbrev-ref head)}"
 
-  if [ "$old_branch" = "head" ]; then
-    echo "❌ cannot rename detached head."
+  local new_branch old_branch
+  new_branch="$1"
+  old_branch="${2:-$(git rev-parse --abbrev-ref HEAD)}"
+
+  if [ "$old_branch" = "HEAD" ]; then
+    echo "❌ cannot rename detached HEAD."
     return 1
   fi
 
@@ -173,6 +177,8 @@ gdel() {
     echo "usage: gdel <branch>"
     return 1
   fi
+
+  local branch confirm
   branch="$1"
 
   echo "🗑️  $ git branch -d $branch"
@@ -182,7 +188,7 @@ gdel() {
   fi
 
   echo -n "⚠️  safe delete failed. force delete '$branch'? [y/N]: "
-  read confirm
+  read -r confirm
   if [[ "$confirm" =~ ^[yY]$ ]]; then
     echo "💥 $ git branch -D $branch"
     git branch -D "$branch" && echo "✅ branch '$branch' force deleted."
@@ -191,79 +197,51 @@ gdel() {
   fi
 }
 
+_gsy_merge() {
+  local target="$1"
+  if git show-ref --verify --quiet "refs/heads/$target" ||
+    git show-ref --verify --quiet "refs/remotes/$target"; then
+    echo "🔁 merging $target..."
+    git merge "$target" || {
+      echo "❌ merge with $target failed."
+      return 1
+    }
+  else
+    echo "⚠️  '$target' not found (skipping)."
+  fi
+}
+
 gsy() {
-  # Ensure inside a git repo
-  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
     echo "❌ not inside a git repository."
     return 1
-  fi
+  }
 
-  # Detect current branch
+  local branch remote_branch extra_branch
   branch=$(git rev-parse --abbrev-ref HEAD)
+
   if [ -z "$branch" ] || [ "$branch" = "HEAD" ]; then
-    echo "❌ not on a branch (detached head)."
+    echo "❌ not on a branch (detached HEAD)."
     return 1
   fi
 
-  # Optional extra sync target
+  remote_branch=$(git for-each-ref --format='%(upstream:short)' "refs/heads/$branch")
   extra_branch="$1"
 
   echo "🔄 $ git fetch --all -p -P"
   git fetch --all -p -P || return 1
 
-  # 1️⃣ Sync with remote self if exists
-  if git rev-parse --verify "origin/$branch" >/dev/null 2>&1; then
-    echo "🔁 Merging origin/$branch..."
-    git merge "origin/$branch" || {
-      echo "❌ merge with origin/$branch failed."
-      return 1
-    }
+  # 1️⃣ sync with remote tracking branch
+  if [ -n "$remote_branch" ]; then
+    _gsy_merge "$remote_branch" || return 1
   else
-    echo "⚠️ No remote branch origin/$branch (skipping self-sync)"
+    echo "⚠️  no remote tracking branch for '$branch' (skipping)."
   fi
 
-  # 2️⃣ Determine closest parent branch (or upstream)
-  upstream=$(git for-each-ref --format='%(upstream:short)' "refs/heads/$branch")
-  if [ -z "$upstream" ]; then
-    echo "ℹ️ No upstream set — determining closest parent branch..."
-    upstream=$(
-      for remote_branch in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin | grep -v "$branch$"); do
-        base=$(git merge-base "$branch" "$remote_branch")
-        if [ -n "$base" ]; then
-          distance=$(git rev-list --count "$base..$branch")
-          echo "$distance $remote_branch"
-        fi
-      done | sort -n | head -1 | awk '{print $2}'
-    )
-    upstream=${upstream:-origin/main}
-  fi
+  # 2️⃣ sync with user-specified extra branch
+  [ -n "$extra_branch" ] && { _gsy_merge "$extra_branch" || return 1; }
 
-  echo "🔀 Merging closest parent: $upstream..."
-  git fetch "${upstream%%/*}" "${upstream#*/}" >/dev/null 2>&1 || true
-  git merge "$upstream" || {
-    echo "❌ merge with $upstream failed."
-    return 1
-  }
-
-  # 3️⃣ Merge with the user-specified branch if provided
-  if [ -n "$extra_branch" ]; then
-    echo "📦 Merging additional branch: $extra_branch..."
-    if [[ "$extra_branch" == *"/"* ]]; then
-      git fetch "${extra_branch%%/*}" "${extra_branch#*/}" >/dev/null 2>&1 || true
-    fi
-
-    if git show-ref --verify --quiet "refs/heads/$extra_branch" ||
-      git show-ref --verify --quiet "refs/remotes/$extra_branch"; then
-      git merge "$extra_branch" || {
-        echo "❌ merge with $extra_branch failed."
-        return 1
-      }
-    else
-      echo "⚠️ Branch $extra_branch not found locally or remotely (skipping)"
-    fi
-  fi
-
-  echo "✅ Branch '$branch' synced successfully."
+  echo "✅ branch '$branch' synced."
 }
 
 # ===============================
@@ -290,10 +268,11 @@ gca() {
 }
 
 gp() {
-  branch=$(git rev-parse --abbrev-ref head)
+  local branch
+  branch=$(git rev-parse --abbrev-ref HEAD)
   bt || return 1
   echo "🚀 $ git push origin $branch"
-  git push origin "$branch"
+  git push origin HEAD
 }
 
 # ===============================
@@ -306,43 +285,44 @@ bt() {
   if [ -f package.json ]; then
     if command -v bun >/dev/null 2>&1; then
       echo "🥟 $ bun run build && bun run test"
-      bun run build && bun run test
+      bun run build && bun run test || return 1
     elif command -v npm >/dev/null 2>&1; then
       echo "📦 $ npm run build && npm run test"
-      npm run build && npm run test
+      npm run build && npm run test || return 1
     elif command -v yarn >/dev/null 2>&1; then
       echo "🧶 $ yarn run build && yarn run test"
-      yarn run build && yarn run test
+      yarn run build && yarn run test || return 1
     fi
   # python
   elif [ -f pyproject.toml ] || [ -f setup.py ]; then
     if command -v hatch >/dev/null 2>&1; then
       echo "🐍 $ hatch build && hatch run test"
-      hatch build && hatch run test
+      hatch build && hatch run test || return 1
     elif command -v poetry >/dev/null 2>&1; then
       echo "📖 $ poetry build && poetry run pytest"
-      poetry build && poetry run pytest
+      poetry build && poetry run pytest || return 1
     else
       echo "🐍 $ python -m build && pytest"
-      python -m build && pytest
+      python -m build && pytest || return 1
     fi
   # rust
-  elif [ -f cargo.toml ]; then
+  elif [ -f Cargo.toml ]; then
     echo "🦀 $ cargo build --release && cargo test"
-    cargo build --release && cargo test
+    cargo build --release && cargo test || return 1
   # go
   elif [ -f go.mod ]; then
     echo "🐹 $ go build ./... && go test ./..."
-    go build ./... && go test ./...
+    go build ./... && go test ./... || return 1
   # java (maven/gradle)
   elif [ -f pom.xml ]; then
-    echo "☕ $ mvn package -dskiptests && mvn test"
-    mvn package -dskiptests && mvn test
+    echo "☕ $ mvn package -DskipTests && mvn test"
+    mvn package -DskipTests && mvn test || return 1
   elif [ -f build.gradle ] || [ -f build.gradle.kts ]; then
     echo "🐘 $ gradle build -x test && gradle test"
-    gradle build -x test && gradle test
+    gradle build -x test && gradle test || return 1
   else
     echo "⚠️  no known build system detected — skipping build and tests."
+    return 1
   fi
 
   echo "✅ build and tests passed."

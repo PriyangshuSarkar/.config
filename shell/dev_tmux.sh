@@ -15,14 +15,14 @@ if ! tmux has-session -t "$SESSION" 2>/dev/null; then
   tmux split-window -h -t "$SESSION:1.1" -c ~/Projects/ops-api
   tmux send-keys -t "$SESSION:1.1" "nvim" C-m
   tmux send-keys -t "$SESSION:1.2" "claude" C-m
-  tmux select-pane -t "$SESSION:1.0"
+  tmux select-pane -t "$SESSION:1"
 
   # Create API window terminal
   echo "⚡ Setting up API terminal window..."
   tmux new-window -t "$SESSION:2" -n api-term -c ~/Projects/ops-api
   tmux split-window -v -t "$SESSION:2" -c ~/Projects/ops-api
   tmux send-keys -t "$SESSION:2.1" "bun start:dev" C-m
-  tmux select-pane -t "$SESSION:2.0"
+  tmux select-pane -t "$SESSION:2"
 
   # Create Web window nvim
   echo "🎨 Setting up Web nvim window..."
@@ -30,14 +30,14 @@ if ! tmux has-session -t "$SESSION" 2>/dev/null; then
   tmux split-window -h -t "$SESSION:3.1" -c ~/Projects/ops-web
   tmux send-keys -t "$SESSION:3.1" "nvim" C-m
   tmux send-keys -t "$SESSION:3.2" "claude" C-m
-  tmux select-pane -t "$SESSION:3.0"
+  tmux select-pane -t "$SESSION:3"
 
   # Create Web window terminal
   echo "🌐 Setting up Web terminal window..."
   tmux new-window -t "$SESSION:4" -n web-term -c ~/Projects/ops-web
   tmux split-window -v -t "$SESSION:4" -c ~/Projects/ops-web
   tmux send-keys -t "$SESSION:4.1" "bun run dev" C-m
-  tmux select-pane -t "$SESSION:4.0"
+  tmux select-pane -t "$SESSION:4"
 fi
 
 # Ensure the session opens on the home window
