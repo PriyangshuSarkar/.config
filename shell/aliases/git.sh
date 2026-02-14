@@ -2,7 +2,8 @@
 # git internal helpers
 # ===============================
 _grun() {
-  local emoji="$1"; shift
+  local emoji="$1"
+  shift
   echo "$emoji \$ $*"
   "$@"
 }
@@ -21,13 +22,13 @@ _grequire() {
 # ===============================
 # git helper functions
 # ===============================
-ga()      { _grun "➕" git add .; }
-gs()      { _grun "📊" git status -sb; }
-gu()      { _grun "⏪" git reset --soft HEAD~1; }
-gstash()  { _grun "📦" git stash "$@"; }
+ga() { _grun "➕" git add .; }
+gs() { _grun "📊" git status -sb; }
+gu() { _grun "⏪" git reset --soft HEAD~1; }
+gstash() { _grun "📦" git stash "$@"; }
 gstashp() { _grun "🎁" git stash pop "$@"; }
-gl()      { _grun "📜" git log --oneline --graph --decorate --all "$@"; }
-grl()     { _grun "🔄" git reflog --decorate --color=auto "$@"; }
+gl() { _grun "📜" git log --oneline --graph --decorate --all "$@"; }
+grl() { _grun "🔄" git reflog --decorate --color=auto "$@"; }
 
 # ===============================
 # git branch functions
@@ -175,7 +176,7 @@ gca() { _grun "✏️ " git commit --amend; }
 gp() {
   local branch
   branch=$(git rev-parse --abbrev-ref HEAD)
-  bt || return 1
+  bt
   echo "🚀 $ git push origin $branch"
   git push origin HEAD
 }
