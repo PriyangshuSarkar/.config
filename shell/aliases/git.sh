@@ -107,18 +107,18 @@ gdel() {
   fi
 }
 
+_gref_exists() {
+  git show-ref --verify --quiet "refs/heads/$1" ||
+    git show-ref --verify --quiet "refs/remotes/$1"
+}
+
 _gsy_merge() {
   local target="$1"
-  if git show-ref --verify --quiet "refs/heads/$target" ||
-    git show-ref --verify --quiet "refs/remotes/$target"; then
-    echo "🔁 merging $target..."
-    git merge "$target" || {
-      echo "❌ merge with $target failed."
-      return 1
-    }
-  else
-    echo "⚠️  '$target' not found (skipping)."
-  fi
+  echo "🔁 merging $target..."
+  git merge "$target" || {
+    echo "❌ merge with $target failed."
+    return 1
+  }
 }
 
 gsy() {
@@ -127,7 +127,7 @@ gsy() {
     return 1
   }
 
-  local branch remote_branch extra_branch
+  local branch remote remote_branch extra_branch
   branch=$(git rev-parse --abbrev-ref HEAD)
 
   if [ -z "$branch" ] || [ "$branch" = "HEAD" ]; then
@@ -135,20 +135,31 @@ gsy() {
     return 1
   fi
 
-  remote_branch=$(git for-each-ref --format='%(upstream:short)' "refs/heads/$branch")
+  remote=$(git remote | head -n 1)
   extra_branch="$1"
 
-  _gfetch || return 1
-
   # 1️⃣ sync with remote tracking branch
-  if [ -n "$remote_branch" ]; then
-    _gsy_merge "$remote_branch" || return 1
+  if [ -n "$remote" ]; then
+    _gfetch || return 1
+    remote_branch="${remote}/${branch}"
+
+    if _gref_exists "$remote_branch"; then
+      _gsy_merge "$remote_branch" || return 1
+    else
+      echo "⚠️  remote branch '$remote_branch' not found (skipping)."
+    fi
   else
-    echo "⚠️  no remote tracking branch for '$branch' (skipping)."
+    echo "⚠️  no git remote found (skipping remote sync)."
   fi
 
   # 2️⃣ sync with user-specified extra branch
-  [ -n "$extra_branch" ] && { _gsy_merge "$extra_branch" || return 1; }
+  if [ -n "$extra_branch" ]; then
+    if _gref_exists "$extra_branch"; then
+      _gsy_merge "$extra_branch" || return 1
+    else
+      echo "⚠️  branch '$extra_branch' not found (skipping)."
+    fi
+  fi
 
   echo "✅ branch '$branch' synced."
 }
@@ -165,6 +176,9 @@ gc() {
   if command -v bun >/dev/null 2>&1; then
     echo "💬 $ bunx git-cz"
     bunx git-cz || git commit
+  elif command -v npx >/dev/null 2>&1; then
+    echo "💬 $ npx git-cz"
+    npx git-cz || git commit
   else
     echo "💬 $ git commit"
     git commit
@@ -176,9 +190,9 @@ gca() { _grun "✏️ " git commit --amend; }
 gp() {
   local branch
   branch=$(git rev-parse --abbrev-ref HEAD)
-  bt
   echo "🚀 $ git push origin $branch"
   git push origin HEAD
+  bt
 }
 
 # ===============================
