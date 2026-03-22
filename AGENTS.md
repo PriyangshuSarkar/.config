@@ -64,6 +64,7 @@ LazyVim-based setup using lazy.nvim plugin manager:
 **Script**: `shell/sysupdate.sh` - LaunchAgent-compatible automated update script
 
 Runs with 10-minute timeout per operation and updates:
+
 - Homebrew (update, upgrade, cleanup)
 - Bun and npm global packages
 - Neovim plugins (Lazy sync/update, Mason, MasonToolsUpdate, TSUpdate)
