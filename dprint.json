@@ -6,6 +6,7 @@
     "https://plugins.dprint.dev/exec-0.6.0.json@a054130d458f124f9b5c91484833828950723a5af3f8ff2bd1523bd47b83b364"
   ],
   "includes": ["**/*"],
+  "excludes": ["**/*.log", "**/*.lock", "**/lazy-lock.json", "yazi/flavors/**"],
   "prettier": {},
   "toml": {},
   "exec": {

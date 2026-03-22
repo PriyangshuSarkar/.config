@@ -89,6 +89,11 @@ if command -v ya >/dev/null 2>&1; then
   run_with_timeout "ya pkg upgrade" ya pkg upgrade
 fi
 
+# --- dprint ---
+if command -v dprint >/dev/null 2>&1; then
+  run_with_timeout "dprint fmt" dprint fmt
+fi
+
 echo "========================================"
 echo " Run finished at $(date)"
 echo "========================================"
