@@ -24,7 +24,6 @@ The shell environment is split into modular components:
   - Git workflow functions (`ga`, `gs`, `gc`, `gp`, etc.)
   - Branch management (`gsw`, `gn`, `gb`, `gr`, `gdel`)
   - `gsy` - intelligent branch sync that merges from remote origin and closest parent branch
-  - Build/test automation (`bt` function detects and runs build systems)
   - Tmux helpers (`tad`, `tkd`)
 
 - **`shell/dev_tmux.sh`**: Tmux session automation script that creates a "dev" session with:
@@ -84,9 +83,10 @@ All custom Git functions are defined in `shell/aliases.sh`:
 ```bash
 ga              # git add .
 gs              # git status -sb
-gc              # git commit (uses git-cz if available via bun)
+gc              # git commit (supports arguments)
+gcx             # git-cz (uses git-cz if available via bun)
 gca             # git commit --amend
-gp              # git push (runs bt first, then pushes to origin)
+gp              # git push
 gu              # git reset --soft HEAD~1
 
 # Branch operations
@@ -104,13 +104,6 @@ gl              # git log --oneline --graph --decorate --all
 grl             # git reflog --decorate --color=auto
 gd              # Show both unstaged and staged diffs
 gstash / gstashp # git stash / git stash pop
-```
-
-### Build & Test
-
-```bash
-bt              # Auto-detect build system and run build + test
-                # Supports: Node.js (bun/npm/yarn), Python (hatch/poetry), Rust, Go, Java (Maven/Gradle)
 ```
 
 ### Tmux
@@ -144,7 +137,6 @@ nvim --headless "+TSUpdate" "+qall"
 - **Vi mode everywhere**: Shell, nvim, tmux copy mode, and Zed all use vi keybindings
 - **Theme consistency**: Catppuccin Mocha is primary across all tools; Gruvbox is the secondary alternative. When adding a new tool, configure it for Catppuccin Mocha first.
 - **Shell compatibility**: `shell.sh` and `aliases.sh` must remain compatible with both Bash and Zsh; Zsh-only features are conditionally wrapped
-- **`gp` runs `bt` first**: Every push triggers a build+test. Changes to `aliases.sh` that affect the `bt` function affect all git pushes.
 - **Zsh branch completions**: `gsw`, `gdel`, `gn` autocomplete branch names via `_git_branch_completion`
 - **Git commit style**: Conventional commits with emoji prefix (e.g. `feat: 🎸`, `fix: 🐛`, `chore: 🤖`, `refactor: ♻️`)
 - **Preferred package managers**: bun (Node.js), brew (macOS packages)

@@ -167,7 +167,9 @@ gsy() {
 # ===============================
 # git commit & push helpers
 # ===============================
-gc() {
+gc() { _grun "💬" git commit "$@"; }
+
+gcx() {
   if git diff --cached --quiet; then
     echo "⚠️  no staged changes to commit."
     return 1
@@ -192,7 +194,6 @@ gp() {
   branch=$(git rev-parse --abbrev-ref HEAD)
   echo "🚀 $ git push origin $branch"
   git push origin HEAD
-  bt
 }
 
 # ===============================
