@@ -13,24 +13,23 @@ This is a personal dotfiles repository managing configuration files for a macOS 
 The shell environment is split into modular components:
 
 - **`shell/shell.sh`**: Cross-shell configuration (Bash/Zsh) that handles:
-  - Shell detection and shell-specific setup
-  - Editor mode (vi mode enabled)
-  - PATH configuration
-  - Completion systems (fzf, zoxide, starship)
-  - Plugin loading for Zsh (autosuggestions, syntax highlighting, vi-mode)
+    - Shell detection and shell-specific setup
+    - Editor mode (vi mode enabled)
+    - PATH configuration
+    - Completion systems (fzf, zoxide, starship)
+    - Plugin loading for Zsh (autosuggestions, syntax highlighting, vi-mode)
 
 - **`shell/aliases.sh`**: Consolidated aliases and Git helper functions:
-  - Command aliases (lsd, bat, nvim)
-  - Git workflow functions (`ga`, `gs`, `gc`, `gp`, etc.)
-  - Branch management (`gsw`, `gn`, `gb`, `gr`, `gdel`)
-  - `gsy` - intelligent branch sync that merges from remote origin and closest parent branch
-  - Build/test automation (`bt` function detects and runs build systems)
-  - Tmux helpers (`tad`, `tkd`)
+    - Command aliases (lsd, bat, nvim)
+    - Git workflow functions (`ga`, `gs`, `gc`, `gp`, etc.)
+    - Branch management (`gsw`, `gn`, `gb`, `gr`, `gdel`)
+    - `gsy` - intelligent branch sync that merges from remote origin and closest parent branch
+    - Tmux helpers (`tad`, `tkd`)
 
 - **`shell/dev_tmux.sh`**: Tmux session automation script that creates a "dev" session with:
-  - 5 windows: home, api-nvim, api-term, web-nvim, web-term
-  - Project-specific layouts for ~/Projects/ops-api and ~/Projects/ops-web
-  - Split panes with nvim, claude CLI, and dev servers
+    - 5 windows: home, api-nvim, api-term, web-nvim, web-term
+    - Project-specific layouts for ~/Projects/ops-api and ~/Projects/ops-web
+    - Split panes with nvim, claude CLI, and dev servers
 
 ### Neovim Configuration
 
@@ -47,9 +46,9 @@ LazyVim-based setup using lazy.nvim plugin manager:
 - **Theme**: Catppuccin Mocha via catppuccin/tmux plugin
 - **Key plugins**: tpm, tmux-sensible, vim-tmux-navigator, tmux-yank, tmux-resurrect, tmux-continuum, tmux-fzf
 - **Keybindings**:
-  - `|` for horizontal split
-  - `-` for vertical split
-  - `prefix r` to reload config
+    - `|` for horizontal split
+    - `-` for vertical split
+    - `prefix r` to reload config
 - **Features**: Mouse support, 256-color terminal, vi-mode copy
 
 ### Other Key Configurations
@@ -64,6 +63,7 @@ LazyVim-based setup using lazy.nvim plugin manager:
 **Script**: `shell/sysupdate.sh` - LaunchAgent-compatible automated update script
 
 Runs with 10-minute timeout per operation and updates:
+
 - Homebrew (update, upgrade, cleanup)
 - Bun and npm global packages
 - Neovim plugins (Lazy sync/update, Mason, MasonToolsUpdate, TSUpdate)
@@ -83,9 +83,10 @@ All custom Git functions are defined in `shell/aliases.sh`:
 ```bash
 ga              # git add .
 gs              # git status -sb
-gc              # git commit (uses git-cz if available via bun)
+gc              # git commit (supports arguments)
+gcx             # git-cz (uses git-cz if available via bun)
 gca             # git commit --amend
-gp              # git push (runs bt first, then pushes to origin)
+gp              # git push
 gu              # git reset --soft HEAD~1
 
 # Branch operations
@@ -103,13 +104,6 @@ gl              # git log --oneline --graph --decorate --all
 grl             # git reflog --decorate --color=auto
 gd              # Show both unstaged and staged diffs
 gstash / gstashp # git stash / git stash pop
-```
-
-### Build & Test
-
-```bash
-bt              # Auto-detect build system and run build + test
-                # Supports: Node.js (bun/npm/yarn), Python (hatch/poetry), Rust, Go, Java (Maven/Gradle)
 ```
 
 ### Tmux
@@ -143,7 +137,6 @@ nvim --headless "+TSUpdate" "+qall"
 - **Vi mode everywhere**: Shell, nvim, tmux copy mode, and Zed all use vi keybindings
 - **Theme consistency**: Catppuccin Mocha is primary across all tools; Gruvbox is the secondary alternative. When adding a new tool, configure it for Catppuccin Mocha first.
 - **Shell compatibility**: `shell.sh` and `aliases.sh` must remain compatible with both Bash and Zsh; Zsh-only features are conditionally wrapped
-- **`gp` runs `bt` first**: Every push triggers a build+test. Changes to `aliases.sh` that affect the `bt` function affect all git pushes.
 - **Zsh branch completions**: `gsw`, `gdel`, `gn` autocomplete branch names via `_git_branch_completion`
 - **Git commit style**: Conventional commits with emoji prefix (e.g. `feat: 🎸`, `fix: 🐛`, `chore: 🤖`, `refactor: ♻️`)
 - **Preferred package managers**: bun (Node.js), brew (macOS packages)

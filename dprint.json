@@ -1,0 +1,28 @@
+{
+  "incremental": true,
+  "plugins": [
+    "https://plugins.dprint.dev/prettier-0.67.0.json@7a864f83de170ad92f27df81366955606f87ea95b00d0de7263f061e72345f87",
+    "https://plugins.dprint.dev/toml-0.7.0.wasm",
+    "https://plugins.dprint.dev/exec-0.6.0.json@a054130d458f124f9b5c91484833828950723a5af3f8ff2bd1523bd47b83b364"
+  ],
+  "includes": ["**/*"],
+  "excludes": ["**/*.log", "**/*.lock", "**/lazy-lock.json", "yazi/flavors/**"],
+  "prettier": {},
+  "toml": {},
+  "exec": {
+    "cwd": "${configDir}",
+    "timeout": 30,
+    "commands": [
+      {
+        "command": "shfmt -i 2",
+        "exts": ["sh", "bash"],
+        "stdin": true
+      },
+      {
+        "command": "stylua --indent-type Spaces --indent-width 2 -",
+        "exts": ["lua"],
+        "stdin": true
+      }
+    ]
+  }
+}

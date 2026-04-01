@@ -1,1 +1,19 @@
 github-copilot/
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+
+# Logs and temporary files
+*.log
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Editor/IDE temporary files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

@@ -19,6 +19,13 @@ brewsync() {
   brew cleanup --prune=all -s -v
 }
 
+mosync() {
+  echo "🧹 $ mo update && mo clean && mo optimize"
+  mo update
+  mo clean
+  mo optimize
+}
+
 ip() {
   echo "🌍 $ ipinfo myip $*"
   command ipinfo myip "$@"

@@ -3,23 +3,23 @@ deps = []
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-mocha"
-rev = "575a48f"
-hash = "8eabb4e88096f10905a6df62cfaadbf4"
+rev = "9511cb0"
+hash = "7dfe41c9c3d9be76da8a844263d0bbed"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-macchiato"
-rev = "575a48f"
-hash = "2f60298d6c26b6d388c8091a9389fa8f"
+rev = "9511cb0"
+hash = "67f2240fd9c98f21714527a24cd672f8"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-latte"
-rev = "575a48f"
-hash = "c6b710b2aa0fb9c6c7f1ec4db6146104"
+rev = "9511cb0"
+hash = "b8f46853c27707115f25f3423a47bd38"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-frappe"
-rev = "575a48f"
-hash = "e25fb61c14484de843b52430a72b5196"
+rev = "9511cb0"
+hash = "1844f850b0c5d1af511c84399c95e3d7"
 
 [[flavor.deps]]
 use = "bennyyip/gruvbox-dark"

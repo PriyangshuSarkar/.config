@@ -15,12 +15,12 @@ today="$(date +%Y-%m-%d)"
 
 # Truncate log once per new day
 if [[ ! -f "$statefile" ]] || [[ "$(cat "$statefile")" != "$today" ]]; then
-  : > "$logfile"
-  echo "$today" > "$statefile"
+  : >"$logfile"
+  echo "$today" >"$statefile"
 fi
 
 # Append for all runs today
-exec >> "$logfile" 2>&1
+exec >>"$logfile" 2>&1
 
 echo "========================================"
 echo " Run started at $(date)"
@@ -84,10 +84,14 @@ if [[ -d "$tpm_dir" ]]; then
   run_with_timeout "tmux tpm clean" "$tpm_dir/bin/clean_plugins"
 fi
 
-
 # --- ya ---
 if command -v ya >/dev/null 2>&1; then
   run_with_timeout "ya pkg upgrade" ya pkg upgrade
+fi
+
+# --- dprint ---
+if command -v dprint >/dev/null 2>&1; then
+  run_with_timeout "dprint fmt" dprint fmt
 fi
 
 echo "========================================"
