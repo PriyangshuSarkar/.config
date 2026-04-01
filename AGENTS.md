@@ -13,23 +13,23 @@ This is a personal dotfiles repository managing configuration files for a macOS 
 The shell environment is split into modular components:
 
 - **`shell/shell.sh`**: Cross-shell configuration (Bash/Zsh) that handles:
-    - Shell detection and shell-specific setup
-    - Editor mode (vi mode enabled)
-    - PATH configuration
-    - Completion systems (fzf, zoxide, starship)
-    - Plugin loading for Zsh (autosuggestions, syntax highlighting, vi-mode)
+  - Shell detection and shell-specific setup
+  - Editor mode (vi mode enabled)
+  - PATH configuration
+  - Completion systems (fzf, zoxide, starship)
+  - Plugin loading for Zsh (autosuggestions, syntax highlighting, vi-mode)
 
 - **`shell/aliases.sh`**: Consolidated aliases and Git helper functions:
-    - Command aliases (lsd, bat, nvim)
-    - Git workflow functions (`ga`, `gs`, `gc`, `gp`, etc.)
-    - Branch management (`gsw`, `gn`, `gb`, `gr`, `gdel`)
-    - `gsy` - intelligent branch sync that merges from remote origin and closest parent branch
-    - Tmux helpers (`tad`, `tkd`)
+  - Command aliases (lsd, bat, nvim)
+  - Git workflow functions (`ga`, `gs`, `gc`, `gp`, etc.)
+  - Branch management (`gsw`, `gn`, `gb`, `gr`, `gdel`)
+  - `gsy` - intelligent branch sync that merges from remote origin and closest parent branch
+  - Tmux helpers (`tad`, `tkd`)
 
 - **`shell/dev_tmux.sh`**: Tmux session automation script that creates a "dev" session with:
-    - 5 windows: home, api-nvim, api-term, web-nvim, web-term
-    - Project-specific layouts for ~/Projects/ops-api and ~/Projects/ops-web
-    - Split panes with nvim, claude CLI, and dev servers
+  - 5 windows: home, api-nvim, api-term, web-nvim, web-term
+  - Project-specific layouts for ~/Projects/ops-api and ~/Projects/ops-web
+  - Split panes with nvim, claude CLI, and dev servers
 
 ### Neovim Configuration
 
@@ -46,9 +46,9 @@ LazyVim-based setup using lazy.nvim plugin manager:
 - **Theme**: Catppuccin Mocha via catppuccin/tmux plugin
 - **Key plugins**: tpm, tmux-sensible, vim-tmux-navigator, tmux-yank, tmux-resurrect, tmux-continuum, tmux-fzf
 - **Keybindings**:
-    - `|` for horizontal split
-    - `-` for vertical split
-    - `prefix r` to reload config
+  - `|` for horizontal split
+  - `-` for vertical split
+  - `prefix r` to reload config
 - **Features**: Mouse support, 256-color terminal, vi-mode copy
 
 ### Other Key Configurations
