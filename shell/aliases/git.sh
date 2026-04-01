@@ -167,9 +167,7 @@ gsy() {
 # ===============================
 # git commit & push helpers
 # ===============================
-gc() { _grun "💬" git commit "$@"; }
-
-gcx() {
+gc() {
   if git diff --cached --quiet; then
     echo "⚠️  no staged changes to commit."
     return 1
