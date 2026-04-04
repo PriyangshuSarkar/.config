@@ -17,3 +17,10 @@ github-copilot/
 .idea/
 *.sublime-project
 *.sublime-workspace
+
+# Lock files
+*.lock
+*.lockb
+bun.lock
+lazy-lock.json
+lock.mdb
