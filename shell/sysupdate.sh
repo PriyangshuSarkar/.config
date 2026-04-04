@@ -7,20 +7,15 @@ export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/
 # --- logging ---
 logdir="$HOME/Library/Logs"
 logfile="$logdir/sysupdate.log"
-statefile="$logdir/.sysupdate.lastdate"
 
 mkdir -p "$logdir"
 
-today="$(date +%Y-%m-%d)"
-
-# Truncate log once per new day
-if [[ ! -f "$statefile" ]] || [[ "$(cat "$statefile")" != "$today" ]]; then
-  : >"$logfile"
-  echo "$today" >"$statefile"
+# Always overwrite log with the latest run
+if [[ -t 1 ]]; then
+  exec > >(tee "$logfile") 2>&1
+else
+  exec >"$logfile" 2>&1
 fi
-
-# Append for all runs today
-exec >>"$logfile" 2>&1
 
 echo "========================================"
 echo " Run started at $(date)"
