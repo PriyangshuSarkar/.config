@@ -2,8 +2,8 @@
 # tmux helpers
 # ===============================
 tad() {
-  echo "💻 $ source ~/.config/shell/dev_tmux.sh"
-  source ~/.config/shell/dev_tmux.sh
+  echo "💻 $ tmuxp load dev"
+  tmuxp load -d dev && tmux attach -t dev
 }
 
 tkd() {

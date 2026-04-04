@@ -1,0 +1,32 @@
+session_name: dev
+root: ~
+
+windows:
+  - window_name: api-nvim
+    root: ~/Projects/ops-api
+    layout: main-vertical
+    panes:
+      - shell_command: nvim
+        focus: true
+      - shell_command: claude
+
+  - window_name: api-term
+    root: ~/Projects/ops-api
+    panes:
+      - shell_command: bun start:dev
+
+  - window_name: web-nvim
+    root: ~/Projects/ops-web
+    layout: main-vertical
+    panes:
+      - shell_command: nvim
+        focus: true
+      - shell_command: claude
+
+  - window_name: web-term
+    root: ~/Projects/ops-web
+    panes:
+      - shell_command: bun run dev
+
+  - window_name: home
+    root: ~
