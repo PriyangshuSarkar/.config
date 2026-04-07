@@ -26,6 +26,11 @@ mosync() {
   mo optimize
 }
 
+sysupdate() {
+  echo "🔄 $ $HOME/.config/shell/sysupdate.sh"
+  "$HOME/.config/shell/sysupdate.sh"
+}
+
 ip() {
   echo "🌍 $ ipinfo myip $*"
   command ipinfo myip "$@"

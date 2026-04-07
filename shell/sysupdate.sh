@@ -10,8 +10,10 @@ logfile="$logdir/sysupdate.log"
 
 mkdir -p "$logdir"
 
-# Always overwrite log with the latest run
+# Detect interactive execution
+interactive=false
 if [[ -t 1 ]]; then
+  interactive=true
   exec > >(tee "$logfile") 2>&1
 else
   exec >"$logfile" 2>&1
@@ -19,7 +21,14 @@ fi
 
 echo "========================================"
 echo " Run started at $(date)"
+echo " Mode: $([ "$interactive" = true ] && echo "interactive" || echo "non-interactive")"
 echo "========================================"
+
+# Pre-authorize sudo for interactive mode (user won't be prompted later)
+if [[ "$interactive" == "true" ]]; then
+  echo ">>> Pre-authorizing sudo..."
+  sudo -v 2>/dev/null || true
+fi
 
 # --- helpers ---
 run_with_timeout() {
@@ -42,8 +51,17 @@ run_with_timeout() {
 # --- homebrew ---
 if command -v brew >/dev/null 2>&1; then
   run_with_timeout "brew update" brew update
-  run_with_timeout "brew upgrade -g" brew upgrade -g
+  if [[ "$interactive" == "true" ]]; then
+    run_with_timeout "brew upgrade -g" brew upgrade -g
+  else
+    run_with_timeout "brew upgrade" brew upgrade
+  fi
   run_with_timeout "brew cleanup --prune=all -s -v" brew cleanup --prune=all -s -v
+fi
+
+# --- mas (interactive only) ---
+if [[ "$interactive" == "true" ]] && command -v mas >/dev/null 2>&1; then
+  run_with_timeout "mas update" mas update
 fi
 
 # --- npm ---
