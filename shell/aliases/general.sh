@@ -20,10 +20,10 @@ brewsync() {
 }
 
 mosync() {
-  echo "🧹 $ mo update && mo clean && mo optimize"
+  echo "🧹 $ mo update && mo optimize && mo clean"
   mo update
-  mo clean
   mo optimize
+  mo clean
 }
 
 sysupdate() {
