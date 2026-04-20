@@ -35,4 +35,3 @@ ip() {
   echo "🌍 $ ipinfo myip $*"
   command ipinfo myip "$@"
 }
-

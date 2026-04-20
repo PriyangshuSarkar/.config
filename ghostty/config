@@ -39,16 +39,15 @@ cursor-style-blink = true
 ########################################
 
 # Use Catppuccin themes (light/dark auto switch)
-# theme = light:catppuccin-frappe.conf,dark:catppuccin-mocha.conf
+# theme = light:Catppuccin Frappe,dark:Catppuccin Mocha
 
 # Use Catppuccin themes
-# theme = Catppuccin Mocha
 theme = Catppuccin Mocha
 
 
 # Background styling
-background-opacity = 1
-background-blur-radius = 0
+background-opacity = 0.75
+background-blur-radius = 50
 
 ########################################
 # 4. Window Behavior (macOS)
