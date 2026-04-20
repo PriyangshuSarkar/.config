@@ -2,9 +2,6 @@
 dark = "catppuccin-mocha"
 light = "catppuccin-mocha"
 
-# dark = "gruvbox-dark"
-# light = "gruvbox-dark"
-
 [mgr]
 border_symbol = "│"
 

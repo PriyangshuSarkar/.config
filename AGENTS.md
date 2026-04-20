@@ -53,7 +53,7 @@ LazyVim-based setup using lazy.nvim plugin manager:
 
 ### Other Key Configurations
 
-- **Starship prompt**: `starship/themes/` — Catppuccin and Gruvbox variants; active theme is `~/.config/starship.toml` (symlinked or copied via `starship-catppuccin` / `starship-gruvbox` shell functions)
+- **Starship prompt**: `starship/themes/catppuccin.toml` — Catppuccin Mocha theme configured in `starship/starship.sh`
 - **Zed editor**: `zed/settings.json` — Vim mode enabled, Catppuccin theme, format on save with Prettier, relative line numbers
 - **LazyGit**: `lazygit/` — Catppuccin Mocha color scheme
 - **Aerospace**: macOS window manager, `aerospace/aerospace.toml`
@@ -117,8 +117,6 @@ tkd             # Kill tmux dev session (with confirmation)
 
 ```bash
 brewsync        # brew update && brew upgrade -g && brew cleanup -s
-starship-catppuccin   # switch starship prompt to Catppuccin theme
-starship-gruvbox      # switch starship prompt to Gruvbox theme
 ```
 
 ### Neovim Updates
@@ -135,7 +133,7 @@ nvim --headless "+TSUpdate" "+qall"
 ## Important Notes
 
 - **Vi mode everywhere**: Shell, nvim, tmux copy mode, and Zed all use vi keybindings
-- **Theme consistency**: Catppuccin Mocha is primary across all tools; Gruvbox is the secondary alternative. When adding a new tool, configure it for Catppuccin Mocha first.
+- **Theme**: Catppuccin Mocha is the exclusive theme across all tools for visual consistency.
 - **Shell compatibility**: `shell.sh` and `aliases.sh` must remain compatible with both Bash and Zsh; Zsh-only features are conditionally wrapped
 - **Zsh branch completions**: `gsw`, `gdel`, `gn` autocomplete branch names via `_git_branch_completion`
 - **Git commit style**: Conventional commits with emoji prefix (e.g. `feat: 🎸`, `fix: 🐛`, `chore: 🤖`, `refactor: ♻️`)
