@@ -116,7 +116,7 @@ tkd             # Kill tmux dev session (with confirmation)
 ### System Maintenance
 
 ```bash
-brewsync        # brew update && brew upgrade -g && brew cleanup -s
+brewsync        # brew update && brew upgrade -g && brew autoremove -v && brew cleanup --prune=all -s -v
 ```
 
 ### Neovim Updates

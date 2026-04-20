@@ -50,6 +50,7 @@ if command -v brew >/dev/null 2>&1; then
   else
     run_cmd "brew upgrade" brew upgrade
   fi
+  run_cmd "brew autoremove -v" brew autoremove -v
   run_cmd "brew cleanup --prune=all -s -v" brew cleanup --prune=all -s -v
 fi
 
