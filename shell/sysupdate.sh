@@ -102,13 +102,6 @@ if command -v dprint >/dev/null 2>&1; then
   (cd "$HOME/.config" && run_cmd "dprint fmt" dprint fmt)
 fi
 
-# --- mo (interactive only) ---
-if [[ "$interactive" == "true" ]] && command -v mo >/dev/null 2>&1; then
-  run_cmd "mo update" mo update
-  run_cmd "mo optimize" mo optimize
-  run_cmd "mo clean" mo clean
-fi
-
 echo "========================================"
 echo " Run finished at $(date)"
 echo "========================================"
