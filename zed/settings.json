@@ -1,6 +1,27 @@
 {
+  "project_panel": {
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "agent": {
+    "dock": "right",
+    "favorite_models": [],
+    "model_parameters": []
+  },
+  "git_panel": {
+    "dock": "left"
+  },
   "vim_mode": true,
-  "theme": "Catppuccin Mocha",
+  "theme": {
+    "mode": "system",
+    "dark": "Catppuccin Mocha",
+    "light": "Catppuccin Frappé"
+  },
   "icon_theme": {
     "mode": "system",
     "dark": "Catppuccin Mocha",
@@ -18,10 +39,8 @@
 
   "show_edit_predictions": true,
   "edit_predictions": {
+    "provider": "zed",
     "mode": "eager"
-  },
-  "features": {
-    "edit_prediction_provider": "zed"
   },
 
   "format_on_save": "on",
