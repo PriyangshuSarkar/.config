@@ -69,6 +69,9 @@ if [ "$SHELL_TYPE" = "zsh" ]; then
 
   # OPAM
   [[ -r "$HOME/.opam/opam-init/init.zsh" ]] && source "$HOME/.opam/opam-init/init.zsh" >/dev/null 2>&1
+
+  # Mole shell completion
+  if output="$(mole completion zsh 2>/dev/null)"; then eval "$output"; fi
 fi
 
 # -----------------------------
