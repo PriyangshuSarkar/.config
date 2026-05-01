@@ -92,3 +92,10 @@ export VISUAL=nvim
 # Load shared aliases + Git functions
 # -----------------------------
 [[ -f "$HOME/.config/shell/aliases.sh" ]] && source "$HOME/.config/shell/aliases.sh"
+
+# -----------------------------
+# Load system-local overrides (not tracked in git)
+# -----------------------------
+for f in "$HOME/.config/shell/local/"*.sh; do
+  [[ -f "$f" ]] && source "$f"
+done

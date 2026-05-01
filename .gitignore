@@ -1,5 +1,7 @@
 github-copilot/
 cagent/
+cursor/
+shell/local/
 
 # Environment and secrets
 .env
