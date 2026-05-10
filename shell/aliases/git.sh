@@ -24,6 +24,8 @@ _grequire() {
 # ===============================
 ga() { _grun "➕" git add .; }
 gs() { _grun "📊" git status -sb; }
+gc() { _grun "✏️ " git commit; }
+gca() { _grun "✏️ " git commit --amend; }
 gu() { _grun "⏪" git reset --soft HEAD~1; }
 gstash() { _grun "📦" git stash "$@"; }
 gstashp() { _grun "🎁" git stash pop "$@"; }
@@ -165,27 +167,8 @@ gsy() {
 }
 
 # ===============================
-# git commit & push helpers
+# git push helpers
 # ===============================
-gc() {
-  if git diff --cached --quiet; then
-    echo "⚠️  no staged changes to commit."
-    return 1
-  fi
-
-  if command -v bun >/dev/null 2>&1; then
-    echo "💬 $ bunx git-cz"
-    bunx git-cz || git commit
-  elif command -v npx >/dev/null 2>&1; then
-    echo "💬 $ npx git-cz"
-    npx git-cz || git commit
-  else
-    echo "💬 $ git commit"
-    git commit
-  fi
-}
-
-gca() { _grun "✏️ " git commit --amend; }
 
 gp() {
   local branch
