@@ -2,6 +2,7 @@ github-copilot/
 cagent/
 cursor/
 shell/local/
+.antigravitycli/
 
 # Environment and secrets
 .env
