@@ -27,10 +27,7 @@
     "dark": "Catppuccin Mocha",
     "light": "Catppuccin Frappé"
   },
-  "ui_font_size": 14,
-  "buffer_font_size": 12,
-  "buffer_font_family": "Fira Code",
-
+  "buffer_font_family": "Iosevka",
   "confirm_quit": true,
   "telemetry": {
     "diagnostics": true,

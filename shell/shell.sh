@@ -60,6 +60,7 @@ if [ "$SHELL_TYPE" = "zsh" ]; then
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
   source $(brew --prefix)/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
   ZVM_SYSTEM_CLIPBOARD_ENABLED=true
+  ZVM_VI_EDITOR="nvim"
   source $(brew --prefix)/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
   # Completion styles

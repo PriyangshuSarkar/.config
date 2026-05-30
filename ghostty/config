@@ -25,8 +25,10 @@ window-inherit-working-directory = true
 # 2. Font & Cursor Configuration
 ########################################
 
-font-family = "Fira Code"
-# font-size = 12.5
+# font-family = "Fira Code"
+# font-family = "JetBrains Mono"
+font-family = "Iosevka"
+# font-size = 12.k
 
 # New windows inherit previous window’s font size
 window-inherit-font-size = true
@@ -46,8 +48,8 @@ theme = Catppuccin Mocha
 
 
 # Background styling
-background-opacity = 0.75
-background-blur-radius = 50
+background-opacity = 1
+background-blur-radius = 0
 
 ########################################
 # 4. Window Behavior (macOS)
