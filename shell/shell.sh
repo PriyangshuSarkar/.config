@@ -100,6 +100,8 @@ export VISUAL=nvim
 # -----------------------------
 # Load system-local overrides (not tracked in git)
 # -----------------------------
-for f in "$HOME/.config/shell/local/"*.sh(N); do
-  source "$f"
-done
+if [[ -d "$HOME/.config/shell/local" ]]; then
+  for f in "$HOME/.config/shell/local/"*.sh; do
+    [[ -f "$f" ]] && source "$f"
+  done
+fi

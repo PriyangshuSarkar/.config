@@ -28,7 +28,7 @@ window-inherit-working-directory = true
 # font-family = "Fira Code"
 # font-family = "JetBrains Mono"
 font-family = "Iosevka"
-# font-size = 12.k
+# font-size = 12
 
 # New windows inherit previous window’s font size
 window-inherit-font-size = true

@@ -8,6 +8,9 @@ $directory\
 $git_status\
 $git_branch\
 $git_state\
+$fill\
+$cmd_duration\
+$time\
 $line_break\
 $line_break\
 $character
@@ -20,7 +23,7 @@ $character
 [directory]
 truncation_length = 4
 style = "fg:mantle bg:pink"
-format = "[ $path ]($style)"
+format = "[ 󰉋 $path ]($style)"
 
 [git_status]
 style = "fg:text bg:base"
@@ -28,7 +31,26 @@ format = "[ $all_status$ahead_behind ]($style)"
 
 [git_branch]
 style = "fg:base bg:blue"
-format = "[ $branch ]($style)"
+format = "[  $branch ]($style)"
+
+[git_state]
+style = "fg:base bg:yellow"
+format = "[ ⚡$state( $progress_current/$progress_total) ]($style)"
+
+[fill]
+symbol = "  "
+
+[time]
+disabled = false
+format = "[ 󰥔 $time ]($style)"
+style = "fg:base bg:lavender"
+time_format = "%H:%M"
+
+[cmd_duration]
+disabled = false
+min_time = 0
+format = "[ 󱦟 $duration ]($style)"
+style = "fg:base bg:peach"
 
 # ──────────────────────────────
 # 💻 UI / Visual
