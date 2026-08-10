@@ -26,10 +26,12 @@ The shell environment is split into modular components:
   - `gsy` - intelligent branch sync that merges from remote origin and closest parent branch
   - Tmux helpers (`tad`, `tkd`)
 
-- **`shell/dev_tmux.sh`**: Tmux session automation script that creates a "dev" session with:
+- **`shell/local/ops_tmux`**: Tmux session script for the ops project — creates an "ops" session with:
   - 5 windows: home, api-nvim, api-term, web-nvim, web-term
-  - Project-specific layouts for ~/Projects/ops-api and ~/Projects/ops-web
+  - Project-specific layouts for ~/Projects/ops/api and ~/Projects/ops/web
   - Split panes with nvim, claude CLI, and dev servers
+
+- **`shell/local/battery_tmux`**: Tmux session script for the battery project — same window structure as ops, using ~/Projects/battery/back-end and ~/Projects/battery/front-end (session name: "battery")
 
 ### Neovim Configuration
 
@@ -109,8 +111,10 @@ gstash / gstashp # git stash / git stash pop
 ### Tmux
 
 ```bash
-tad             # Launch dev_tmux.sh (creates or attaches to "dev" session)
-tkd             # Kill tmux dev session (with confirmation)
+tad ops         # Create or attach to "ops" tmux session (~/Projects/ops/api + web)
+tad battery     # Create or attach to "battery" tmux session (~/Projects/battery/back-end + front-end)
+tkd ops         # Kill "ops" tmux session (with confirmation)
+tkd battery     # Kill "battery" tmux session (with confirmation)
 ```
 
 ### System Maintenance

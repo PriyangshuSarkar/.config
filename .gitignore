@@ -4,6 +4,11 @@ cursor/
 shell/local/
 .antigravitycli/
 
+# Podman runtime/machine state (ephemeral, host-specific)
+containers/podman/
+containers/podman-connections.json
+containers/enable-rosetta
+
 # Environment and secrets
 .env
 .env.local

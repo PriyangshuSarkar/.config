@@ -20,6 +20,7 @@ set -o vi
 # -----------------------------
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 export PATH="$HOME/.bun/bin:/opt/homebrew/opt/openjdk/bin:$HOME/.codeium/windsurf/bin:/opt/homebrew/opt/postgresql@17/bin:$PATH"
+export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 export PATH="$PATH:$HOME/.local/bin"
 
 # -----------------------------

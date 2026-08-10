@@ -26,15 +26,16 @@ window-inherit-working-directory = true
 ########################################
 
 # font-family = "Fira Code"
-# font-family = "JetBrains Mono"
-font-family = "Iosevka"
-# font-size = 12
+font-family = "JetBrains Mono"
+# font-family = "Iosevka"
 
-# New windows inherit previous window’s font size
-window-inherit-font-size = true
+font-family = "Symbols Nerd Font"
 
+font-size = 12
+
+# Cursor Style
 cursor-style = bar
-cursor-style-blink = true
+cursor-style-blink = false
 
 ########################################
 # 3. Appearance & Theme
@@ -48,27 +49,23 @@ theme = Catppuccin Mocha
 
 
 # Background styling
-background-opacity = 1
-background-blur-radius = 0
+background-opacity = 0.95
+background-blur-radius = 5
 
 ########################################
 # 4. Window Behavior (macOS)
 ########################################
 
+window-theme = system
 window-decoration = auto
 window-padding-balance = true
+window-inherit-font-size = true
 macos-non-native-fullscreen = false
 macos-window-buttons = visible
 macos-titlebar-style = hidden
 macos-window-shadow = true
 macos-option-as-alt = left
 macos-shortcuts = allow
-
-# Unbind default alt+arrow navigation
-keybind = alt+left=unbind
-keybind = alt+right=unbind
-keybind = alt+up=unbind
-keybind = alt+down=unbind
 
 # Use Display P3 color space (Retina-compatible)
 window-colorspace = display-p3
@@ -84,7 +81,7 @@ window-save-state = default
 ########################################
 
 # Scrollback buffer size (in bytes)
-scrollback-limit = 20000000
+# scrollback-limit = 20000000
 
 ########################################
 # 6. Quality of Life
