@@ -14,6 +14,7 @@ return {
         dark = "mocha",
       },
       transparent_background = true,
+      term_colors = true,
       float = {
         transparent = false,
         solid = false,
