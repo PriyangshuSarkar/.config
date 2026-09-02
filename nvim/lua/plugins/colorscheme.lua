@@ -13,11 +13,10 @@ return {
         light = "frappe",
         dark = "mocha",
       },
-      transparent_background = true,
+      transparent_background = false,
       term_colors = true,
       float = {
         transparent = false,
-        solid = false,
       },
     },
   },
