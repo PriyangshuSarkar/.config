@@ -114,11 +114,11 @@ _gref_exists() {
     git show-ref --verify --quiet "refs/remotes/$1"
 }
 
-_gsy_merge() {
+_gsy_rebase() {
   local target="$1"
-  echo "🔁 merging $target..."
-  git merge "$target" || {
-    echo "❌ merge with $target failed."
+  echo "🔁 rebasing onto $target..."
+  git rebase "$target" || {
+    echo "❌ rebase onto $target failed."
     return 1
   }
 }
@@ -146,7 +146,7 @@ gsy() {
     remote_branch="${remote}/${branch}"
 
     if _gref_exists "$remote_branch"; then
-      _gsy_merge "$remote_branch" || return 1
+      _gsy_rebase "$remote_branch" || return 1
     else
       echo "⚠️  remote branch '$remote_branch' not found (skipping)."
     fi
@@ -157,7 +157,7 @@ gsy() {
   # 2️⃣ sync with user-specified extra branch
   if [ -n "$extra_branch" ]; then
     if _gref_exists "$extra_branch"; then
-      _gsy_merge "$extra_branch" || return 1
+      _gsy_rebase "$extra_branch" || return 1
     else
       echo "⚠️  branch '$extra_branch' not found (skipping)."
     fi
