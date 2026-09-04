@@ -23,7 +23,7 @@ The shell environment is split into modular components:
   - Command aliases (lsd, bat, nvim)
   - Git workflow functions (`ga`, `gs`, `gc`, `gp`, etc.)
   - Branch management (`gsw`, `gn`, `gb`, `gr`, `gdel`)
-  - `gsy` - intelligent branch sync that rebases onto remote origin and closest parent branch
+  - `gsy` - branch sync that rebases onto the remote tracking branch and an optional extra branch; `--all` syncs every local branch
   - Tmux helpers (`tad`, `tkd`)
 
 - **`shell/local/ops_tmux`**: Tmux session script for the ops project — creates an "ops" session with:
@@ -88,7 +88,7 @@ gs              # git status -sb
 gc              # git commit (supports arguments)
 gcx             # git-cz (uses git-cz if available via bun)
 gca             # git commit --amend
-gp              # git push
+gp [--all]      # git push (current branch, or every local branch with --all; failures are skipped, not fatal)
 gu              # git reset --soft HEAD~1
 
 # Branch operations
@@ -99,7 +99,7 @@ gr <new-name> [old-name]        # Rename branch
 gdel <branch>                   # Delete branch (prompts for force if needed)
 
 # Branch syncing
-gsy [extra-branch]  # Intelligent sync: rebases onto origin/<current>, closest parent, and optional extra branch
+gsy [--all] [extra-branch]  # Rebase onto origin/<current> and optional extra branch; --all syncs every local branch (aborts + continues past conflicts)
 
 # Utilities
 gl              # git log --oneline --graph --decorate --all

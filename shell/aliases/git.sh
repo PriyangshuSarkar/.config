@@ -123,13 +123,9 @@ _gsy_rebase() {
   }
 }
 
-gsy() {
-  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
-    echo "❌ not inside a git repository."
-    return 1
-  }
-
+_gsy_branch() {
   local branch remote remote_branch extra_branch
+  extra_branch="$1"
   branch=$(git rev-parse --abbrev-ref HEAD)
 
   if [ -z "$branch" ] || [ "$branch" = "HEAD" ]; then
@@ -138,7 +134,6 @@ gsy() {
   fi
 
   remote=$(git remote | head -n 1)
-  extra_branch="$1"
 
   # 1️⃣ sync with remote tracking branch
   if [ -n "$remote" ]; then
@@ -166,15 +161,100 @@ gsy() {
   echo "✅ branch '$branch' synced."
 }
 
+_gsy_all() {
+  local extra_branch original_branch branch branches
+  extra_branch="$1"
+  original_branch=$(git rev-parse --abbrev-ref HEAD)
+  branches=($(git for-each-ref --format='%(refname:short)' refs/heads/))
+
+  for branch in "${branches[@]}"; do
+    _grun "🔀" git switch "$branch" || {
+      echo "⚠️  could not switch to '$branch' (skipping)."
+      continue
+    }
+
+    _gsy_branch "$extra_branch" || {
+      echo "❌ conflict syncing '$branch', aborting rebase..."
+      _grun "🧹" git rebase --abort
+    }
+  done
+
+  _grun "🔀" git switch "$original_branch"
+  echo "✅ all branches synced."
+}
+
+gsy() {
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
+    echo "❌ not inside a git repository."
+    return 1
+  }
+
+  if [ "$1" = "--all" ]; then
+    shift
+    _gsy_all "$1"
+    return
+  fi
+
+  _gsy_branch "$1"
+}
+
 # ===============================
 # git push helpers
 # ===============================
 
+_gp_in_sync() {
+  local branch="$1"
+  _gref_exists "origin/$branch" || return 1
+  [ "$(git rev-parse "$branch")" = "$(git rev-parse "origin/$branch")" ]
+}
+
+_gp_branch() {
+  local branch="$1" batch="$2"
+  _gfetch || return 1
+
+  if _gp_in_sync "$branch"; then
+    echo "✅ '$branch' already in sync with origin, skipping push."
+    return 0
+  fi
+
+  if ! _gref_exists "origin/$branch"; then
+    if [ "$batch" = "1" ]; then
+      echo "⚠️  '$branch' not found on origin (skipping, run 'gp' on it directly to create)."
+      return 0
+    fi
+
+    local confirm
+    echo -n "🌱 branch '$branch' not found on origin. create it and push? [y/N]: "
+    read -r confirm
+    if [[ ! "$confirm" =~ ^[yY]$ ]]; then
+      echo "🚫 push cancelled, '$branch' not created on origin."
+      return 1
+    fi
+  fi
+
+  _grun "🚀" git push origin "$branch"
+}
+
+_gp_all() {
+  local branch branches
+  branches=($(git for-each-ref --format='%(refname:short)' refs/heads/))
+
+  for branch in "${branches[@]}"; do
+    _gp_branch "$branch" 1 || echo "⚠️  failed to push '$branch' (skipping)."
+  done
+
+  echo "✅ all branches pushed."
+}
+
 gp() {
+  if [ "$1" = "--all" ]; then
+    _gp_all
+    return
+  fi
+
   local branch
   branch=$(git rev-parse --abbrev-ref HEAD)
-  echo "🚀 $ git push origin $branch"
-  git push origin HEAD
+  _gp_branch "$branch"
 }
 
 # ===============================
