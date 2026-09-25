@@ -2,6 +2,6 @@
 deps = []
 
 [[flavor.deps]]
-use = "BennyOe/onedark"
-rev = "668d71d"
-hash = "1e647ba2d7c6e6f2bafe858ad9a4e50a"
+use = "damjee/onedark"
+rev = "3735edb"
+hash = "271fb4c548cebe08a557802d7dc89316"

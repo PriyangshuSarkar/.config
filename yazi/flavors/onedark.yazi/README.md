@@ -1,10 +1,7 @@
-<div align="center">
-  <img src="https://github.com/sxyazi/yazi/blob/main/assets/logo.png?raw=true" alt="Yazi logo" width="20%">
-</div>
-
 <h3 align="center">
-	Onedark Flavor for <a href="https://github.com/sxyazi/yazi">Yazi</a>
+	OneDark Yazi Flavor
 </h3>
+
 
 ## 👀 Preview
 
@@ -12,26 +9,30 @@
 
 ## 🎨 Installation
 
-```bash
-# Linux/macOS
-git clone https://github.com/BennyOe/onedark.yazi.git ~/.config/yazi/flavors/onedark.yazi
 
-# Windows
-git clone https://github.com/BennyOe/onedark.yazi.git %AppData%\yazi\config\flavors\onedark.yazi
+```sh
+ya pkg add damjee/onedark
 ```
 
 ## ⚙️ Usage
 
-Add the these lines to your `theme.toml` configuration file to use it:
+<!--
+If your flavor uses a light color scheme, use "light" instead of "dark" wherever it appears below.
+-->
 
+To set it as your dark flavor, change the content of your `theme.toml` to:
 
 ```toml
 [flavor]
 dark = "onedark"
 ```
 
+Make sure your `theme.toml` doesn't contain anything other than `[flavor]`, unless you want to override certain styles of this flavor.
+
+See the [Yazi flavor documentation](https://yazi-rs.github.io/docs/flavors/overview) for more details.
+
 ## 📜 License
 
-The flavor is MIT-licensed, and the included tmTheme is also MIT-licensed.
+The flavor is MIT-licensed.
 
 Check the [LICENSE](LICENSE) and [LICENSE-tmtheme](LICENSE-tmtheme) file for more details.
