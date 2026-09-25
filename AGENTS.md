@@ -45,7 +45,7 @@ LazyVim-based setup using lazy.nvim plugin manager:
 ### Tmux Configuration
 
 - **Config file**: `tmux/tmux.conf`
-- **Theme**: Catppuccin Mocha via catppuccin/tmux plugin
+- **Theme**: One Dark via odedlaz/tmux-onedark-theme plugin
 - **Key plugins**: tpm, tmux-sensible, vim-tmux-navigator, tmux-yank, tmux-resurrect, tmux-continuum, tmux-fzf
 - **Keybindings**:
   - `|` for horizontal split
@@ -55,9 +55,9 @@ LazyVim-based setup using lazy.nvim plugin manager:
 
 ### Other Key Configurations
 
-- **Starship prompt**: `starship/themes/catppuccin.toml` — Catppuccin Mocha theme configured in `starship/starship.sh`
-- **Zed editor**: `zed/settings.json` — Vim mode enabled, Catppuccin theme, format on save with Prettier, relative line numbers
-- **LazyGit**: `lazygit/` — Catppuccin Mocha color scheme
+- **Starship prompt**: `starship.toml` (repo root) — generic ANSI color names (theming comes from the terminal, which is set to One Dark); initialized in `shell/shell.sh` (`starship init bash`/`zsh`)
+- **Zed editor**: `zed/settings.json` — Vim mode enabled, One Dark theme, format on save with Prettier, relative line numbers
+- **LazyGit**: `lazygit/` — One Dark color scheme
 - **Aerospace**: macOS window manager, `aerospace/aerospace.toml`
 
 ## System Update Automation
@@ -137,7 +137,7 @@ nvim --headless "+TSUpdate" "+qall"
 ## Important Notes
 
 - **Vi mode everywhere**: Shell, nvim, tmux copy mode, and Zed all use vi keybindings
-- **Theme**: Catppuccin Mocha is the exclusive theme across all tools for visual consistency.
+- **Theme**: One Dark (Atom) is the exclusive theme across all tools for visual consistency.
 - **Shell compatibility**: `shell.sh` and `aliases.sh` must remain compatible with both Bash and Zsh; Zsh-only features are conditionally wrapped
 - **Zsh branch completions**: `gsw`, `gdel`, `gn` autocomplete branch names via `_git_branch_completion`
 - **Git commit style**: Conventional commits with emoji prefix (e.g. `feat: 🎸`, `fix: 🐛`, `chore: 🤖`, `refactor: ♻️`)

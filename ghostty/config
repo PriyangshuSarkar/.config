@@ -41,11 +41,11 @@ cursor-style-blink = false
 # 3. Appearance & Theme
 ########################################
 
-# Use Catppuccin themes (light/dark auto switch)
-# theme = light:Catppuccin Frappe,dark:Catppuccin Mocha
+# Use Atom One Dark theme (light/dark auto switch)
+# theme = light:Atom One Light,dark:Atom One Dark
 
-# Use Catppuccin themes
-theme = Catppuccin Mocha
+# Use Atom One Dark theme
+theme = Atom One Dark
 
 
 # Background styling

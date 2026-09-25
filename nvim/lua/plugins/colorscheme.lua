@@ -4,26 +4,19 @@
 
 return {
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    "navarasu/onedark.nvim",
+    name = "onedark",
     priority = 1000,
     opts = {
-      flavour = "mocha", -- latte, frappe, macchiato, mocha
-      background = { -- :h background
-        light = "frappe",
-        dark = "mocha",
-      },
-      transparent_background = false,
+      style = "dark",
+      transparent = true,
       term_colors = true,
-      float = {
-        transparent = false,
-      },
     },
   },
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin-nvim",
+      colorscheme = "onedark",
     },
   },
 }

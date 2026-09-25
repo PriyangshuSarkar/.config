@@ -1,6 +1,6 @@
 [flavor]
-dark = "catppuccin-mocha"
-light = "catppuccin-mocha"
+dark = "onedark"
+light = "onedark"
 
 [mgr]
 border_symbol = "│"
