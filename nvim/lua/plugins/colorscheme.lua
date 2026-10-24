@@ -8,8 +8,8 @@ return {
     name = "onedark",
     priority = 1000,
     opts = {
-      style = "dark",
-      transparent = true,
+      style = "darker",
+      transparent = false,
       term_colors = true,
     },
   },

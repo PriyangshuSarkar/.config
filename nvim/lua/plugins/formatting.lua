@@ -1,6 +1,8 @@
 return {
   "stevearc/conform.nvim",
   opts = {
+    -- use the LSP formatter when no conform formatter is configured for a filetype
+    default_format_opts = { lsp_format = "fallback" },
     formatters_by_ft = {
       javascript = { "prettier" },
       typescript = { "prettier" },
