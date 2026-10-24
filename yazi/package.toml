@@ -2,6 +2,21 @@
 deps = []
 
 [[flavor.deps]]
-use = "damjee/onedark"
-rev = "3735edb"
-hash = "271fb4c548cebe08a557802d7dc89316"
+use = "yazi-rs/flavors:catppuccin-mocha"
+rev = "1183892"
+hash = "ce320f877fe709b189433941aba747c4"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-macchiato"
+rev = "1183892"
+hash = "5b1bf96d1cba26376087c37de993c517"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-frappe"
+rev = "1183892"
+hash = "ab7c71d442d3a9e16331ea0d95ab36a8"
+
+[[flavor.deps]]
+use = "yazi-rs/flavors:catppuccin-latte"
+rev = "1183892"
+hash = "273ee53369ccfbf7feb9b0c65e387ed8"
