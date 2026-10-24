@@ -124,7 +124,7 @@ _gsy_merge() {
 }
 
 _gsy_branch() {
-  local branch remote remote_branch extra_branch
+  local branch remote remote_branch extra_branch upstream
   extra_branch="$1"
   branch=$(git rev-parse --abbrev-ref HEAD)
 
@@ -135,10 +135,10 @@ _gsy_branch() {
 
   remote=$(git remote | head -n 1)
 
-  # 1️⃣ sync with remote tracking branch
+  # 1️⃣ sync with the branch's own upstream (falls back to guessed remote/branch)
   if [ -n "$remote" ]; then
-    _gfetch || return 1
-    remote_branch="${remote}/${branch}"
+    upstream=$(git rev-parse --abbrev-ref --symbolic-full-name "${branch}@{upstream}" 2>/dev/null)
+    remote_branch="${upstream:-${remote}/${branch}}"
 
     if _gref_exists "$remote_branch"; then
       _gsy_merge "$remote_branch" || return 1
@@ -188,6 +188,8 @@ gsy() {
     echo "❌ not inside a git repository."
     return 1
   }
+
+  _gfetch || return 1
 
   if [ "$1" = "--all" ]; then
     shift
