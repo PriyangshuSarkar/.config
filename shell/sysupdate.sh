@@ -84,12 +84,9 @@ if command -v nvim >/dev/null 2>&1; then
   run_cmd "nvim remote plugins update" nvim --headless "+UpdateRemotePlugins" "+qall"
 fi
 
-# --- tmux TPM ---
-tpm_dir="$HOME/.tmux/plugins/tpm"
-if [[ -d "$tpm_dir" ]]; then
-  run_cmd "tmux tpm install" "$tpm_dir/bin/install_plugins"
-  run_cmd "tmux tpm update" "$tpm_dir/bin/update_plugins" all
-  run_cmd "tmux tpm clean" "$tpm_dir/bin/clean_plugins"
+# --- herdr plugins ---
+if command -v herdr >/dev/null 2>&1; then
+  run_cmd "herdr plugin update" herdr plugin update --yes
 fi
 
 # --- ya ---

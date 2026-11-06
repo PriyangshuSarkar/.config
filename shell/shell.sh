@@ -74,6 +74,9 @@ if [ "$SHELL_TYPE" = "zsh" ]; then
 
   # Mole shell completion
   if output="$(mole completion zsh 2>/dev/null)"; then eval "$output"; fi
+
+  # Herdr shell completion
+  if output="$(herdr completion zsh 2>/dev/null)"; then eval "$output"; fi
 fi
 
 # -----------------------------

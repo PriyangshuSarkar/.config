@@ -1,0 +1,55 @@
+onboarding = false
+
+[session]
+resume_agents_on_restore = false
+
+[ui.toast]
+delivery = "terminal"
+
+[ui]
+status_indicators = "dots"
+sidebar_start_collapsed = true
+sidebar_collapsed_mode = "hidden"
+hide_tab_bar_when_single_tab = true
+tab_bar_position = "bottom"
+pane_outer_borders = false
+pane_scrollbars = false
+pane_gaps = false
+
+[theme]
+name = "catppuccin"
+
+# ===============================
+# NAVIGATE MODE (prefix+w): j/k move between spaces, panes use h/l and ctrl+j/k
+# ===============================
+[keys]
+navigate_workspace_up = ["up", "k"]
+navigate_workspace_down = ["down", "j"]
+navigate_pane_up = "ctrl+k"
+navigate_pane_down = "ctrl+j"
+
+# Global back-and-forth between the last two focused panes (across tabs/workspaces)
+last_pane = "prefix+tab"
+
+# ===============================
+# NEOVIM <-> HERDR NAVIGATION (vim-herdr-navigation plugin)
+# ===============================
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "vim-herdr-navigation.left"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "vim-herdr-navigation.down"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "vim-herdr-navigation.up"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "vim-herdr-navigation.right"

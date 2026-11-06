@@ -24,14 +24,14 @@ The shell environment is split into modular components:
   - Git workflow functions (`ga`, `gs`, `gc`, `gp`, etc.)
   - Branch management (`gsw`, `gn`, `gb`, `gr`, `gdel`)
   - `gsy` - branch sync that merges in the remote tracking branch and an optional extra branch; `--all` syncs every local branch
-  - Tmux helpers (`tad`, `tkd`)
 
-- **`shell/local/ops_tmux`**: Tmux session script for the ops project — creates an "ops" session with:
-  - 5 windows: home, api-nvim, api-term, web-nvim, web-term
-  - Project-specific layouts for ~/Projects/ops/api and ~/Projects/ops/web
-  - Split panes with nvim, claude CLI, and dev servers
+- **`shell/local/herdr.sh`** (gitignored, system-specific): Herdr session helpers (`had`, `hkd`)
 
-- **`shell/local/battery_tmux`**: Tmux session script for the battery project — same window structure as ops, using ~/Projects/battery/back-end and ~/Projects/battery/front-end (session name: "battery")
+- **`shell/local/ops_herdr`**: Herdr session script for the ops project — creates a named "ops" session (headless server, then attach) with:
+  - 3 workspaces: `api`, `web`, `home` (opens on home); the sidebar groups each project's agents under its workspace
+  - `api` and `web` each have 2 tabs: `nvim` (nvim | claude) and `term` (dev server over a shell), for ~/Projects/ops/api and ~/Projects/ops/web
+
+- **`shell/local/battery_herdr`**: Herdr session script for the battery project — same structure as ops with workspaces `be` and `fe` (~/Projects/battery/back-end and ~/Projects/battery/front-end) plus `home` (session name: "battery")
 
 ### Neovim Configuration
 
@@ -40,18 +40,17 @@ LazyVim-based setup using lazy.nvim plugin manager:
 - **Entry point**: `nvim/init.lua` loads `config.lazy`
 - **Structure**: `nvim/lua/config/` contains core config (autocmds, keymaps, options)
 - **Plugins**: `nvim/lua/plugins/` contains custom plugin configurations
-- **Key plugins**: colorscheme, git integration, formatting, vim-tmux-navigator, lualine
+- **Key plugins**: colorscheme, git integration, formatting, vim-herdr-navigation (only loaded inside Herdr), lualine
 
-### Tmux Configuration
+### Herdr Configuration
 
-- **Config file**: `tmux/tmux.conf`
-- **Theme**: Catppuccin Mocha via catppuccin/tmux plugin
-- **Key plugins**: tpm, tmux-sensible, vim-tmux-navigator, tmux-yank, tmux-resurrect, tmux-continuum, tmux-fzf
-- **Keybindings**:
-  - `|` for horizontal split
-  - `-` for vertical split
-  - `prefix r` to reload config
-- **Features**: Mouse support, 256-color terminal, vi-mode copy
+Herdr (terminal workspace manager for AI agents) replaces tmux.
+
+- **Config file**: `herdr/config.toml` — the only tracked file in `herdr/`; sessions, sockets, logs and installed plugins are gitignored
+- **Theme**: built-in `catppuccin`
+- **Plugins**: `vim-herdr-navigation` (installed with `herdr plugin install paulbkim-dev/vim-herdr-navigation`)
+- **Keybindings**: default prefix `ctrl+b`; `ctrl+h/j/k/l` are bound to the navigation plugin's actions (forward to nvim when it is in the foreground, otherwise move pane focus)
+- **Reload config**: `prefix+shift+r` or `herdr server reload-config`
 
 ### Other Key Configurations
 
@@ -69,7 +68,7 @@ Runs with 10-minute timeout per operation and updates:
 - Homebrew (update, upgrade, cleanup)
 - Bun and npm global packages
 - Neovim plugins (Lazy sync/update, Mason, MasonToolsUpdate, TSUpdate)
-- Tmux plugins (via tpm)
+- Herdr plugins (`herdr plugin update`)
 - Yazi packages
 
 **Log location**: `~/Library/Logs/sysupdate.log` (overwritten on each run)
@@ -108,13 +107,14 @@ gd              # Show both unstaged and staged diffs
 gstash / gstashp # git stash / git stash pop
 ```
 
-### Tmux
+### Herdr
 
 ```bash
-tad ops         # Create or attach to "ops" tmux session (~/Projects/ops/api + web)
-tad battery     # Create or attach to "battery" tmux session (~/Projects/battery/back-end + front-end)
-tkd ops         # Kill "ops" tmux session (with confirmation)
-tkd battery     # Kill "battery" tmux session (with confirmation)
+had ops         # Attach to running "ops" herdr session, else build it fresh (~/Projects/ops/api + web)
+had battery     # Same for "battery" (~/Projects/battery/back-end + front-end)
+had -c ops      # --continue: restore a stopped session as-is (old layout + claude --resume) instead of rebuilding
+hkd ops         # Stop "ops" herdr session (with confirmation); kept on disk for `had -c`
+hkd battery     # Stop "battery" herdr session (with confirmation)
 ```
 
 ### System Maintenance
@@ -136,7 +136,7 @@ nvim --headless "+TSUpdate" "+qall"
 
 ## Important Notes
 
-- **Vi mode everywhere**: Shell, nvim, tmux copy mode, and Zed all use vi keybindings
+- **Vi mode everywhere**: Shell, nvim, herdr copy mode, and Zed all use vi keybindings
 - **Theme**: Catppuccin Mocha is the exclusive theme across all tools for visual consistency.
 - **Shell compatibility**: `shell.sh` and `aliases.sh` must remain compatible with both Bash and Zsh; Zsh-only features are conditionally wrapped
 - **Zsh branch completions**: `gsw`, `gdel`, `gn` autocomplete branch names via `_git_branch_completion`

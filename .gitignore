@@ -33,3 +33,7 @@ containers/enable-rosetta
 bun.lock
 lazy-lock.json
 lock.mdb
+
+# Herdr runtime state (sessions, sockets, plugins) — only config.toml is tracked
+herdr/*
+!herdr/config.toml
