@@ -25,9 +25,7 @@ window-inherit-working-directory = true
 # 2. Font & Cursor Configuration
 ########################################
 
-# font-family = "Fira Code"
 font-family = "JetBrains Mono"
-# font-family = "Iosevka"
 
 font-family = "Symbols Nerd Font"
 
