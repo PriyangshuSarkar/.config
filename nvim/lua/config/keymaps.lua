@@ -81,3 +81,49 @@ vim.keymap.set("v", "<leader>cY", function()
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "x", false)
   copy_context("v", true)
 end, { desc = "Copy absolute context path:lines" })
+
+-- ─── Toggle block comments (/** ... */) ──────────────────────────────────────
+-- Built-in `gc` is linewise (`// %s`) and can't uncomment JSDoc blocks.
+-- <leader>cb (normal)  – uncomment the /* ... */ block under the cursor
+-- <leader>cb (visual)  – wrap the selection in /** ... */, or unwrap if it already is one
+
+local function toggle_block_comment(l1, l2)
+  local lines = vim.api.nvim_buf_get_lines(0, l1 - 1, l2, false)
+  local indent = lines[1]:match("^%s*")
+  local out = {}
+
+  if lines[1]:match("^%s*/%*") and lines[#lines]:match("%*/%s*$") then
+    for i, line in ipairs(lines) do
+      local body = line
+      if i == 1 then body = body:gsub("^%s*/%*+%s?", "") end
+      if i == #lines then body = body:gsub("%s*%*+/%s*$", "") end
+      if i ~= 1 then body = body:gsub("^%s*%* ?", "") end
+      if body:match("%S") then out[#out + 1] = indent .. body end
+    end
+  else
+    out[1] = indent .. "/**"
+    for _, line in ipairs(lines) do
+      out[#out + 1] = indent .. " *" .. (line:match("%S") and (" " .. line:sub(#indent + 1)) or "")
+    end
+    out[#out + 1] = indent .. " */"
+  end
+
+  vim.api.nvim_buf_set_lines(0, l1 - 1, l2, false, out)
+end
+
+vim.keymap.set("n", "<leader>cb", function()
+  local start = vim.fn.search([[^\s*/\*]], "bcnW")
+  local stop = vim.fn.search([[\*/\s*$]], "cnW")
+  if start == 0 or stop == 0 then
+    vim.notify("No block comment under cursor", vim.log.levels.WARN)
+    return
+  end
+  toggle_block_comment(start, stop)
+end, { desc = "Uncomment block comment" })
+
+vim.keymap.set("x", "<leader>cb", function()
+  local l1, l2 = vim.fn.line("v"), vim.fn.line(".")
+  if l1 > l2 then l1, l2 = l2, l1 end
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "nx", false)
+  toggle_block_comment(l1, l2)
+end, { desc = "Toggle block comment" })
