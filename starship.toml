@@ -14,7 +14,8 @@ $line_break\
 $character
 """
 
-# Semantic names map to ANSI colors, so they follow the terminal theme
+# Semantic names map to ANSI colors (follow the terminal theme); base is the
+# Catppuccin Mocha background, which has no ANSI slot
 palette = "terminal"
 
 # ──────────────────────────────
@@ -73,7 +74,7 @@ vimcmd_visual_symbol = "[❮](bold fg:secondary)"
 [palettes.terminal]
 primary = "blue"
 secondary = "purple"
-base = "black"
+base = "#1e1e2e"
 muted = "bright-black"
 warning = "yellow"
 error = "red"
