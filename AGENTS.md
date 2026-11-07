@@ -140,7 +140,7 @@ nvim --headless "+TSUpdate" "+qall"
 - **Theme**: Catppuccin Mocha is the exclusive theme across all tools for visual consistency.
 - **Shell compatibility**: `shell.sh` and `aliases.sh` must remain compatible with both Bash and Zsh; Zsh-only features are conditionally wrapped
 - **Zsh branch completions**: `gsw`, `gdel`, `gn` autocomplete branch names via `_git_branch_completion`
-- **Git commit style**: Conventional commits with emoji prefix (e.g. `feat: 🎸`, `fix: 🐛`, `chore: 🤖`, `refactor: ♻️`)
+- **Git commit style**: Must match [git-cz](https://github.com/streamich/git-cz) output exactly — see [Commit Message Rules](#commit-message-rules)
 - **Preferred package managers**: bun (Node.js), brew (macOS packages)
 - **Untracked directories**: `cursor/` and `ngrok/` are intentionally untracked; do not add them to git
 
@@ -150,3 +150,40 @@ nvim --headless "+TSUpdate" "+qall"
 - **Neovim plugins**: Add new plugins as separate files in `nvim/lua/plugins/`
 - **Git functions**: All git helpers go in `shell/aliases.sh` with an `echo` showing the command being run (existing style)
 - **Shell script style**: Maintain existing comment block separators (`# ===`) and emoji usage
+
+## Commit Message Rules
+
+Every commit message must be exactly what [git-cz](https://github.com/streamich/git-cz) would produce (defaults from `lib/defaults.js` and `lib/formatCommitMessage.js`). Never use a type or emoji outside this table.
+
+| Type | Emoji | Use for |
+| --- | --- | --- |
+| `feat` | 🎸 | A new feature |
+| `fix` | 🐛 | A bug fix |
+| `chore` | 🤖 | Build process or auxiliary tool changes |
+| `docs` | ✏️ | Documentation only changes |
+| `refactor` | 💡 | A code change that neither fixes a bug nor adds a feature |
+| `style` | 💄 | Markup, white-space, formatting, missing semi-colons... |
+| `perf` | ⚡️ | A code change that improves performance |
+| `test` | 💍 | Adding missing tests |
+| `ci` | 🎡 | CI related changes |
+| `release` | 🏹 | Create a release commit |
+
+**Layout** (every section except the header is optional):
+
+```
+<type>(<scope>): <emoji> <subject>
+
+<body, wrapped at 72 columns>
+
+BREAKING CHANGE: 🧨 <description>
+
+✅ Closes: <issues, e.g. #123>
+```
+
+- **Header**: `type(scope): emoji subject` — one space after the colon, one space between emoji and subject. Omit the parentheses entirely when there is no scope (`feat: 🎸 add keymap`).
+- **Subject**: imperative, present tense ("add", not "added"), no trailing period, 3–61 characters (64-character header budget minus the emoji and space), lowercase start.
+- **Body**: blank line after the header; explain motivation and contrast with previous behavior; wrap at 72 columns.
+- **Breaking changes**: blank line, then `BREAKING CHANGE: 🧨 ` followed by the description.
+- **Issues**: blank line, then `✅ Closes: ` followed by the issue refs.
+- Trailers required by the harness (e.g. `Co-Authored-By`, `Claude-Session`) go last, after a blank line.
+- One logical change per commit; never invent types (`feat!`, `build`, etc.).
