@@ -39,8 +39,8 @@ cursor-style-blink = false
 # 3. Appearance & Theme
 ########################################
 
-# Use Tokyo Night theme
-theme = TokyoNight
+# Use Catppuccin theme
+theme = Catppuccin Mocha
 
 
 # Background styling
