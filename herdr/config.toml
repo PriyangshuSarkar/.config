@@ -17,7 +17,7 @@ pane_scrollbars = false
 pane_gaps = false
 
 [theme]
-name = "catppuccin"
+name = "tokyo-night"
 
 # ===============================
 # NAVIGATE MODE (prefix+w): j/k move between spaces, panes use h/l and ctrl+j/k
