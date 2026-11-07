@@ -47,15 +47,14 @@ LazyVim-based setup using lazy.nvim plugin manager:
 Herdr (terminal workspace manager for AI agents) replaces tmux.
 
 - **Config file**: `herdr/config.toml` — the only tracked file in `herdr/`; sessions, sockets, logs and installed plugins are gitignored
-- **Theme**: built-in `catppuccin`
+- **Theme**: built-in `tokyo-night`
 - **Plugins**: `vim-herdr-navigation` (installed with `herdr plugin install paulbkim-dev/vim-herdr-navigation`)
 - **Keybindings**: default prefix `ctrl+b`; `ctrl+h/j/k/l` are bound to the navigation plugin's actions (forward to nvim when it is in the foreground, otherwise move pane focus)
 - **Reload config**: `prefix+shift+r` or `herdr server reload-config`
 
 ### Other Key Configurations
 
-- **Starship prompt**: `starship.toml` (repo root) — Catppuccin Mocha palette (from catppuccin/starship); initialized in `shell/shell.sh` (`starship init bash`/`zsh`)
-- **Zed editor**: `zed/settings.json` — Vim mode enabled, Catppuccin theme, format on save with Prettier, relative line numbers
+- **Starship prompt**: `starship.toml` (repo root) — ANSI terminal colors (inherits the Ghostty Tokyo Night palette); initialized in `shell/shell.sh` (`starship init bash`/`zsh`)
 - **LazyGit**: `lazygit/` — generic terminal colors (no custom theme)
 - **Aerospace**: macOS window manager, `aerospace/aerospace.toml`
 
@@ -136,8 +135,8 @@ nvim --headless "+TSUpdate" "+qall"
 
 ## Important Notes
 
-- **Vi mode everywhere**: Shell, nvim, herdr copy mode, and Zed all use vi keybindings
-- **Theme**: Catppuccin Mocha is the exclusive theme across all tools for visual consistency.
+- **Vi mode everywhere**: Shell, nvim, and herdr copy mode all use vi keybindings
+- **Theme**: Tokyo Night is the exclusive theme across all tools for visual consistency.
 - **Shell compatibility**: `shell.sh` and `aliases.sh` must remain compatible with both Bash and Zsh; Zsh-only features are conditionally wrapped
 - **Zsh branch completions**: `gsw`, `gdel`, `gn` autocomplete branch names via `_git_branch_completion`
 - **Git commit style**: Must match [git-cz](https://github.com/streamich/git-cz) output exactly — see [Commit Message Rules](#commit-message-rules)
