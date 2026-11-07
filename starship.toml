@@ -28,7 +28,7 @@ format = "[ 󰉋 $path ]($style)"
 
 [git_status]
 style = "bg:base"
-format = "[ $all_status$ahead_behind ]($style)"
+format = "([ $all_status$ahead_behind ]($style))"
 
 [git_branch]
 style = "fg:secondary bg:base"
