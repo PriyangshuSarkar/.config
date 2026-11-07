@@ -25,7 +25,7 @@ palette = "terminal"
 [directory]
 truncation_length = 4
 style = "fg:primary bg:base"
-format = "[ 󰉋 $path ]($style)"
+format = "[󰉋 $path ]($style)"
 
 [git_status]
 style = "bg:base"
@@ -44,7 +44,7 @@ symbol = "  "
 
 [time]
 disabled = false
-format = "[ 󰥔 $time ]($style)"
+format = "[ 󰥔 $time]($style)"
 style = "bg:base"
 time_format = "%H:%M"
 
