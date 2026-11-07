@@ -60,7 +60,7 @@ style = "fg:warning bg:base"
 
 [character]
 disabled = false
-success_symbol = "[❯](bold fg:primary)"
+success_symbol = "[❯](bold fg:success)"
 error_symbol = "[❯](bold fg:error)"
 vimcmd_symbol = "[❮](bold fg:primary)"
 vimcmd_replace_one_symbol = "[❮](bold fg:secondary)"
@@ -76,5 +76,6 @@ primary = "blue"
 secondary = "purple"
 base = "#1e1e2e"
 muted = "bright-black"
+success = "green"
 warning = "yellow"
 error = "red"
