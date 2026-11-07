@@ -39,11 +39,8 @@ cursor-style-blink = false
 # 3. Appearance & Theme
 ########################################
 
-# Use Catppuccin themes (light/dark auto switch)
-# theme = light:Catppuccin Frappe,dark:Catppuccin Mocha
-
-# Use Catppuccin themes
-theme = Catppuccin Mocha
+# Use Tokyo Night theme
+theme = TokyoNight
 
 
 # Background styling
