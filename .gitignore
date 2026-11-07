@@ -37,3 +37,6 @@ lock.mdb
 # Herdr runtime state (sessions, sockets, plugins) — only config.toml is tracked
 herdr/*
 !herdr/config.toml
+
+# Herdr app config — ignored for now
+herdr-app/
