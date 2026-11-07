@@ -1,22 +1,22 @@
 # ──────────────────────────────
 # 🌍 Global Settings
 # ──────────────────────────────
+# Semantic names map to ANSI colors (follow the terminal theme); base is the
+# Catppuccin Mocha background, which has no ANSI slot
+palette = "terminal"
+
 format = """
 $directory\
-([│](fg:muted bg:base)$git_status)\
-([│](fg:muted bg:base)$git_branch)\
-([│](fg:muted bg:base)$git_state)\
+$git_status\
+$git_branch\
+$git_state\
 $fill\
-($cmd_duration[│](fg:muted bg:base))\
+$cmd_duration\
 $time\
 $line_break\
 $line_break\
 $character
 """
-
-# Semantic names map to ANSI colors (follow the terminal theme); base is the
-# Catppuccin Mocha background, which has no ANSI slot
-palette = "terminal"
 
 # ──────────────────────────────
 # 📁 Core Segments
@@ -24,19 +24,19 @@ palette = "terminal"
 
 [directory]
 truncation_length = 4
-style = "fg:primary bg:base"
-format = "[󰉋 $path ]($style)"
+style = "bold fg:base bg:secondary"
+format = "[ 󰉋 $path ]($style)"
 
 [git_status]
-style = "bg:base"
+style = "bold fg:white bg:base"
 format = "([ $all_status$ahead_behind ]($style))"
 
 [git_branch]
-style = "fg:secondary bg:base"
+style = "bold fg:base bg:primary"
 format = "[  $branch ]($style)"
 
 [git_state]
-style = "fg:warning bg:base"
+style = "bold fg:base bg:warning"
 format = "[ ⚡$state( $progress_current/$progress_total) ]($style)"
 
 [fill]
@@ -44,15 +44,15 @@ symbol = "  "
 
 [time]
 disabled = false
-format = "[ 󰥔 $time]($style)"
-style = "bg:base"
+format = "[ 󰥔 $time ]($style)"
+style = "bold fg:base bg:bright-purple"
 time_format = "%H:%M"
 
 [cmd_duration]
 disabled = false
 min_time = 0
 format = "[ 󱦟 $duration ]($style)"
-style = "fg:warning bg:base"
+style = "bold fg:base bg:bright-yellow"
 
 # ──────────────────────────────
 # 💻 UI / Visual
@@ -62,10 +62,10 @@ style = "fg:warning bg:base"
 disabled = false
 success_symbol = "[❯](bold fg:success)"
 error_symbol = "[❯](bold fg:error)"
-vimcmd_symbol = "[❮](bold fg:primary)"
-vimcmd_replace_one_symbol = "[❮](bold fg:secondary)"
-vimcmd_replace_symbol = "[❮](bold fg:secondary)"
-vimcmd_visual_symbol = "[❮](bold fg:secondary)"
+vimcmd_symbol = "[❮](bold fg:success)"
+vimcmd_replace_one_symbol = "[❮](bold fg:purple)"
+vimcmd_replace_symbol = "[❮](bold fg:purple)"
+vimcmd_visual_symbol = "[❮](bold fg:bright-purple)"
 
 # ──────────────────────────────
 # 🎨 Palette
