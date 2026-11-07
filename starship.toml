@@ -3,16 +3,19 @@
 # ──────────────────────────────
 format = """
 $directory\
-$git_status\
-$git_branch\
-$git_state\
+([│](fg:muted bg:base)$git_status)\
+([│](fg:muted bg:base)$git_branch)\
+([│](fg:muted bg:base)$git_state)\
 $fill\
-$cmd_duration\
+($cmd_duration[│](fg:muted bg:base))\
 $time\
 $line_break\
 $line_break\
 $character
 """
+
+# Semantic names map to ANSI colors, so they follow the terminal theme
+palette = "terminal"
 
 # ──────────────────────────────
 # 📁 Core Segments
@@ -20,19 +23,19 @@ $character
 
 [directory]
 truncation_length = 4
-style = "fg:black bg:purple"
+style = "fg:primary bg:base"
 format = "[ 󰉋 $path ]($style)"
 
 [git_status]
-style = "fg:white bg:black"
+style = "bg:base"
 format = "[ $all_status$ahead_behind ]($style)"
 
 [git_branch]
-style = "fg:black bg:blue"
+style = "fg:secondary bg:base"
 format = "[  $branch ]($style)"
 
 [git_state]
-style = "fg:black bg:yellow"
+style = "fg:warning bg:base"
 format = "[ ⚡$state( $progress_current/$progress_total) ]($style)"
 
 [fill]
@@ -41,14 +44,14 @@ symbol = "  "
 [time]
 disabled = false
 format = "[ 󰥔 $time ]($style)"
-style = "fg:black bg:bright-purple"
+style = "bg:base"
 time_format = "%H:%M"
 
 [cmd_duration]
 disabled = false
 min_time = 0
 format = "[ 󱦟 $duration ]($style)"
-style = "fg:black bg:bright-yellow"
+style = "fg:warning bg:base"
 
 # ──────────────────────────────
 # 💻 UI / Visual
@@ -56,9 +59,21 @@ style = "fg:black bg:bright-yellow"
 
 [character]
 disabled = false
-success_symbol = "[❯](bold fg:green)"
-error_symbol = "[❯](bold fg:red)"
-vimcmd_symbol = "[❮](bold fg:green)"
-vimcmd_replace_one_symbol = "[❮](bold fg:purple)"
-vimcmd_replace_symbol = "[❮](bold fg:purple)"
-vimcmd_visual_symbol = "[❮](bold fg:bright-purple)"
+success_symbol = "[❯](bold fg:primary)"
+error_symbol = "[❯](bold fg:error)"
+vimcmd_symbol = "[❮](bold fg:primary)"
+vimcmd_replace_one_symbol = "[❮](bold fg:secondary)"
+vimcmd_replace_symbol = "[❮](bold fg:secondary)"
+vimcmd_visual_symbol = "[❮](bold fg:secondary)"
+
+# ──────────────────────────────
+# 🎨 Palette
+# ──────────────────────────────
+
+[palettes.terminal]
+primary = "blue"
+secondary = "purple"
+base = "black"
+muted = "bright-black"
+warning = "yellow"
+error = "red"
