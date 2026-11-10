@@ -12,6 +12,25 @@ _gfetch() {
   _grun "🔄" git fetch --all -p -P
 }
 
+# reason for the most recent failure, read by the --all summaries
+_GFAIL_REASON=""
+
+# usage: _gfail_summary <verb> <entry>...  (entries are "branch|reason")
+_gfail_summary() {
+  local verb="$1" entry
+  shift
+  if [ "$#" -eq 0 ]; then
+    echo "✅ all branches $verb."
+    return 0
+  fi
+  echo ""
+  echo "❌ $# branch(es) failed:"
+  for entry in "$@"; do
+    echo "   • ${entry%%|*}: ${entry#*|}"
+  done
+  return 1
+}
+
 _grequire() {
   if [ -z "$2" ]; then
     echo "usage: $1"
@@ -119,6 +138,7 @@ _gsy_merge() {
   echo "🔁 merging $target..."
   git merge "$target" || {
     echo "❌ merge with $target failed."
+    _GFAIL_REASON="merge conflict with $target"
     return 1
   }
 }
@@ -130,6 +150,7 @@ _gsy_branch() {
 
   if [ -z "$branch" ] || [ "$branch" = "HEAD" ]; then
     echo "❌ not on a branch (detached HEAD)."
+    _GFAIL_REASON="not on a branch (detached HEAD)"
     return 1
   fi
 
@@ -162,7 +183,8 @@ _gsy_branch() {
 }
 
 _gsy_all() {
-  local extra_branch original_branch branch branches
+  local extra_branch original_branch branch branches failures
+  failures=()
   extra_branch="$1"
   original_branch=$(git rev-parse --abbrev-ref HEAD)
   branches=($(git for-each-ref --format='%(refname:short)' refs/heads/))
@@ -170,17 +192,20 @@ _gsy_all() {
   for branch in "${branches[@]}"; do
     _grun "🔀" git switch "$branch" || {
       echo "⚠️  could not switch to '$branch' (skipping)."
+      failures+=("$branch|could not switch (uncommitted changes or checked out elsewhere)")
       continue
     }
 
+    _GFAIL_REASON=""
     _gsy_branch "$extra_branch" || {
-      echo "❌ conflict syncing '$branch', aborting merge..."
+      echo "❌ failed syncing '$branch', aborting merge..."
       _grun "🧹" git merge --abort
+      failures+=("$branch|${_GFAIL_REASON:-sync failed}")
     }
   done
 
   _grun "🔀" git switch "$original_branch"
-  echo "✅ all branches synced."
+  _gfail_summary synced "${failures[@]}"
 }
 
 gsy() {
@@ -212,7 +237,6 @@ _gp_in_sync() {
 
 _gp_branch() {
   local branch="$1" batch="$2"
-  _gfetch || return 1
 
   if _gp_in_sync "$branch"; then
     echo "✅ '$branch' already in sync with origin, skipping push."
@@ -222,7 +246,8 @@ _gp_branch() {
   if ! _gref_exists "origin/$branch"; then
     if [ "$batch" = "1" ]; then
       echo "⚠️  '$branch' not found on origin (skipping, run 'gp' on it directly to create)."
-      return 0
+      _GFAIL_REASON="not found on origin (run 'gp' on it directly to create)"
+      return 1
     fi
 
     local confirm
@@ -230,25 +255,56 @@ _gp_branch() {
     read -r confirm
     if [[ ! "$confirm" =~ ^[yY]$ ]]; then
       echo "🚫 push cancelled, '$branch' not created on origin."
+      _GFAIL_REASON="push cancelled, branch not created on origin"
       return 1
     fi
   fi
 
-  _grun "🚀" git push origin "$branch"
+  local log rc
+  log=$(mktemp)
+  echo "🚀 \$ git push origin $branch"
+  # run under a pty (script) so hook output keeps its colors while still being captured
+  if command -v script >/dev/null 2>&1; then
+    script -q "$log" git push origin "$branch"
+    rc=$?
+  else
+    git push origin "$branch" >"$log" 2>&1
+    rc=$?
+    cat "$log"
+  fi
+  if [ "$rc" -ne 0 ]; then
+    echo "⚠️  failed to push '$branch'."
+    local clean
+    clean=$(sed -E 's/^\^D//; s/\x1b\[[0-9;]*[A-Za-z]//g' "$log" | tr -d '\r\004')
+    _GFAIL_REASON=$(echo "$clean" | grep -m1 -E 'rejected|error:|fatal:|FAIL |failed|✖|❌')
+    [ -n "$_GFAIL_REASON" ] || _GFAIL_REASON=$(echo "$clean" | grep -v '^[[:space:]]*$' | tail -n 1)
+  fi
+  rm -f "$log"
+  return "$rc"
 }
 
 _gp_all() {
-  local branch branches
+  local branch branches failures
+  failures=()
   branches=($(git for-each-ref --format='%(refname:short)' refs/heads/))
 
   for branch in "${branches[@]}"; do
-    _gp_branch "$branch" 1 || echo "⚠️  failed to push '$branch' (skipping)."
+    _GFAIL_REASON=""
+    _gp_branch "$branch" 1 ||
+      failures+=("$branch|${_GFAIL_REASON:-push failed}")
   done
 
-  echo "✅ all branches pushed."
+  _gfail_summary pushed "${failures[@]}"
 }
 
 gp() {
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || {
+    echo "❌ not inside a git repository."
+    return 1
+  }
+
+  _gfetch || return 1
+
   if [ "$1" = "--all" ]; then
     _gp_all
     return
