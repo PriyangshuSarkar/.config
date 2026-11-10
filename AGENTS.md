@@ -28,10 +28,11 @@ The shell environment is split into modular components:
 - **`shell/local/herdr.sh`** (gitignored, system-specific): Herdr session helpers (`had`, `hkd`)
 
 - **`shell/local/ops_herdr`**: Herdr session script for the ops project — creates a named "ops" session (headless server, then attach) with:
-  - 3 workspaces: `api`, `web`, `home` (opens on home); the sidebar groups each project's agents under its workspace
-  - `api` and `web` each have 2 tabs: `nvim` (nvim | claude) and `term` (dev server over a shell), for ~/Projects/ops/api and ~/Projects/ops/web
+  - 4 workspaces: `agent`, `api`, `web`, `home` (opens on agent); the sidebar groups each project's agents under its workspace
+  - `agent` runs a single `claude` at ~/Projects/ops so one agent covers both repos (and any git worktrees); its permissions and instructions live in `~/Projects/ops/.claude/settings.local.json` and `~/Projects/ops/CLAUDE.md` (outside this repo)
+  - `api` and `web` each have 2 tabs: `nvim` and `term` (dev server over a shell), for ~/Projects/ops/api and ~/Projects/ops/web
 
-- **`shell/local/battery_herdr`**: Herdr session script for the battery project — same structure as ops with workspaces `be` and `fe` (~/Projects/battery/back-end and ~/Projects/battery/front-end) plus `home` (session name: "battery")
+- **`shell/local/battery_herdr`**: Herdr session script for the battery project — same structure as ops with workspaces `agent` (~/Projects/battery), `be` and `fe` (~/Projects/battery/back-end and ~/Projects/battery/front-end) plus `home` (session name: "battery")
 
 ### Neovim Configuration
 
@@ -109,8 +110,8 @@ gstash / gstashp # git stash / git stash pop
 ### Herdr
 
 ```bash
-had ops         # Attach to running "ops" herdr session, else build it fresh (~/Projects/ops/api + web)
-had battery     # Same for "battery" (~/Projects/battery/back-end + front-end)
+had ops         # Attach to running "ops" herdr session, else build it fresh (agent at ~/Projects/ops, plus api + web)
+had battery     # Same for "battery" (agent at ~/Projects/battery, plus back-end + front-end)
 had -c ops      # --continue: restore a stopped session as-is (old layout + claude --resume) instead of rebuilding
 hkd ops         # Stop "ops" herdr session (with confirmation); kept on disk for `had -c`
 hkd battery     # Stop "battery" herdr session (with confirmation)
