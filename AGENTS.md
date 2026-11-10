@@ -19,10 +19,12 @@ The shell environment is split into modular components:
   - Completion systems (fzf, zoxide, starship)
   - Plugin loading for Zsh (autosuggestions, syntax highlighting, vi-mode)
 
-- **`shell/aliases.sh`**: Consolidated aliases and Git helper functions:
-  - Command aliases (lsd, bat, nvim)
-  - Git workflow functions (`ga`, `gs`, `gc`, `gp`, etc.)
-  - Branch management (`gsw`, `gn`, `gb`, `gr`, `gdel`)
+- **`shell/aliases.sh`**: Loader that sources `shell/aliases/*.sh` and `shell/aliases/*/*.sh`
+- **`shell/aliases/general.sh`**: Command aliases (lsd, bat, nvim) and system helpers
+- **`shell/aliases/git/`**: Git helpers, one function per file:
+  - `aliases.sh` - one-line wrappers (`ga`, `gs`, `gc`, `gl`, etc.)
+  - `_helpers.sh` - shared internals (`_grun`, `_gfetch`, `_gin_repo`, `_gcurrent`, `_gbranches`, `_gconfirm`, ...)
+  - `gsw.sh`, `gn.sh`, `gb.sh`, `gd.sh`, `gr.sh`, `gdel.sh`, `gp.sh`, `gsy.sh` (with its private helpers), `completion.sh`
   - `gsy` - branch sync that merges in the remote tracking branch and an optional extra branch; `--all` syncs every local branch
 
 - **`shell/local/herdr.sh`** (gitignored, system-specific): Herdr session helpers (`had`, `hkd`)
@@ -79,7 +81,7 @@ Runs with 10-minute timeout per operation and updates:
 
 ### Git Workflow Functions
 
-All custom Git functions are defined in `shell/aliases.sh`:
+All custom Git functions are defined in `shell/aliases/git/`:
 
 ```bash
 ga              # git add .
@@ -138,7 +140,7 @@ nvim --headless "+TSUpdate" "+qall"
 
 - **Vi mode everywhere**: Shell, nvim, and herdr copy mode all use vi keybindings
 - **Theme**: Catppuccin Mocha is the exclusive theme across all tools (ANSI-based tools inherit it from Ghostty) for visual consistency.
-- **Shell compatibility**: `shell.sh` and `aliases.sh` must remain compatible with both Bash and Zsh; Zsh-only features are conditionally wrapped
+- **Shell compatibility**: `shell.sh` and the alias files must remain compatible with both Bash and Zsh; Zsh-only features are conditionally wrapped
 - **Zsh branch completions**: `gsw`, `gdel`, `gn` autocomplete branch names via `_git_branch_completion`
 - **Git commit style**: Must match [git-cz](https://github.com/streamich/git-cz) output exactly — see [Commit Message Rules](#commit-message-rules)
 - **Preferred package managers**: bun (Node.js), brew (macOS packages)
@@ -146,9 +148,9 @@ nvim --headless "+TSUpdate" "+qall"
 
 ## File Modification Guidelines
 
-- **Shell scripts**: Keep `shell.sh` (env setup) and `aliases.sh` (functions/aliases) separate; don't merge them
+- **Shell scripts**: Keep `shell.sh` (env setup) and `aliases/` (functions/aliases) separate; don't merge them
 - **Neovim plugins**: Add new plugins as separate files in `nvim/lua/plugins/`
-- **Git functions**: All git helpers go in `shell/aliases.sh` with an `echo` showing the command being run (existing style)
+- **Git functions**: New git helpers go in `shell/aliases/git/` (one file per non-trivial function; one-liners in `aliases.sh`) with an `echo` showing the command being run (existing style)
 - **Shell script style**: Maintain existing comment block separators (`# ===`) and emoji usage
 
 ## Commit Message Rules
