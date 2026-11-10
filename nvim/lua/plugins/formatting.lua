@@ -11,7 +11,7 @@ return {
       json = { "prettier" },
       yaml = { "prettier" },
       markdown = { "prettier" },
-      sql = { "prettier" },
+      sql = { "sql_formatter" },
     },
     -- optional: disable biome if conform auto-detects it
     formatters = {
